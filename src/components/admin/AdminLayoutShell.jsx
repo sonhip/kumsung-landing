@@ -40,9 +40,12 @@ export default function AdminLayoutShell({ children }) {
   const isLoginPage = pathname === "/admin/login";
 
   const selectedKey =
-    menuItems.find(
-      (item) => pathname === item.key || pathname.startsWith(`${item.key}/`),
-    )?.key || "/admin";
+    menuItems
+      .filter(
+        (item) => pathname === item.key || pathname.startsWith(`${item.key}/`),
+      )
+      .sort((left, right) => right.key.length - left.key.length)?.[0]?.key ||
+    "/admin";
 
   const handleLogout = () => {
     modal.confirm({

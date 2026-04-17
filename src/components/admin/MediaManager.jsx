@@ -187,7 +187,8 @@ export default function MediaManager({ initialItems = [] }) {
       title: "Tiêu đề",
       dataIndex: "title",
       key: "title",
-      render: (value) => value || <span style={{ color: "#9aa8b6" }}>Không có</span>,
+      render: (value) =>
+        value || <span style={{ color: "#9aa8b6" }}>Không có</span>,
     },
     {
       title: "Variant",
@@ -206,7 +207,8 @@ export default function MediaManager({ initialItems = [] }) {
       dataIndex: "isActive",
       key: "isActive",
       width: 110,
-      render: (value) => (value ? <Tag color="green">Bật</Tag> : <Tag>Tắt</Tag>),
+      render: (value) =>
+        value ? <Tag color="green">Bật</Tag> : <Tag>Tắt</Tag>,
     },
     {
       title: "Thao tác",
@@ -235,7 +237,10 @@ export default function MediaManager({ initialItems = [] }) {
             value={sectionFilter}
             style={{ minWidth: 180 }}
             onChange={setSectionFilter}
-            options={[{ label: "Tất cả section", value: "all" }, ...sectionOptions]}
+            options={[
+              { label: "Tất cả section", value: "all" },
+              ...sectionOptions,
+            ]}
           />
           <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
             Thêm media
@@ -257,7 +262,7 @@ export default function MediaManager({ initialItems = [] }) {
         onCancel={() => setOpen(false)}
         footer={null}
         width={760}
-        destroyOnClose
+        destroyOnHidden
       >
         <Form
           form={form}
@@ -265,7 +270,11 @@ export default function MediaManager({ initialItems = [] }) {
           initialValues={initialValues}
           onFinish={handleFinish}
         >
-          <Form.Item label="Section" name="section" rules={[{ required: true }]}>
+          <Form.Item
+            label="Section"
+            name="section"
+            rules={[{ required: true }]}
+          >
             <Select options={sectionOptions} />
           </Form.Item>
 
@@ -286,7 +295,11 @@ export default function MediaManager({ initialItems = [] }) {
             <Input.TextArea rows={3} />
           </Form.Item>
 
-          <Form.Item label="URL hình ảnh" name="imageUrl" rules={[{ required: true }]}>
+          <Form.Item
+            label="URL hình ảnh"
+            name="imageUrl"
+            rules={[{ required: true }]}
+          >
             <Input
               addonAfter={
                 <Upload
