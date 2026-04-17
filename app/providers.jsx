@@ -1,7 +1,7 @@
 "use client";
 
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ConfigProvider } from "antd";
+import { App, ConfigProvider } from "antd";
 
 export default function Providers({ children }) {
   return (
@@ -50,7 +50,7 @@ export default function Providers({ children }) {
           },
         }}
       >
-        {children}
+        <App>{children}</App>
       </ConfigProvider>
     </AntdRegistry>
   );

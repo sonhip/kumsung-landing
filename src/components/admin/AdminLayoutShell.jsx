@@ -1,7 +1,11 @@
 "use client";
 
-import { AppstoreOutlined, FileImageOutlined, LogoutOutlined } from "@ant-design/icons";
-import { Button, Layout, Menu, Typography, message } from "antd";
+import {
+  AppstoreOutlined,
+  FileImageOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
+import { App, Button, Layout, Menu, Typography } from "antd";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -30,26 +34,37 @@ const menuItems = [
 ];
 
 export default function AdminLayoutShell({ children }) {
+  const { message, modal } = App.useApp();
   const pathname = usePathname();
   const router = useRouter();
   const isLoginPage = pathname === "/admin/login";
 
   const selectedKey =
-    menuItems.find((item) => pathname === item.key || pathname.startsWith(`${item.key}/`))
-      ?.key || "/admin";
+    menuItems.find(
+      (item) => pathname === item.key || pathname.startsWith(`${item.key}/`),
+    )?.key || "/admin";
 
-  const handleLogout = async () => {
-    const response = await fetch("/api/admin/logout", {
-      method: "POST",
+  const handleLogout = () => {
+    modal.confirm({
+      title: "Xác nhận đăng xuất",
+      content: "Bạn có chắc muốn đăng xuất khỏi khu vực quản trị?",
+      okText: "Đăng xuất",
+      cancelText: "Huỷ",
+      okButtonProps: { danger: true },
+      onOk: async () => {
+        const response = await fetch("/api/admin/logout", {
+          method: "POST",
+        });
+
+        if (!response.ok) {
+          message.error("Không thể đăng xuất.");
+          return;
+        }
+
+        router.replace("/admin/login");
+        router.refresh();
+      },
     });
-
-    if (!response.ok) {
-      message.error("Không thể đăng xuất.");
-      return;
-    }
-
-    router.replace("/admin/login");
-    router.refresh();
   };
 
   if (isLoginPage) {
@@ -87,9 +102,7 @@ export default function AdminLayoutShell({ children }) {
           <Title level={3} style={{ color: brandColor, margin: 0 }}>
             Tân Việt Admin
           </Title>
-          <Text style={{ color: "#5F7E9D" }}>
-            Quản trị nội dung website
-          </Text>
+          <Text style={{ color: "#5F7E9D" }}>Quản trị nội dung website</Text>
         </div>
 
         <Menu
@@ -110,12 +123,17 @@ export default function AdminLayoutShell({ children }) {
         <Header
           style={{
             background: "rgba(255, 255, 255, 0.9)",
-            padding: "0 24px",
+            padding: "12px 24px",
             borderBottom: shellBorder,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             backdropFilter: "blur(10px)",
+            position: "sticky",
+            top: 0,
+            zIndex: 20,
+            height: "auto",
+            lineHeight: "normal",
           }}
         >
           <div>

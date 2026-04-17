@@ -1,11 +1,12 @@
 "use client";
 
-import { Button, Card, Form, Input, Typography, message } from "antd";
+import { App, Button, Card, Form, Input, Typography } from "antd";
 import { useState } from "react";
 
 const { Paragraph, Title } = Typography;
 
 export default function SiteSettingsForm({ initialValues }) {
+  const { message } = App.useApp();
   const [form] = Form.useForm();
   const [isSaving, setIsSaving] = useState(false);
 
@@ -68,7 +69,9 @@ export default function SiteSettingsForm({ initialValues }) {
               <Form.Item
                 label="Tên công ty"
                 name={["company", "name"]}
-                rules={[{ required: true, message: "Vui lòng nhập tên công ty." }]}
+                rules={[
+                  { required: true, message: "Vui lòng nhập tên công ty." },
+                ]}
               >
                 <Input />
               </Form.Item>
@@ -76,12 +79,17 @@ export default function SiteSettingsForm({ initialValues }) {
               <Form.Item
                 label="Tên thương hiệu ngắn"
                 name={["company", "shortName"]}
-                rules={[{ required: true, message: "Vui lòng nhập tên thương hiệu." }]}
+                rules={[
+                  { required: true, message: "Vui lòng nhập tên thương hiệu." },
+                ]}
               >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Aria label trang chủ" name={["company", "homeAriaLabel"]}>
+              <Form.Item
+                label="Aria label trang chủ"
+                name={["company", "homeAriaLabel"]}
+              >
                 <Input />
               </Form.Item>
 
@@ -103,7 +111,10 @@ export default function SiteSettingsForm({ initialValues }) {
                 <Input.TextArea rows={3} />
               </Form.Item>
 
-              <Form.Item label="Nhãn nút liên hệ" name={["company", "quoteButton"]}>
+              <Form.Item
+                label="Nhãn nút liên hệ"
+                name={["company", "quoteButton"]}
+              >
                 <Input />
               </Form.Item>
             </Card>
@@ -123,11 +134,17 @@ export default function SiteSettingsForm({ initialValues }) {
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Địa chỉ đầy đủ" name={["contact", "addressFull"]}>
+              <Form.Item
+                label="Địa chỉ đầy đủ"
+                name={["contact", "addressFull"]}
+              >
                 <Input.TextArea rows={3} />
               </Form.Item>
 
-              <Form.Item label="Địa chỉ ngắn" name={["contact", "addressShort"]}>
+              <Form.Item
+                label="Địa chỉ ngắn"
+                name={["contact", "addressShort"]}
+              >
                 <Input />
               </Form.Item>
 
@@ -142,7 +159,10 @@ export default function SiteSettingsForm({ initialValues }) {
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Aria label email" name={["contact", "emailAriaLabel"]}>
+              <Form.Item
+                label="Aria label email"
+                name={["contact", "emailAriaLabel"]}
+              >
                 <Input />
               </Form.Item>
 
