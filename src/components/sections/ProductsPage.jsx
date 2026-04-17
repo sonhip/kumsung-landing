@@ -1,3 +1,6 @@
+"use client";
+
+import Link from "next/link";
 import {
   BuildOutlined,
   ToolOutlined,
@@ -5,7 +8,6 @@ import {
   ThunderboltOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
-import { Link, useParams } from "react-router-dom";
 import ProductCard from "../ui/ProductCard";
 import { SITE_TEXT } from "../../constants/siteText";
 import {
@@ -24,7 +26,7 @@ const productIcons = [
   AppstoreOutlined,
 ];
 
-const productsWithIcons = productCatalog.map((item, index) => ({
+const productsWithIcons = productCatalog.map((item) => ({
   ...item,
   icon:
     productIcons[
@@ -34,9 +36,7 @@ const productsWithIcons = productCatalog.map((item, index) => ({
     ] || BuildOutlined,
 }));
 
-const ProductsPage = () => {
-  const { categorySlug } = useParams();
-
+const ProductsPage = ({ categorySlug = null }) => {
   const selectedCategory = categorySlug
     ? nav.items.find((item) => toSlug(item) === categorySlug)
     : null;
@@ -79,7 +79,7 @@ const ProductsPage = () => {
           <div className="products-empty">
             <h2>No products found</h2>
             <p>Selected product type does not have any item yet.</p>
-            <Link to="/products" className="products-back-link">
+            <Link href="/products" className="products-back-link">
               Back to all products
             </Link>
           </div>
@@ -87,7 +87,7 @@ const ProductsPage = () => {
       </div>
 
       <div className="container products-page-cta-wrap">
-        <Link to="/contact" className="products-page-quote-btn">
+        <Link href="/contact" className="products-page-quote-btn">
           {company.quoteButton}
         </Link>
       </div>

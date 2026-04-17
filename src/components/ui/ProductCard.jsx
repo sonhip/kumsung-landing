@@ -1,6 +1,8 @@
+"use client";
+
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const ProductCard = ({
   icon: Icon,
@@ -33,7 +35,7 @@ const ProductCard = ({
     >
       {to ? (
         <Link
-          to={to}
+          href={to}
           className="product-card-link"
           aria-label={`Open ${title}`}
         >

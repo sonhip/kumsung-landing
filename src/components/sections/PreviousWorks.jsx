@@ -1,7 +1,8 @@
+"use client";
+
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SITE_TEXT } from "../../constants/siteText";
 
 const { previousWorks } = SITE_TEXT;

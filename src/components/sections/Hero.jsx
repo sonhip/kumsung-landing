@@ -1,8 +1,10 @@
+"use client";
+
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { SITE_TEXT } from "../../constants/siteText";
 
 const { hero } = SITE_TEXT;
@@ -106,12 +108,12 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.1, duration: 0.4 }}
         >
-          <Link to="/products">
+          <Link href="/products">
             <Button type="primary" size="large" className="hero-btn-primary">
               {hero.viewProductsButton}
             </Button>
           </Link>
-          <Link to="/contact">
+          <Link href="/contact">
             <Button size="large" className="hero-btn-outline">
               {hero.contactButton}
             </Button>

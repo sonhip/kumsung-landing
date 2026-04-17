@@ -1,12 +1,10 @@
-import { Link, useParams } from "react-router-dom";
-import { Image } from "antd";
+import Link from "next/link";
 import { SITE_TEXT } from "../../constants/siteText";
 import { findProductBySlugs, productCatalog } from "../../utils/productCatalog";
 
 const { company } = SITE_TEXT;
 
-const ProductDetailPage = () => {
-  const { categorySlug, productSlug } = useParams();
+const ProductDetailPage = ({ categorySlug, productSlug }) => {
   const product = findProductBySlugs(categorySlug, productSlug);
   const relatedProducts = product
     ? productCatalog
@@ -24,7 +22,7 @@ const ProductDetailPage = () => {
         <div className="container product-detail-not-found">
           <h1>Product not found</h1>
           <p>The selected product does not exist or has been removed.</p>
-          <Link to="/products" className="products-back-link">
+          <Link href="/products" className="products-back-link">
             Back to all products
           </Link>
         </div>
@@ -38,20 +36,19 @@ const ProductDetailPage = () => {
       aria-label={`${product.title} details`}
     >
       <div className="container product-detail-breadcrumbs">
-        <Link to="/">Home</Link>
+        <Link href="/">Home</Link>
         <span>/</span>
-        <Link to={`/products/${product.categorySlug}`}>{product.category}</Link>
+        <Link href={`/products/${product.categorySlug}`}>{product.category}</Link>
         <span>/</span>
         <span>{product.model || product.title}</span>
       </div>
 
       <div className="container product-detail-main">
         <div className="product-detail-media">
-          <Image
+          <img
             src={product.image}
             alt={product.title}
             className="product-detail-main-image"
-            preview={{ mask: "Click to zoom" }}
           />
         </div>
 
@@ -70,7 +67,7 @@ const ProductDetailPage = () => {
             Category: <span>{product.category}</span>
           </p>
 
-          <Link to="/contact" className="products-page-quote-btn">
+          <Link href="/contact" className="products-page-quote-btn">
             {company.quoteButton}
           </Link>
         </div>
@@ -88,7 +85,7 @@ const ProductDetailPage = () => {
             {relatedProducts.map((relatedItem) => (
               <Link
                 key={relatedItem.productSlug}
-                to={`/products/${relatedItem.categorySlug}/${relatedItem.productSlug}`}
+                href={`/products/${relatedItem.categorySlug}/${relatedItem.productSlug}`}
                 className="product-related-card"
               >
                 <img

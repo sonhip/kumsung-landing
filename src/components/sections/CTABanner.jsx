@@ -1,5 +1,7 @@
+"use client";
+
 import { Button } from "antd";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { SITE_TEXT } from "../../constants/siteText";
 
 const { cta } = SITE_TEXT;
@@ -12,7 +14,7 @@ const CTABanner = () => {
           <h2>{cta.title}</h2>
           {cta.description ? <p>{cta.description}</p> : null}
         </div>
-        <Link to="/contact">
+        <Link href="/contact">
           <Button
             type="primary"
             className="quote-btn cta-career-btn"

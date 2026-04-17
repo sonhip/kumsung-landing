@@ -1,8 +1,10 @@
+"use client";
+
 import { Button } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import Navbar from "./Navbar";
 import { SITE_TEXT } from "../../constants/siteText";
 
@@ -34,7 +36,7 @@ const Header = () => {
     >
       <div className="header-main">
         <div className="container header-inner">
-          <Link to="/" className="brand" aria-label={company.homeAriaLabel}>
+          <Link href="/" className="brand" aria-label={company.homeAriaLabel}>
             <span className="brand-title">{company.name}</span>
             <span className="brand-tagline">{company.tagline}</span>
           </Link>
@@ -50,9 +52,11 @@ const Header = () => {
             </div>
           </div>
 
-          <Button type="primary" className="quote-btn" aria-label="Get a quote">
-            {company.quoteButton}
-          </Button>
+          <Link href="/contact" aria-label="Get a quote">
+            <Button type="primary" className="quote-btn">
+              {company.quoteButton}
+            </Button>
+          </Link>
         </div>
       </div>
 

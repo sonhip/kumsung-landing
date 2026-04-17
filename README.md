@@ -1,16 +1,34 @@
-# React + Vite
+# Next.js + Prisma
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ứng dụng này đã được chuyển sang `Next.js` App Router để chạy frontend + backend trong cùng một repo, dùng `PostgreSQL` qua `Prisma`.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Next.js 15
+- React 18
+- PostgreSQL
+- Prisma ORM
+- Ant Design + Framer Motion
 
-## React Compiler
+## Cấu hình môi trường
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+DATABASE_URL=postgresql://admin:123456@localhost:5432/mydb?schema=public
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_google_recaptcha_site_key
+RECAPTCHA_SECRET_KEY=your_google_recaptcha_secret_key
+```
 
-## Expanding the ESLint configuration
+## Chạy dự án
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run db:generate
+npm run db:push
+npm run dev
+```
+
+## Backend đã tích hợp
+
+- `POST /api/contact`
+- Prisma model `ContactSubmission`
+- Form liên hệ ở `/contact` sẽ lưu xuống PostgreSQL

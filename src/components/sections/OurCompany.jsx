@@ -1,3 +1,5 @@
+"use client";
+
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { useRef } from "react";
 import { SITE_TEXT } from "../../constants/siteText";

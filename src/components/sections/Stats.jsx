@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   CheckCircleOutlined,
   CustomerServiceOutlined,
@@ -38,9 +39,9 @@ const Stats = () => {
                 <Icon className="stats-service-icon" aria-hidden="true" />
                 <h4>{item.title}</h4>
                 <p>{item.description}</p>
-                <a href="/contact" className="stats-service-link">
+                <Link href="/contact" className="stats-service-link">
                   {stats.contactCta} <CheckCircleOutlined />
-                </a>
+                </Link>
               </article>
             );
           })}
