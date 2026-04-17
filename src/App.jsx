@@ -10,6 +10,7 @@ import ScrollReveal from "./components/ui/ScrollReveal";
 import { SITE_TEXT } from "./constants/siteText";
 
 const Stats = lazy(() => import("./components/sections/Stats"));
+const PreviousWorks = lazy(() => import("./components/sections/PreviousWorks"));
 const Products = lazy(() => import("./components/sections/Products"));
 const WhyUs = lazy(() => import("./components/sections/WhyUs"));
 const CTABanner = lazy(() => import("./components/sections/CTABanner"));
@@ -40,6 +41,9 @@ const HomePage = () => {
       >
         <ScrollReveal>
           <Stats />
+        </ScrollReveal>
+        <ScrollReveal>
+          <PreviousWorks />
         </ScrollReveal>
         <ScrollReveal>
           <Products />

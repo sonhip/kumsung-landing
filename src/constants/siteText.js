@@ -84,6 +84,63 @@ export const SITE_TEXT = {
     ],
     contactCta: "Contact us!",
   },
+  previousWorks: {
+    ariaLabel: "Our previous works",
+    title: "Our Previous Works",
+    subtitle: "We bring quality works",
+    items: [
+      {
+        title: "LOADING BAY EQUIPMENT",
+        subtitle: "Loading Bay Equipment",
+        image: "/static/images/product-compressor.jpg",
+      },
+      {
+        title: "INSULATED NON HEATED DOOR",
+        subtitle: "Insulated Door",
+        image: "/static/images/product-unit-cooler.jpg",
+      },
+      {
+        title: "SECTIONAL DOOR WITH DOCK LEVELER",
+        subtitle: "Loading Bay Equipment",
+        image: "/static/images/product-condensing-unit.jpg",
+      },
+      {
+        title: "WALK IN FREEZER",
+        subtitle: "Walk In Freezer",
+        image: "/static/images/product-condenser-unit.jpg",
+      },
+      {
+        title: "BLAST FREEZER",
+        subtitle: "Condensing Unit",
+        image: "/static/images/product-other.jpg",
+      },
+      {
+        title: "COLD ROOM FACILITY",
+        subtitle: "Cold Storage Project",
+        image: "/static/images/work-1.jpg",
+      },
+      {
+        title: "INDUSTRIAL COOLING ZONE",
+        subtitle: "Industrial Refrigeration",
+        image: "/static/images/work-2.jpg",
+      },
+      {
+        title: "WAREHOUSE RETROFIT",
+        subtitle: "Renovation & Upgrade",
+        image: "/static/images/work-3.jpg",
+      },
+      {
+        title: "LOW TEMP STORAGE",
+        subtitle: "Temperature Control",
+        image: "/static/images/work-4.jpg",
+      },
+      {
+        title: "PROCESSING FACILITY",
+        subtitle: "Complete Installation",
+        image: "/static/images/work-5.jpg",
+      },
+    ],
+  },
   products: {
     sectionAriaLabel: "Products",
     title: "Our Products",
