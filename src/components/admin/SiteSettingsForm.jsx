@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, Col, Form, Input, Row, Typography, message } from "antd";
+import { Button, Card, Form, Input, Typography, message } from "antd";
 import { useState } from "react";
 
 const { Paragraph, Title } = Typography;
@@ -51,8 +51,15 @@ export default function SiteSettingsForm({ initialValues }) {
           }
         }}
       >
-        <Row gutter={24}>
-          <Col xs={24} lg={12}>
+        <div
+          style={{
+            display: "grid",
+            gap: 24,
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            marginBottom: 24,
+          }}
+        >
+          <div>
             <Card
               size="small"
               title="Thông tin công ty"
@@ -100,9 +107,9 @@ export default function SiteSettingsForm({ initialValues }) {
                 <Input />
               </Form.Item>
             </Card>
-          </Col>
+          </div>
 
-          <Col xs={24} lg={12}>
+          <div>
             <Card
               size="small"
               title="Thông tin liên hệ"
@@ -150,8 +157,8 @@ export default function SiteSettingsForm({ initialValues }) {
                 <Input />
               </Form.Item>
             </Card>
-          </Col>
-        </Row>
+          </div>
+        </div>
 
         <Button type="primary" htmlType="submit" loading={isSaving}>
           Lưu thông tin công ty

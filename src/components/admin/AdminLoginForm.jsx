@@ -47,11 +47,20 @@ export default function AdminLoginForm() {
         display: "grid",
         placeItems: "center",
         background:
-          "linear-gradient(180deg, rgba(242,248,253,1) 0%, rgba(225,239,250,1) 100%)",
+          "radial-gradient(circle at top left, rgba(220, 232, 244, 0.85) 0%, rgba(244, 248, 252, 1) 42%, rgba(234, 241, 248, 1) 100%)",
         padding: 24,
       }}
     >
-      <Card style={{ width: "100%", maxWidth: 460, borderRadius: 20 }}>
+      <Card
+        style={{
+          width: "100%",
+          maxWidth: 460,
+          borderRadius: 20,
+          border: "1px solid rgba(22, 54, 95, 0.08)",
+          boxShadow: "0 24px 60px rgba(22, 54, 95, 0.12)",
+          background: "rgba(255, 255, 255, 0.94)",
+        }}
+      >
         <Title level={2} style={{ color: "#16365f", marginBottom: 8 }}>
           Đăng nhập quản trị
         </Title>
@@ -59,7 +68,11 @@ export default function AdminLoginForm() {
           Tạm thời hệ thống dùng tài khoản hardcode: <strong>admin / admin</strong>
         </Paragraph>
 
-        <Form layout="vertical" onFinish={handleSubmit} initialValues={{ username: "admin", password: "admin" }}>
+        <Form
+          layout="vertical"
+          onFinish={handleSubmit}
+          initialValues={{ username: "admin", password: "admin" }}
+        >
           <Form.Item
             label="Tên đăng nhập"
             name="username"
@@ -76,7 +89,19 @@ export default function AdminLoginForm() {
             <Input.Password prefix={<LockOutlined />} size="large" />
           </Form.Item>
 
-          <Button type="primary" htmlType="submit" size="large" loading={loading} block>
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            loading={loading}
+            block
+            style={{
+              height: 48,
+              fontWeight: 600,
+              borderRadius: 12,
+              background: "linear-gradient(180deg, #2F5F93 0%, #244B73 100%)",
+            }}
+          >
             Đăng nhập
           </Button>
         </Form>
