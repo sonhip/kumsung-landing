@@ -51,13 +51,13 @@ main {
 }
 
 .topbar {
-  background: var(--color-bg-2);
+  background: #ffffff;
   min-height: 40px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid #e8e8e8;
   display: flex;
   align-items: center;
   font-size: 0.82rem;
-  color: #cfcfcf;
+  color: #3a3a3a;
 }
 
 .topbar-inner {
@@ -93,16 +93,16 @@ main {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(10, 10, 10, 0.8);
+  background: rgba(255, 255, 255, 0.94);
 }
 
 .site-header.scrolled {
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .header-main {
-  background: #151515;
+  background: #ffffff;
 }
 
 .header-inner {
@@ -122,10 +122,11 @@ main {
 .brand-title {
   font-weight: 700;
   letter-spacing: 0.4px;
+  color: #1f1f1f;
 }
 
 .brand-tagline {
-  color: #aaaaaa;
+  color: #696969;
   font-size: 0.76rem;
   text-transform: uppercase;
 }
@@ -134,7 +135,7 @@ main {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  color: #dddddd;
+  color: #464646;
 }
 
 .distributor-badge strong {
@@ -144,7 +145,7 @@ main {
 
 .distributor-badge span {
   display: block;
-  color: #9b9b9b;
+  color: #6e6e6e;
   font-size: 0.78rem;
 }
 
