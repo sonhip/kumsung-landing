@@ -279,6 +279,32 @@ export const SITE_TEXT = {
     description: "",
     buttonLabel: "Send Us Your CV",
   },
+  contactPage: {
+    ariaLabel: "Contact page",
+    heroTitle: "CONTACT US",
+    heroImage: "/static/images/hero-warehouse-2.jpg",
+    phoneTitle: "Phone",
+    phoneDescription:
+      "We are pleased to answer anything you want to know. Give us a call.",
+    emailTitle: "Email",
+    emailDescription:
+      "You may reach us via email if you feel better to do it. We're always here.",
+    locationTitle: "Location",
+    locationMapLabel: "View On Google Map",
+    locationMapUrl:
+      "https://maps.google.com/?q=41+Naga+Road,+Pulang+Lupa+Dos,+Las+Pi%C3%B1as+City,+Metro+Manila",
+    formTitle: "Leave us your info",
+    formSubtitle: "and we will get back to you.",
+    fields: {
+      name: "Your Name (required)",
+      email: "Your Email (required)",
+      subject: "Subject",
+      message: "Your Message",
+    },
+    recaptchaLabel: "I'm not a robot",
+    recaptchaBrand: "reCAPTCHA",
+    submitLabel: "SEND",
+  },
   footer: {
     contactInfoTitle: "CONTACT INFO",
     officeLocations: [

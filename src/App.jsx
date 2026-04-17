@@ -14,6 +14,7 @@ const PreviousWorks = lazy(() => import("./components/sections/PreviousWorks"));
 const OurServices = lazy(() => import("./components/sections/OurServices"));
 const OurCompany = lazy(() => import("./components/sections/OurCompany"));
 const CTABanner = lazy(() => import("./components/sections/CTABanner"));
+const ContactPage = lazy(() => import("./components/sections/ContactPage"));
 
 const { company, routes } = SITE_TEXT;
 
@@ -104,10 +105,7 @@ const AnimatedRoutes = () => {
           path="/contact"
           element={
             <PageTransition>
-              <RoutePage
-                title={routes.contact.title}
-                description={routes.contact.description}
-              />
+              <ContactPage />
             </PageTransition>
           }
         />
