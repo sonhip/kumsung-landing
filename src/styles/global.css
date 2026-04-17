@@ -26,6 +26,7 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
+  overflow-x: hidden;
 }
 
 a {
@@ -246,7 +247,8 @@ main {
 
 .hero-section {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -264,7 +266,7 @@ main {
   position: absolute;
   inset: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: #0b0b0b;
   opacity: 0;
   transition: opacity 0.9s ease;
@@ -737,6 +739,7 @@ main {
   z-index: 1;
   max-width: 700px;
   padding: 5.2rem 6rem;
+  overflow-wrap: anywhere;
 }
 
 .service-content-copy h3 {
@@ -1791,6 +1794,26 @@ main {
 }
 
 @media (max-width: 980px) {
+  .topbar {
+    min-height: 34px;
+  }
+
+  .topbar-inner {
+    min-height: 34px;
+  }
+
+  .topbar-left {
+    gap: 0.75rem;
+  }
+
+  .topbar-left span {
+    font-size: 0.74rem;
+  }
+
+  .topbar-left span:nth-child(3) {
+    display: none;
+  }
+
   .hero-nav {
     width: 38px;
     height: 38px;
@@ -1817,6 +1840,15 @@ main {
 
   .menu-toggle {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+  }
+
+  .navbar-inner {
+    min-height: 58px;
+    justify-content: flex-end;
   }
 
   .nav-links {
@@ -1836,13 +1868,26 @@ main {
   }
 
   .nav-links.open {
-    max-height: 360px;
+    max-height: 82vh;
+    overflow-y: auto;
     padding-bottom: 0.8rem;
+  }
+
+  .nav-links a,
+  .products-trigger {
+    width: 100%;
+    padding: 0.95rem 0;
+    text-align: left;
+  }
+
+  .nav-products {
+    width: 100%;
   }
 
   .products-dropdown {
     position: static;
     width: 100%;
+    min-width: 0;
     margin: 0.4rem 0;
   }
 
@@ -2020,6 +2065,7 @@ main {
   }
 
   .about-milestones-grid {
+    grid-template-columns: 1fr;
     margin-top: 2.3rem;
     gap: 1rem;
   }
@@ -2099,6 +2145,241 @@ main {
 
   .why-right {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: 15px;
+  }
+
+  .container {
+    width: min(1200px, calc(100% - 1.2rem));
+  }
+
+  .topbar-inner {
+    justify-content: center;
+  }
+
+  .topbar-left span:nth-child(2) {
+    display: none;
+  }
+
+  .topbar-right {
+    display: none;
+  }
+
+  .header-inner {
+    padding: 0.65rem 0;
+    gap: 0.6rem;
+  }
+
+  .brand-title {
+    font-size: 0.95rem;
+  }
+
+  .brand-tagline {
+    font-size: 0.67rem;
+    letter-spacing: 0.4px;
+  }
+
+  .distributor-badge {
+    gap: 0.5rem;
+  }
+
+  .distributor-badge strong {
+    font-size: 0.83rem;
+  }
+
+  .distributor-badge span {
+    font-size: 0.7rem;
+  }
+
+  .quote-btn {
+    min-height: 38px;
+    padding-inline: 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .hero-content {
+    padding-top: 1.4rem;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(2rem, 13vw, 3.1rem);
+    line-height: 0.98;
+  }
+
+  .hero-kicker,
+  .hero-subtitle {
+    display: none;
+  }
+
+  .hero-subtitle {
+    margin-top: 0.85rem;
+    font-size: 0.94rem;
+    line-height: 1.5;
+  }
+
+  .hero-actions {
+    margin-top: 1.2rem;
+    gap: 0.6rem;
+  }
+
+  .hero-actions .ant-btn {
+    min-height: 40px;
+    width: 100%;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+
+  .stats-services-wrap,
+  .products-section,
+  .why-section,
+  .cta-banner,
+  .about-team-section,
+  .contact-info-section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .works-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .works-header p {
+    font-size: 0.95rem;
+  }
+
+  .work-card {
+    min-height: 350px;
+  }
+
+  .work-caption {
+    min-height: 108px;
+    padding: 0.75rem 0.9rem;
+  }
+
+  .work-caption h3 {
+    font-size: 1.45rem;
+  }
+
+  .work-caption p {
+    margin-top: 0.38rem;
+    font-size: 0.9rem;
+  }
+
+  .products-page {
+    padding: 2.35rem 0 2.7rem;
+  }
+
+  .products-page-hero h1 {
+    font-size: clamp(2.05rem, 11vw, 3rem);
+  }
+
+  .products-page-hero p {
+    display: none;
+  }
+
+  .product-card {
+    padding: 1rem;
+  }
+
+  .product-card h3 {
+    margin-top: 0.65rem;
+    font-size: 1.8rem;
+    line-height: 1.08;
+  }
+
+  .product-card p {
+    display: none;
+  }
+
+  .learn-more {
+    margin-top: 0.65rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .products-page-quote-btn {
+    font-size: 0.95rem;
+    min-height: 46px;
+  }
+
+  .product-detail-page {
+    padding-top: 1.2rem;
+    padding-bottom: 2.4rem;
+  }
+
+  .product-detail-media {
+    padding: 0.75rem;
+  }
+
+  .product-detail-info h1 {
+    font-size: clamp(1.65rem, 8.6vw, 2.2rem);
+  }
+
+  .product-detail-subtitle {
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .product-detail-description-block {
+    margin-top: 1.2rem;
+    padding: 1rem 0;
+  }
+
+  .cta-career-btn {
+    width: 100%;
+    min-width: 0;
+    height: 52px;
+    border-width: 2px !important;
+    font-size: 1.05rem;
+  }
+
+  .site-footer {
+    padding-top: 2.7rem;
+    min-height: 0;
+  }
+
+  .footer-bottom {
+    margin-top: 2.2rem;
+    padding: 1rem 0.8rem 1.25rem;
+  }
+
+  .about-hero,
+  .about-hero-inner,
+  .contact-hero,
+  .contact-hero-inner {
+    min-height: 215px;
+  }
+
+  .about-company-description,
+  .contact-info-card p,
+  .contact-info-card ul,
+  .contact-map-link {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 0.96rem;
+    padding: 0.7rem 0.82rem;
+  }
+
+  .contact-recaptcha-wrap {
+    overflow-x: auto;
+  }
+
+  .contact-recaptcha-wrap > div {
+    transform: scale(0.84);
+  }
+
+  .contact-form-submit {
+    height: 48px;
   }
 }
 
