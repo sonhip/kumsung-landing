@@ -141,6 +141,51 @@ export const SITE_TEXT = {
       },
     ],
   },
+  services: {
+    ariaLabel: "Our services",
+    title: "Our Services",
+    tiles: [
+      {
+        type: "image",
+        image: "/static/images/work-1.jpg",
+        alt: "Industrial equipment ready for delivery",
+      },
+      {
+        type: "content",
+        tone: "dark",
+        image: "/static/images/product-other.jpg",
+        title: "Sales",
+        description:
+          "As the sole distributor of Kyungdong Industrial Co., Ltd. and Samyoung General Machinery Co., Ltd., we provide quality products imported from Korea with complete after-sales support.",
+      },
+      {
+        type: "content",
+        tone: "gold",
+        image: "/static/images/work-2.jpg",
+        title: "Installation",
+        description:
+          "Our well-trained and well-mannered team delivers accurate installation and commissioning to match your facility requirements and operating standards.",
+      },
+      {
+        type: "image",
+        image: "/static/images/work-3.jpg",
+        alt: "Installed refrigeration units in a commercial facility",
+      },
+      {
+        type: "image",
+        image: "/static/images/work-4.jpg",
+        alt: "Industrial roof area with cooling system",
+      },
+      {
+        type: "content",
+        tone: "dark",
+        image: "/static/images/work-5.jpg",
+        title: "Repair",
+        description:
+          "We stay in touch with our customers and provide responsive repair assistance to keep refrigeration systems stable and efficient.",
+      },
+    ],
+  },
   products: {
     sectionAriaLabel: "Products",
     title: "Our Products",

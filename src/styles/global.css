@@ -673,6 +673,101 @@ main {
   font-size: 1rem;
 }
 
+.services-section {
+  background: #ececec;
+}
+
+.services-heading {
+  padding: 4.4rem 0 4.1rem;
+}
+
+.services-heading .container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.services-heading h2 {
+  margin: 0;
+  color: #3f3f3f;
+  font-size: clamp(2.1rem, 3.1vw, 3.35rem);
+  font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.service-tile {
+  position: relative;
+  min-height: 470px;
+  overflow: hidden;
+}
+
+.service-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.service-content-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-content-layer {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 6, 6, 0.74);
+}
+
+.service-content.is-gold .service-content-layer {
+  background: rgba(245, 166, 35, 0.72);
+}
+
+.service-content-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  padding: 5.2rem 6rem;
+}
+
+.service-content-copy h3 {
+  margin: 0;
+  font-size: clamp(2rem, 2.6vw, 2.9rem);
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.service-content-copy p {
+  margin: 1.35rem 0 0;
+  line-height: 1.75;
+  font-size: clamp(1.05rem, 1.22vw, 1.12rem);
+}
+
+.service-content.is-dark .service-content-copy h3 {
+  color: var(--color-accent);
+}
+
+.service-content.is-dark .service-content-copy p {
+  color: #ececec;
+}
+
+.service-content.is-gold .service-content-copy h3 {
+  color: #151515;
+}
+
+.service-content.is-gold .service-content-copy p {
+  color: #1f1f1f;
+}
+
 .products-section,
 .why-section {
   padding: 5rem 0;
@@ -985,6 +1080,22 @@ main {
 
   .work-card {
     min-height: 420px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-tile {
+    min-height: 320px;
+  }
+
+  .services-heading {
+    padding: 2.5rem 0 2.3rem;
+  }
+
+  .service-content-copy {
+    padding: 2.1rem 1.4rem;
   }
 
   .why-grid,
