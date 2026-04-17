@@ -186,6 +186,32 @@ export const SITE_TEXT = {
       },
     ],
   },
+  companyProfile: {
+    ariaLabel: "Our company overview",
+    title: "Our Company",
+    description:
+      "The Company was originally established in 2014 as Kumsung Refrigeration Inc. Trading wholesaling, retailing and servicing for airconditioning unit and refrigeration equipment. We provide good quality services and equipment to our customer at a very competent price. We have an excellent staffs who will guide our customers with their best ideas by keeping in constant touch and informing them about their needs.",
+    partners: [
+      { name: "KD", logo: "/static/images/company-kd.svg" },
+      {
+        name: "SAMYOUNG MACHINERY",
+        logo: "/static/images/company-samyoung.svg",
+      },
+      { name: "GEA BOCK", logo: "/static/images/company-gea.svg" },
+      { name: "BITZER", logo: "/static/images/company-bitzer.svg" },
+      { name: "COPELAND", logo: "/static/images/company-copeland.svg" },
+      { name: "DANFOSS", logo: "/static/images/company-danfoss.svg" },
+      { name: "EMERSON", logo: "/static/images/company-emerson.svg" },
+      { name: "CARRIER", logo: "/static/images/company-carrier.svg" },
+      { name: "DAIKIN", logo: "/static/images/company-daikin.svg" },
+      {
+        name: "MITSUBISHI ELECTRIC",
+        logo: "/static/images/company-mitsubishi.svg",
+      },
+      { name: "PANASONIC", logo: "/static/images/company-panasonic.svg" },
+      { name: "LG", logo: "/static/images/company-lg.svg" },
+    ],
+  },
   products: {
     sectionAriaLabel: "Products",
     title: "Our Products",
@@ -248,31 +274,43 @@ export const SITE_TEXT = {
     ],
   },
   cta: {
-    ariaLabel: "Call to action banner",
-    title: "Ready to Get Started?",
-    description:
-      "Talk to our team for a tailored refrigeration solution for your business.",
+    ariaLabel: "Career and jobs banner",
+    title: "Career & Jobs",
+    description: "",
+    buttonLabel: "Send Us Your CV",
   },
   footer: {
-    description:
-      "Trusted B2B partner for industrial refrigeration equipment, system design, installation, and long-term maintenance support.",
-    quickLinksTitle: "Quick Links",
-    productsTitle: "Products",
-    contactTitle: "Contact",
-    quickLinks: [
-      { label: "Home", to: "/" },
-      { label: "Products", to: "/products" },
-      { label: "Contact Us", to: "/contact" },
-      { label: "About Us", to: "/about" },
+    contactInfoTitle: "CONTACT INFO",
+    officeLocations: [
+      {
+        label: "Luzon (Main Office)",
+        address: "#41 Naga Road, Pulang Lupa Dos, Las Piñas City, Metro Manila",
+      },
+      {
+        label: "Western Visayas",
+        address:
+          "Rm. 101, Tydco Commercial Complex, Kahilwayan Ave., Sta. Barbara, Iloilo",
+      },
+      {
+        label: "Central Visayas",
+        address:
+          "Door 1 Esperanza Bldg., A.C. Cortes Ave., Ibabao-Estancia, Mandaue City, Cebu",
+      },
+      {
+        label: "Mindanao",
+        address:
+          "Neocentral Arcade Bldg., Kauswagan Highway, Cagayan De Oro City",
+      },
     ],
-    productItems: [
-      "Compressors",
-      "Unit Coolers",
-      "Condensing Units",
-      "Condenser Units",
-      "Industrial Equipment",
+    landline: "( 02 ) 7-148-1904",
+    mobile: "+639 17 144 9709",
+    emails: [
+      "kumsung.ref@gmail.com",
+      "kumsungcebu.ref@gmail.com",
+      "kumsungcdo.ref@gmail.com",
     ],
-    rightsText: "All rights reserved.",
+    copyrightStartYear: 2014,
+    rightsText: "All Right Reserved",
   },
   routes: {
     loadingAriaLabel: "Loading content",

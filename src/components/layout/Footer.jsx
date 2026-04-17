@@ -1,51 +1,70 @@
-import { Link } from "react-router-dom";
+import {
+  MailOutlined,
+  MobileOutlined,
+  PhoneOutlined,
+  PushpinFilled,
+} from "@ant-design/icons";
 import { SITE_TEXT } from "../../constants/siteText";
 
-const { company, footer, contact } = SITE_TEXT;
+const { company, footer } = SITE_TEXT;
+
+const currentYear = new Date().getFullYear();
+
+const copyrightYearRange =
+  footer.copyrightStartYear && footer.copyrightStartYear < currentYear
+    ? `${footer.copyrightStartYear}-${currentYear}`
+    : `${currentYear}`;
 
 const Footer = () => {
   return (
     <footer className="site-footer">
-      <div className="container footer-grid">
-        <div>
-          <h3 className="footer-brand">{company.name}</h3>
-          <p>{footer.description}</p>
-        </div>
+      <div className="container footer-contact-wrap">
+        <h4>{footer.contactInfoTitle}</h4>
 
-        <div>
-          <h4>{footer.quickLinksTitle}</h4>
-          <ul>
-            {footer.quickLinks.map((item) => (
-              <li key={item.to}>
-                <Link to={item.to}>{item.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul className="footer-office-list">
+          {footer.officeLocations.map((office) => (
+            <li key={office.label}>
+              <PushpinFilled className="footer-icon" aria-hidden="true" />
+              <p>
+                <strong>{office.label}:</strong> {office.address}
+              </p>
+            </li>
+          ))}
+        </ul>
 
-        <div>
-          <h4>{footer.productsTitle}</h4>
-          <ul>
-            {footer.productItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h4>{footer.contactTitle}</h4>
-          <ul>
-            <li>{contact.phone}</li>
-            <li>{contact.email}</li>
-            <li>{contact.addressShort}</li>
-            <li>{contact.hours}</li>
-          </ul>
-        </div>
+        <ul className="footer-contact-list">
+          <li>
+            <PhoneOutlined className="footer-icon" aria-hidden="true" />
+            <span>{footer.landline}</span>
+          </li>
+          <li>
+            <MobileOutlined className="footer-icon" aria-hidden="true" />
+            <span>{footer.mobile}</span>
+          </li>
+          <li>
+            <MailOutlined className="footer-icon" aria-hidden="true" />
+            <span>{footer.emails.join(" | ")}</span>
+          </li>
+        </ul>
       </div>
 
       <div className="footer-bottom">
-        © {new Date().getFullYear()} {company.name} {footer.rightsText}
+        Copyright © {copyrightYearRange} {company.name}, {footer.rightsText}
       </div>
+
+      <button
+        type="button"
+        className="footer-scroll-top"
+        aria-label="Scroll to top"
+        onClick={() =>
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          })
+        }
+      >
+        ^
+      </button>
     </footer>
   );
 };

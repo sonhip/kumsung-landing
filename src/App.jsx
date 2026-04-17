@@ -12,6 +12,7 @@ import { SITE_TEXT } from "./constants/siteText";
 const Stats = lazy(() => import("./components/sections/Stats"));
 const PreviousWorks = lazy(() => import("./components/sections/PreviousWorks"));
 const OurServices = lazy(() => import("./components/sections/OurServices"));
+const OurCompany = lazy(() => import("./components/sections/OurCompany"));
 const CTABanner = lazy(() => import("./components/sections/CTABanner"));
 
 const { company, routes } = SITE_TEXT;
@@ -46,6 +47,9 @@ const HomePage = () => {
         </ScrollReveal>
         <ScrollReveal>
           <OurServices />
+        </ScrollReveal>
+        <ScrollReveal>
+          <OurCompany />
         </ScrollReveal>
         <ScrollReveal>
           <CTABanner />
