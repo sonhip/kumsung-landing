@@ -37,6 +37,11 @@ const productsWithIcons = productCatalog.map((item) => ({
 }));
 
 const ProductsPage = ({ categorySlug = null }) => {
+  const {
+    emptyTitle,
+    emptyDescription,
+    backToProducts,
+  } = productsText;
   const selectedCategory = categorySlug
     ? nav.items.find((item) => toSlug(item) === categorySlug)
     : null;
@@ -77,10 +82,10 @@ const ProductsPage = ({ categorySlug = null }) => {
           </div>
         ) : (
           <div className="products-empty">
-            <h2>No products found</h2>
-            <p>Selected product type does not have any item yet.</p>
+            <h2>{emptyTitle}</h2>
+            <p>{emptyDescription}</p>
             <Link href="/products" className="products-back-link">
-              Back to all products
+              {backToProducts}
             </Link>
           </div>
         )}

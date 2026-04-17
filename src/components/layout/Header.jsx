@@ -37,13 +37,19 @@ const Header = () => {
       <div className="header-main">
         <div className="container header-inner">
           <Link href="/" className="brand" aria-label={company.homeAriaLabel}>
-            <span className="brand-title">{company.name}</span>
-            <span className="brand-tagline">{company.tagline}</span>
+            <span className="brand-mark" aria-hidden="true">
+              <span className="brand-mark-wave" />
+              <span className="brand-mark-text">TV</span>
+            </span>
+            <span className="brand-copy">
+              <span className="brand-title">{company.shortName}</span>
+              <span className="brand-tagline">{company.name}</span>
+            </span>
           </Link>
 
           <div
             className="distributor-badge"
-            aria-label="Sole distributor information"
+            aria-label="Thông tin đối tác phân phối"
           >
             <CheckCircleOutlined />
             <div>
@@ -52,7 +58,7 @@ const Header = () => {
             </div>
           </div>
 
-          <Link href="/contact" aria-label="Get a quote">
+          <Link href="/contact" aria-label={company.quoteButton}>
             <Button type="primary" className="quote-btn">
               {company.quoteButton}
             </Button>

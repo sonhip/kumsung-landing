@@ -34,8 +34,8 @@ const ContactPage = () => {
             <h2>{contactPage.phoneTitle}</h2>
             <p>{contactPage.phoneDescription}</p>
             <ul>
-              <li>Landline: {footer.landline}</li>
-              <li>Mobile: {footer.mobile}</li>
+              <li>Điện thoại bàn: {footer.landline}</li>
+              <li>Di động: {footer.mobile}</li>
             </ul>
           </article>
 
@@ -56,9 +56,9 @@ const ContactPage = () => {
             <SendOutlined className="contact-info-icon" aria-hidden="true" />
             <h2>{contactPage.locationTitle}</h2>
             <p>
-              <strong>Main Office:</strong>
+              <strong>Khu vực hoạt động:</strong>
             </p>
-            <p>{contact.addressFull}, Philippines</p>
+            <p>{contact.addressFull}</p>
             <a
               href={contactPage.locationMapUrl}
               target="_blank"
@@ -86,7 +86,7 @@ const ContactPage = () => {
               setStatus({ type: "", message: "" });
 
               if (recaptchaSiteKey && !captchaToken) {
-                setCaptchaError("Please verify that you are not a robot.");
+                setCaptchaError("Vui lòng xác nhận reCAPTCHA trước khi gửi.");
                 return;
               }
 
@@ -116,7 +116,7 @@ const ContactPage = () => {
                 if (!response.ok) {
                   setStatus({
                     type: "error",
-                    message: result.error || "Unable to submit the form.",
+                    message: result.error || "Không thể gửi biểu mẫu.",
                   });
                   return;
                 }
@@ -131,7 +131,7 @@ const ContactPage = () => {
               } catch {
                 setStatus({
                   type: "error",
-                  message: "Unable to submit the form right now.",
+                  message: "Không thể gửi biểu mẫu vào lúc này.",
                 });
               } finally {
                 setIsSubmitting(false);
@@ -172,9 +172,9 @@ const ContactPage = () => {
                 />
               ) : (
                 <p className="contact-recaptcha-missing">
-                  Missing reCAPTCHA site key. Set{" "}
-                  <strong>NEXT_PUBLIC_RECAPTCHA_SITE_KEY</strong> in your .env
-                  file.
+                  Chưa cấu hình khóa reCAPTCHA. Hãy thiết lập{" "}
+                  <strong>NEXT_PUBLIC_RECAPTCHA_SITE_KEY</strong> trong file
+                  môi trường.
                 </p>
               )}
             </div>
@@ -203,7 +203,7 @@ const ContactPage = () => {
               className="contact-form-submit"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "SENDING..." : contactPage.submitLabel}
+              {isSubmitting ? "ĐANG GỬI..." : contactPage.submitLabel}
             </button>
           </form>
         </div>

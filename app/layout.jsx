@@ -4,9 +4,9 @@ import "../src/styles/animations.css";
 import Providers from "./providers";
 
 export const metadata = {
-  title: "Kumsung Refrigeration",
+  title: "Tân Việt",
   description:
-    "Industrial refrigeration solutions, product catalog, and contact management built with Next.js and PostgreSQL.",
+    "Website giới thiệu doanh nghiệp và danh mục thiết bị điện lạnh của Tân Việt, xây dựng bằng Next.js và PostgreSQL.",
 };
 
 export default function RootLayout({ children }) {

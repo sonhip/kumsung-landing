@@ -9,9 +9,9 @@ export default function Providers({ children }) {
       <ConfigProvider
         theme={{
           token: {
-            colorPrimary: "#F5A623",
+            colorPrimary: "#2F5F93",
             borderRadius: 4,
-            colorBgContainer: "#1A1A1A",
+            colorBgContainer: "#16365F",
           },
         }}
       >

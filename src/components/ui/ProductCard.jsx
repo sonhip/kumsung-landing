@@ -22,7 +22,7 @@ const ProductCard = ({
       </motion.div>
       <h3>{title}</h3>
       <p>{description}</p>
-      <span className="learn-more" aria-label={`Learn more about ${title}`}>
+      <span className="learn-more" aria-label={`Xem chi tiết ${title}`}>
         {learnMoreLabel} <ArrowRightOutlined />
       </span>
     </>
@@ -37,7 +37,7 @@ const ProductCard = ({
         <Link
           href={to}
           className="product-card-link"
-          aria-label={`Open ${title}`}
+          aria-label={`Mở ${title}`}
         >
           {content}
         </Link>

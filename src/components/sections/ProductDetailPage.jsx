@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SITE_TEXT } from "../../constants/siteText";
 import { findProductBySlugs, productCatalog } from "../../utils/productCatalog";
 
-const { company } = SITE_TEXT;
+const { company, products: productsText } = SITE_TEXT;
 
 const ProductDetailPage = ({ categorySlug, productSlug }) => {
   const product = findProductBySlugs(categorySlug, productSlug);
@@ -20,10 +20,10 @@ const ProductDetailPage = ({ categorySlug, productSlug }) => {
     return (
       <section className="product-detail-page">
         <div className="container product-detail-not-found">
-          <h1>Product not found</h1>
-          <p>The selected product does not exist or has been removed.</p>
+          <h1>{productsText.notFoundTitle}</h1>
+          <p>{productsText.notFoundDescription}</p>
           <Link href="/products" className="products-back-link">
-            Back to all products
+            {productsText.backToProducts}
           </Link>
         </div>
       </section>
@@ -33,10 +33,10 @@ const ProductDetailPage = ({ categorySlug, productSlug }) => {
   return (
     <section
       className="product-detail-page"
-      aria-label={`${product.title} details`}
+      aria-label={`Chi tiết ${product.title}`}
     >
       <div className="container product-detail-breadcrumbs">
-        <Link href="/">Home</Link>
+        <Link href="/">{productsText.breadcrumbsHome}</Link>
         <span>/</span>
         <Link href={`/products/${product.categorySlug}`}>{product.category}</Link>
         <span>/</span>
@@ -56,7 +56,7 @@ const ProductDetailPage = ({ categorySlug, productSlug }) => {
           <h1>{product.model || product.title}</h1>
           <p className="product-detail-subtitle">{product.description}</p>
 
-          <h2>FEATURE</h2>
+          <h2>{productsText.featureTitle}</h2>
           <ul>
             {product.features?.map((feature) => (
               <li key={feature}>{feature}</li>
@@ -64,7 +64,7 @@ const ProductDetailPage = ({ categorySlug, productSlug }) => {
           </ul>
 
           <p className="product-detail-category">
-            Category: <span>{product.category}</span>
+            {productsText.categoryLabel}: <span>{product.category}</span>
           </p>
 
           <Link href="/contact" className="products-page-quote-btn">
@@ -74,13 +74,13 @@ const ProductDetailPage = ({ categorySlug, productSlug }) => {
       </div>
 
       <div className="container product-detail-description-block">
-        <h2>Description</h2>
+        <h2>{productsText.descriptionTitle}</h2>
         <p>{product.description}</p>
       </div>
 
       {relatedProducts.length ? (
         <div className="container product-related-wrap">
-          <h2>Related products</h2>
+          <h2>{productsText.relatedTitle}</h2>
           <div className="product-related-grid">
             {relatedProducts.map((relatedItem) => (
               <Link

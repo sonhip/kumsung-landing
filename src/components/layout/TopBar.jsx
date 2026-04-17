@@ -11,7 +11,7 @@ const { contact } = SITE_TEXT;
 
 const TopBar = () => {
   return (
-    <div className="topbar" aria-label="Company contact information">
+    <div className="topbar" aria-label="Thông tin liên hệ doanh nghiệp">
       <div className="container topbar-inner">
         <div className="topbar-left">
           <span>

@@ -2,6 +2,8 @@ import { SITE_TEXT } from "../constants/siteText";
 
 export const toSlug = (text) =>
   text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "-")

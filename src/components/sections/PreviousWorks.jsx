@@ -32,7 +32,7 @@ const PreviousWorks = () => {
       <div className="works-gallery-wrap">
         <button
           className="works-nav works-nav-prev"
-          aria-label="Previous works"
+          aria-label="Xem nhóm giải pháp trước"
           type="button"
           onClick={() => scrollGrid(-1)}
         >
@@ -40,7 +40,7 @@ const PreviousWorks = () => {
         </button>
         <button
           className="works-nav works-nav-next"
-          aria-label="Next works"
+          aria-label="Xem nhóm giải pháp tiếp theo"
           type="button"
           onClick={() => scrollGrid(1)}
         >
@@ -54,7 +54,7 @@ const PreviousWorks = () => {
               key={item.title}
               role="button"
               tabIndex={0}
-              aria-label={`View details for ${item.title}`}
+              aria-label={`Xem chi tiết ${item.title}`}
               onClick={() => setActiveWork(item)}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {

@@ -20,15 +20,15 @@ const validatePayload = ({ name, email, subject, message }) => {
   const normalizedMessage = message?.trim();
 
   if (!normalizedName || normalizedName.length < 2) {
-    return { error: "Name must be at least 2 characters long." };
+    return { error: "Họ và tên cần có ít nhất 2 ký tự." };
   }
 
   if (!normalizedEmail || !EMAIL_PATTERN.test(normalizedEmail)) {
-    return { error: "A valid email address is required." };
+    return { error: "Vui lòng nhập địa chỉ email hợp lệ." };
   }
 
   if (!normalizedMessage || normalizedMessage.length < 10) {
-    return { error: "Message must be at least 10 characters long." };
+    return { error: "Nội dung cần có ít nhất 10 ký tự." };
   }
 
   return {
@@ -94,7 +94,7 @@ export async function POST(request) {
 
     if (recaptcha.required && !recaptcha.verified) {
       return Response.json(
-        { error: "reCAPTCHA verification failed. Please try again." },
+        { error: "Xác thực reCAPTCHA không thành công. Vui lòng thử lại." },
         { status: 400 },
       );
     }
@@ -111,13 +111,13 @@ export async function POST(request) {
     });
 
     return Response.json({
-      message: "Your message has been received. We will contact you soon.",
+      message: "Tân Việt đã nhận được thông tin. Chúng tôi sẽ liên hệ lại sớm.",
     });
   } catch (error) {
     console.error("Failed to store contact submission", error);
 
     return Response.json(
-      { error: "Unable to submit the form right now." },
+      { error: "Không thể gửi biểu mẫu vào lúc này. Vui lòng thử lại sau." },
       { status: 500 },
     );
   }

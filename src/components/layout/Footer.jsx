@@ -51,13 +51,13 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        Copyright © {copyrightYearRange} {company.name}, {footer.rightsText}
+        Bản quyền © {copyrightYearRange} {company.name}. {footer.rightsText}
       </div>
 
       <button
         type="button"
         className="footer-scroll-top"
-        aria-label="Scroll to top"
+        aria-label="Cuộn lên đầu trang"
         onClick={() =>
           window.scrollTo({
             top: 0,
