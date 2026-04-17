@@ -305,6 +305,55 @@ export const SITE_TEXT = {
     recaptchaBrand: "reCAPTCHA",
     submitLabel: "SEND",
   },
+  aboutPage: {
+    ariaLabel: "About us page",
+    heroTitle: "ABOUT US",
+    heroImage: "/static/images/hero-warehouse.jpg",
+    companyTitle: "OUR COMPANY",
+    companyName: "Kumsung Refrigeration Inc.",
+    description:
+      "The Company was originally established in 2014 as Kumsung Refrigeration Inc. Trading wholesaling retailing and servicing for airconditioning unit and refrigeration equipment. We provide good quality services and equipment to our customer at a very competent price. We have an excellent staffs who will guide our customers with their best ideas by keeping in constant touch and informing them about their needs.",
+    milestonesTitle: "Important",
+    milestonesHighlight: "Milestones",
+    milestonesSubtitle:
+      "A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone",
+    milestonesImage: "/static/images/hero-warehouse-3.jpg",
+    milestones: [
+      {
+        value: 300,
+        suffix: "+",
+        label: "Customers",
+      },
+      {
+        value: 500,
+        suffix: "+",
+        label: "Projects",
+      },
+      {
+        value: 10,
+        suffix: " Years",
+        label: "In The Industry",
+      },
+    ],
+    teamTitle: "Meet The Team",
+    teamMembers: [
+      {
+        name: "Team Member 1",
+        role: "Operations",
+        image: "/static/images/team-1.jpg",
+      },
+      {
+        name: "Team Member 2",
+        role: "Engineering",
+        image: "/static/images/team-2.jpg",
+      },
+      {
+        name: "Team Member 3",
+        role: "Sales",
+        image: "/static/images/team-3.jpg",
+      },
+    ],
+  },
   footer: {
     contactInfoTitle: "CONTACT INFO",
     officeLocations: [

@@ -1153,6 +1153,173 @@ main {
   background: #ececec;
 }
 
+.about-page {
+  background: #ececec;
+}
+
+.about-hero {
+  position: relative;
+  min-height: 500px;
+  background-size: cover;
+  background-position: center;
+}
+
+.about-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(32, 38, 46, 0.5);
+}
+
+.about-hero-inner {
+  position: relative;
+  z-index: 1;
+  min-height: 500px;
+  display: grid;
+  place-items: center;
+}
+
+.about-hero h1 {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: clamp(2.5rem, 5.2vw, 5rem);
+}
+
+.about-company-section {
+  padding: 4.2rem 0 5.2rem;
+}
+
+.about-company-content {
+  text-align: center;
+  max-width: 980px;
+}
+
+.about-company-content h2 {
+  margin: 0;
+  color: #3a3e44;
+  font-size: clamp(2rem, 3.8vw, 3.35rem);
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+.about-company-name {
+  margin: 1rem 0 0;
+  color: #7b7f84;
+  font-size: clamp(1.05rem, 1.45vw, 1.4rem);
+  font-style: italic;
+}
+
+.about-company-description {
+  margin: 2.5rem auto 0;
+  color: #7d7d7d;
+  font-size: clamp(1.04rem, 1.12vw, 1.26rem);
+  line-height: 1.85;
+  max-width: 1200px;
+}
+
+.about-milestones {
+  position: relative;
+  min-height: 510px;
+  background-size: cover;
+  background-position: center;
+}
+
+.about-milestones-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(27, 32, 39, 0.55);
+}
+
+.about-milestones-content {
+  position: relative;
+  z-index: 1;
+  min-height: 510px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.about-milestones-content h2 {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: clamp(2.3rem, 4.3vw, 4rem);
+  font-weight: 700;
+}
+
+.about-milestones-content h2 span {
+  color: var(--color-accent);
+}
+
+.about-milestones-content > p {
+  margin: 1.2rem auto 0;
+  max-width: 780px;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.6;
+  font-size: clamp(1rem, 1.08vw, 1.2rem);
+}
+
+.about-milestones-grid {
+  margin-top: 3.7rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.about-milestone-item .stat-item {
+  text-align: center;
+}
+
+.about-milestone-item .stat-number {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: clamp(2.4rem, 4.1vw, 4.2rem);
+  font-weight: 700;
+}
+
+.about-milestone-item .stat-label {
+  margin: 1.1rem 0 0;
+  color: var(--color-accent);
+  font-size: clamp(1rem, 1.15vw, 1.28rem);
+}
+
+.about-team-section {
+  background: #ececec;
+  padding: 5rem 0 5.4rem;
+}
+
+.about-team-section h2 {
+  margin: 0;
+  text-align: center;
+  color: #3a3e44;
+  font-family: var(--font-body);
+  font-size: clamp(2.1rem, 3.8vw, 3.6rem);
+  font-weight: 700;
+}
+
+.about-team-grid {
+  margin-top: 3.1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.6rem;
+}
+
+.about-team-card {
+  background: #dcdcdc;
+  overflow: hidden;
+}
+
+.about-team-card img {
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  object-fit: cover;
+  display: block;
+}
+
 .contact-hero {
   position: relative;
   min-height: 340px;
@@ -1530,8 +1697,59 @@ main {
   }
 
   .contact-hero,
+  .about-hero,
+  .about-hero-inner,
   .contact-hero-inner {
     min-height: 250px;
+  }
+
+  .about-company-section {
+    padding: 3rem 0 3.3rem;
+  }
+
+  .about-company-name {
+    margin-top: 0.75rem;
+  }
+
+  .about-company-description {
+    margin-top: 1.8rem;
+    font-size: 0.98rem;
+    line-height: 1.72;
+  }
+
+  .about-milestones,
+  .about-milestones-content {
+    min-height: 430px;
+  }
+
+  .about-milestones-content > p {
+    margin-top: 0.8rem;
+    max-width: 560px;
+    font-size: 0.93rem;
+  }
+
+  .about-milestones-grid {
+    margin-top: 2.3rem;
+    gap: 1rem;
+  }
+
+  .about-milestone-item .stat-number {
+    font-size: 2.1rem;
+  }
+
+  .about-milestone-item .stat-label {
+    margin-top: 0.65rem;
+    font-size: 0.96rem;
+  }
+
+  .about-team-section {
+    padding: 3rem 0 3.5rem;
+  }
+
+  .about-team-grid {
+    grid-template-columns: 1fr;
+    margin-top: 1.8rem;
+    gap: 1rem;
   }
 
   .contact-info-section {
