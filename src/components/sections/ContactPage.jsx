@@ -5,9 +5,9 @@ import { useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { SITE_TEXT } from "../../constants/siteText";
 
-const { contact, contactPage, footer } = SITE_TEXT;
+const { contactPage } = SITE_TEXT;
 
-const ContactPage = () => {
+const ContactPage = ({ contact = SITE_TEXT.contact }) => {
   const recaptchaRef = useRef(null);
   const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   const [captchaToken, setCaptchaToken] = useState("");
@@ -34,8 +34,8 @@ const ContactPage = () => {
             <h2>{contactPage.phoneTitle}</h2>
             <p>{contactPage.phoneDescription}</p>
             <ul>
-              <li>Điện thoại bàn: {footer.landline}</li>
-              <li>Di động: {footer.mobile}</li>
+              <li>Điện thoại: {contact.phone}</li>
+              <li>Giờ làm việc: {contact.hours}</li>
             </ul>
           </article>
 
@@ -44,11 +44,9 @@ const ContactPage = () => {
             <h2>{contactPage.emailTitle}</h2>
             <p>{contactPage.emailDescription}</p>
             <ul className="contact-email-list">
-              {footer.emails.map((email) => (
-                <li key={email}>
-                  <a href={`mailto:${email}`}>{email}</a>
-                </li>
-              ))}
+              <li>
+                <a href={`mailto:${contact.email}`}>{contact.email}</a>
+              </li>
             </ul>
           </article>
 

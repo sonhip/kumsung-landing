@@ -2,7 +2,7 @@ import { SITE_TEXT } from "../../constants/siteText";
 
 const { services } = SITE_TEXT;
 
-const OurServices = () => {
+const OurServices = ({ tiles = services.tiles }) => {
   return (
     <section className="services-section" aria-label={services.ariaLabel}>
       <div className="services-heading">
@@ -12,7 +12,7 @@ const OurServices = () => {
       </div>
 
       <div className="services-grid">
-        {services.tiles.map((tile, index) => {
+        {tiles.map((tile, index) => {
           if (tile.type === "image") {
             return (
               <article

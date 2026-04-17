@@ -9,9 +9,9 @@ import { SITE_TEXT } from "../../constants/siteText";
 
 const { hero } = SITE_TEXT;
 
-const Hero = () => {
+const Hero = ({ backgroundImages = hero.backgroundImages }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = hero.backgroundImages.length;
+  const totalSlides = backgroundImages.length;
 
   useEffect(() => {
     if (totalSlides <= 1) return;
@@ -34,11 +34,11 @@ const Hero = () => {
   return (
     <section className="hero-section" aria-label={hero.ariaLabel}>
       <div className="hero-slides" aria-hidden="true">
-        {hero.backgroundImages.map((imagePath) => (
+        {backgroundImages.map((imagePath) => (
           <div
             key={imagePath}
             className={`hero-slide ${
-              hero.backgroundImages[currentSlide] === imagePath ? "active" : ""
+              backgroundImages[currentSlide] === imagePath ? "active" : ""
             }`}
           >
             <img

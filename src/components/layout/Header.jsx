@@ -8,9 +8,7 @@ import Link from "next/link";
 import Navbar from "./Navbar";
 import { SITE_TEXT } from "../../constants/siteText";
 
-const { company } = SITE_TEXT;
-
-const Header = () => {
+const Header = ({ brandLogo = null, company = SITE_TEXT.company }) => {
   const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const lastY = useRef(0);
@@ -37,10 +35,18 @@ const Header = () => {
       <div className="header-main">
         <div className="container header-inner">
           <Link href="/" className="brand" aria-label={company.homeAriaLabel}>
-            <span className="brand-mark" aria-hidden="true">
-              <span className="brand-mark-wave" />
-              <span className="brand-mark-text">TV</span>
-            </span>
+            {brandLogo ? (
+              <img
+                src={brandLogo.imageUrl}
+                alt={brandLogo.altText || company.shortName}
+                className="brand-logo-image"
+              />
+            ) : (
+              <span className="brand-mark" aria-hidden="true">
+                <span className="brand-mark-wave" />
+                <span className="brand-mark-text">TV</span>
+              </span>
+            )}
             <span className="brand-copy">
               <span className="brand-title">{company.shortName}</span>
               <span className="brand-tagline">{company.name}</span>

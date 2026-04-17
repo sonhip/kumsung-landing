@@ -11,7 +11,6 @@ import {
 import ProductCard from "../ui/ProductCard";
 import { SITE_TEXT } from "../../constants/siteText";
 import {
-  findProductsByCategorySlug,
   productCatalog,
   toSlug,
 } from "../../utils/productCatalog";
@@ -26,7 +25,7 @@ const productIcons = [
   AppstoreOutlined,
 ];
 
-const productsWithIcons = productCatalog.map((item) => ({
+const mapProductsWithIcons = (items) => items.map((item) => ({
   ...item,
   icon:
     productIcons[
@@ -36,22 +35,27 @@ const productsWithIcons = productCatalog.map((item) => ({
     ] || BuildOutlined,
 }));
 
-const ProductsPage = ({ categorySlug = null }) => {
+const ProductsPage = ({
+  categorySlug = null,
+  products = productCatalog,
+  companyInfo = company,
+}) => {
   const {
     emptyTitle,
     emptyDescription,
     backToProducts,
   } = productsText;
+  const productsWithIcons = mapProductsWithIcons(products);
   const selectedCategory = categorySlug
     ? nav.items.find((item) => toSlug(item) === categorySlug)
     : null;
 
   const filteredProducts = categorySlug
-    ? findProductsByCategorySlug(categorySlug).map((item) => ({
+    ? products.filter((item) => item.categorySlug === categorySlug).map((item) => ({
         ...item,
         icon:
           productsWithIcons.find(
-            (product) => product.productSlug === item.productSlug,
+            (product) => product.productSlug === item.productSlug && product.categorySlug === item.categorySlug,
           )?.icon || BuildOutlined,
       }))
     : productsWithIcons;
@@ -93,7 +97,7 @@ const ProductsPage = ({ categorySlug = null }) => {
 
       <div className="container products-page-cta-wrap">
         <Link href="/contact" className="products-page-quote-btn">
-          {company.quoteButton}
+          {companyInfo.quoteButton}
         </Link>
       </div>
     </section>

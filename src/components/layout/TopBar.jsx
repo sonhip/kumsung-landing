@@ -7,9 +7,7 @@ import {
 } from "@ant-design/icons";
 import { SITE_TEXT } from "../../constants/siteText";
 
-const { contact } = SITE_TEXT;
-
-const TopBar = () => {
+const TopBar = ({ contact = SITE_TEXT.contact }) => {
   return (
     <div className="topbar" aria-label="Thông tin liên hệ doanh nghiệp">
       <div className="container topbar-inner">

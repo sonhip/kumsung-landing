@@ -7,7 +7,7 @@ import { SITE_TEXT } from "../../constants/siteText";
 
 const { previousWorks } = SITE_TEXT;
 
-const PreviousWorks = () => {
+const PreviousWorks = ({ items = previousWorks.items }) => {
   const gridRef = useRef(null);
   const [activeWork, setActiveWork] = useState(null);
 
@@ -48,7 +48,7 @@ const PreviousWorks = () => {
         </button>
 
         <div className="works-grid" ref={gridRef}>
-          {previousWorks.items.map((item) => (
+          {items.map((item) => (
             <article
               className="work-card"
               key={item.title}

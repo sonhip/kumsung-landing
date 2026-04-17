@@ -20,3 +20,68 @@ model ContactSubmission {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
+
+model MediaAsset {
+  id          String   @id @default(cuid())
+  section     String
+  title       String?
+  subtitle    String?
+  description String?
+  imageUrl    String
+  altText     String?
+  tone        String?
+  variant     String?
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Product {
+  id               String         @id @default(cuid())
+  category         String
+  title            String
+  model            String?
+  slug             String         @unique
+  shortDescription String
+  contentHtml      String?        @db.Text
+  tags             String[]       @default([])
+  isActive         Boolean        @default(true)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  images           ProductImage[]
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String
+  url       String
+  altText   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId, sortOrder])
+}
+
+model SiteSettings {
+  id                       String   @id @default("default")
+  companyName              String
+  companyShortName         String
+  companyHomeAriaLabel     String
+  companyTagline           String
+  companyDistributorLabel  String
+  companyDistributorValue  String
+  companyQuoteButton       String
+  contactPhone             String
+  contactHours             String
+  contactAddressFull       String
+  contactAddressShort      String
+  contactEmail             String
+  contactEmailAriaLabel    String
+  contactFacebookUrl       String
+  contactFacebookAriaLabel String
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}

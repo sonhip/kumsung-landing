@@ -6,12 +6,9 @@ import { SITE_TEXT } from "../../constants/siteText";
 
 const { companyProfile } = SITE_TEXT;
 
-const OurCompany = () => {
+const OurCompany = ({ partners = companyProfile.partners }) => {
   const partnersRef = useRef(null);
-  const scrollPartners = [
-    ...companyProfile.partners,
-    ...companyProfile.partners,
-  ];
+  const scrollPartners = [...partners, ...partners];
 
   const scrollByDirection = (direction) => {
     const container = partnersRef.current;

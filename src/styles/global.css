@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap");
 
 :root {
   --color-bg: #071827;
@@ -11,8 +11,8 @@
   --color-text: #ffffff;
   --color-text-muted: #9ab0c7;
   --color-border: rgba(92, 139, 188, 0.18);
-  --font-display: "Bebas Neue", sans-serif;
-  --font-body: "DM Sans", sans-serif;
+  --font-display: "Montserrat", sans-serif;
+  --font-body: "Be Vietnam Pro", sans-serif;
 }
 
 * {
@@ -133,6 +133,16 @@ main {
   place-items: center;
   position: relative;
   box-shadow: 0 12px 28px rgba(23, 63, 104, 0.18);
+}
+
+.brand-logo-image {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(23, 63, 104, 0.12);
+  padding: 4px;
 }
 
 .brand-mark-wave {

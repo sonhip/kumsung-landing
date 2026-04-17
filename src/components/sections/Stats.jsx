@@ -10,11 +10,11 @@ import { SITE_TEXT } from "../../constants/siteText";
 const { stats } = SITE_TEXT;
 const serviceIcons = [ShoppingOutlined, ToolOutlined, CustomerServiceOutlined];
 
-const Stats = () => {
+const Stats = ({ highlights = stats.highlights }) => {
   return (
     <section className="stats-section" aria-label={stats.ariaLabel}>
       <div className="stats-highlights">
-        {stats.highlights.map((item) => (
+        {highlights.map((item) => (
           <article key={item.title} className="highlight-card">
             <img src={item.image} alt={item.title} loading="lazy" />
             <div className="highlight-overlay" />

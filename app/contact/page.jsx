@@ -1,10 +1,18 @@
 import ContactPage from "../../src/components/sections/ContactPage";
 import SiteShell from "../../src/components/site/SiteShell";
+import { getBrandLogo, getSiteSettings } from "../../src/lib/cms";
 
-export default function Contact() {
+export const dynamic = "force-dynamic";
+
+export default async function Contact() {
+  const [brandLogo, siteSettings] = await Promise.all([
+    getBrandLogo(),
+    getSiteSettings(),
+  ]);
+
   return (
-    <SiteShell>
-      <ContactPage />
+    <SiteShell brandLogo={brandLogo} siteSettings={siteSettings}>
+      <ContactPage contact={siteSettings.contact} />
     </SiteShell>
   );
 }

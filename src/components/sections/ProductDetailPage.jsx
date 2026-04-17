@@ -4,17 +4,26 @@ import { findProductBySlugs, productCatalog } from "../../utils/productCatalog";
 
 const { company, products: productsText } = SITE_TEXT;
 
-const ProductDetailPage = ({ categorySlug, productSlug }) => {
-  const product = findProductBySlugs(categorySlug, productSlug);
-  const relatedProducts = product
-    ? productCatalog
-        .filter(
-          (item) =>
-            item.categorySlug === product.categorySlug &&
-            item.productSlug !== product.productSlug,
-        )
-        .slice(0, 3)
-    : [];
+const ProductDetailPage = ({
+  categorySlug,
+  productSlug,
+  product: providedProduct = null,
+  relatedProducts: providedRelatedProducts = null,
+  companyInfo = company,
+}) => {
+  const product =
+    providedProduct || findProductBySlugs(categorySlug, productSlug);
+  const relatedProducts =
+    providedRelatedProducts ||
+    (product
+      ? productCatalog
+          .filter(
+            (item) =>
+              item.categorySlug === product.categorySlug &&
+              item.productSlug !== product.productSlug,
+          )
+          .slice(0, 3)
+      : []);
 
   if (!product) {
     return (
@@ -56,26 +65,34 @@ const ProductDetailPage = ({ categorySlug, productSlug }) => {
           <h1>{product.model || product.title}</h1>
           <p className="product-detail-subtitle">{product.description}</p>
 
-          <h2>{productsText.featureTitle}</h2>
-          <ul>
-            {product.features?.map((feature) => (
-              <li key={feature}>{feature}</li>
-            ))}
-          </ul>
+          {product.features?.length ? (
+            <>
+              <h2>{productsText.featureTitle}</h2>
+              <ul>
+                {product.features.map((feature) => (
+                  <li key={feature}>{feature}</li>
+                ))}
+              </ul>
+            </>
+          ) : null}
 
           <p className="product-detail-category">
             {productsText.categoryLabel}: <span>{product.category}</span>
           </p>
 
           <Link href="/contact" className="products-page-quote-btn">
-            {company.quoteButton}
+            {companyInfo.quoteButton}
           </Link>
         </div>
       </div>
 
       <div className="container product-detail-description-block">
         <h2>{productsText.descriptionTitle}</h2>
-        <p>{product.description}</p>
+        {product.contentHtml ? (
+          <div dangerouslySetInnerHTML={{ __html: product.contentHtml }} />
+        ) : (
+          <p>{product.description}</p>
+        )}
       </div>
 
       {relatedProducts.length ? (

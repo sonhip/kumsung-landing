@@ -1,4 +1,4 @@
-import { SITE_TEXT } from "../constants/siteText";
+import { SITE_TEXT } from "../constants/siteText.js";
 
 export const toSlug = (text) =>
   text
