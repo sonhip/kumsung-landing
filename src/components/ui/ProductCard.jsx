@@ -1,5 +1,6 @@
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({
   icon: Icon,
@@ -7,12 +8,10 @@ const ProductCard = ({
   description,
   learnMoreLabel,
   image,
+  to,
 }) => {
-  return (
-    <motion.article
-      className="product-card"
-      whileHover={{ y: -10, transition: { duration: 0.25 } }}
-    >
+  const content = (
+    <>
       {image && (
         <img src={image} alt={title} className="product-image" loading="lazy" />
       )}
@@ -21,13 +20,28 @@ const ProductCard = ({
       </motion.div>
       <h3>{title}</h3>
       <p>{description}</p>
-      <a
-        href="#"
-        className="learn-more"
-        aria-label={`Learn more about ${title}`}
-      >
+      <span className="learn-more" aria-label={`Learn more about ${title}`}>
         {learnMoreLabel} <ArrowRightOutlined />
-      </a>
+      </span>
+    </>
+  );
+
+  return (
+    <motion.article
+      className="product-card"
+      whileHover={{ y: -10, transition: { duration: 0.25 } }}
+    >
+      {to ? (
+        <Link
+          to={to}
+          className="product-card-link"
+          aria-label={`Open ${title}`}
+        >
+          {content}
+        </Link>
+      ) : (
+        content
+      )}
     </motion.article>
   );
 };

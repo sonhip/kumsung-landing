@@ -219,33 +219,71 @@ export const SITE_TEXT = {
     list: [
       {
         title: "Compressor",
+        model: "SC-TYPE",
         image: "/static/images/product-compressor.jpg",
         description:
           "High-efficiency compressor systems for demanding B2B environments.",
+        features: [
+          "High-capacity compressor design for stable cooling performance.",
+          "Low vibration and low noise operation.",
+          "Energy-efficient motor for continuous industrial use.",
+          "Durable housing with easy service access.",
+        ],
       },
       {
         title: "Unit Cooler",
+        model: "BF-TYPE",
         image: "/static/images/product-unit-cooler.jpg",
         description:
           "Reliable evaporator and unit cooler solutions for cold storage.",
+        features: [
+          '5/8" OD copper tube and Aluminum fin.',
+          "PIPE PITCH 43.3mm X 50mm.",
+          "Powder coated zinc-plated steel.",
+          "Electric defrost.",
+          "Voltage : 3Ph 380V 50Hz.",
+          "Application for medium & large warehouse.",
+          "Easy to access terminal plate.",
+        ],
       },
       {
         title: "Condensing Unit",
+        model: "CDU-TYPE",
         image: "/static/images/product-condensing-unit.jpg",
         description:
           "Optimized condensing units designed for industrial-grade uptime.",
+        features: [
+          "Heavy-duty condensing assembly for industrial refrigeration.",
+          "Optimized heat rejection for consistent performance.",
+          "Compact footprint for easier installation.",
+          "Designed for long operating cycles.",
+        ],
       },
       {
         title: "Condenser Unit",
+        model: "CN-TYPE",
         image: "/static/images/product-condenser-unit.jpg",
         description:
           "Durable condenser units with excellent heat transfer performance.",
+        features: [
+          "Efficient condenser coil for rapid heat transfer.",
+          "Corrosion-resistant exterior and frame.",
+          "Suitable for tropical industrial environments.",
+          "Easy cleaning and preventive maintenance access.",
+        ],
       },
       {
         title: "Other Products",
+        model: "ACCESSORIES",
         image: "/static/images/product-other.jpg",
         description:
           "Complete refrigeration accessories and custom equipment packages.",
+        features: [
+          "Wide range of accessories and replacement components.",
+          "Compatible with major refrigeration system brands.",
+          "Supports custom project requirements.",
+          "Backed by technical assistance and after-sales service.",
+        ],
       },
     ],
   },

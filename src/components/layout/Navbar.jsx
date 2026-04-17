@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { SITE_TEXT } from "../../constants/siteText";
+import { toSlug } from "../../utils/productCatalog";
 
 const { nav } = SITE_TEXT;
 
@@ -55,7 +56,11 @@ const Navbar = () => {
                   transition={{ duration: 0.2 }}
                 >
                   {nav.items.map((item) => (
-                    <NavLink key={item} to="/products" onClick={closeMenus}>
+                    <NavLink
+                      key={item}
+                      to={`/products/${toSlug(item)}`}
+                      onClick={closeMenus}
+                    >
                       {item}
                     </NavLink>
                   ))}

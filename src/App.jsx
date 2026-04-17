@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
-import { Button, Spin } from "antd";
+import { Spin } from "antd";
 import { AnimatePresence, motion } from "framer-motion";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import TopBar from "./components/layout/TopBar";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -16,8 +16,12 @@ const OurCompany = lazy(() => import("./components/sections/OurCompany"));
 const CTABanner = lazy(() => import("./components/sections/CTABanner"));
 const ContactPage = lazy(() => import("./components/sections/ContactPage"));
 const AboutPage = lazy(() => import("./components/sections/AboutPage"));
+const ProductsPage = lazy(() => import("./components/sections/ProductsPage"));
+const ProductDetailPage = lazy(
+  () => import("./components/sections/ProductDetailPage"),
+);
 
-const { company, routes } = SITE_TEXT;
+const { routes } = SITE_TEXT;
 
 const PageTransition = ({ children }) => (
   <motion.div
@@ -61,22 +65,6 @@ const HomePage = () => {
   );
 };
 
-const RoutePage = ({ title, description }) => {
-  return (
-    <section className="route-page">
-      <div>
-        <h1>{title}</h1>
-        <p>{description}</p>
-        <Link to="/contact">
-          <Button className="hero-btn-primary" size="large" type="primary">
-            {company.quoteButton}
-          </Button>
-        </Link>
-      </div>
-    </section>
-  );
-};
-
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -95,10 +83,23 @@ const AnimatedRoutes = () => {
           path="/products"
           element={
             <PageTransition>
-              <RoutePage
-                title={routes.products.title}
-                description={routes.products.description}
-              />
+              <ProductsPage />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/products/:categorySlug"
+          element={
+            <PageTransition>
+              <ProductsPage />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/products/:categorySlug/:productSlug"
+          element={
+            <PageTransition>
+              <ProductDetailPage />
             </PageTransition>
           }
         />

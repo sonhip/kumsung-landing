@@ -8,6 +8,7 @@ import {
 import { motion } from "framer-motion";
 import ProductCard from "../ui/ProductCard";
 import { SITE_TEXT } from "../../constants/siteText";
+import { productCatalog } from "../../utils/productCatalog";
 
 const { products: productsText } = SITE_TEXT;
 
@@ -19,7 +20,7 @@ const productIcons = [
   AppstoreOutlined,
 ];
 
-const products = productsText.list.map((item, index) => ({
+const products = productCatalog.map((item, index) => ({
   ...item,
   icon: productIcons[index],
 }));
@@ -67,6 +68,7 @@ const Products = () => {
               <ProductCard
                 {...product}
                 learnMoreLabel={productsText.learnMoreLabel}
+                to={`/products/${product.categorySlug}/${product.productSlug}`}
               />
             </motion.div>
           ))}
