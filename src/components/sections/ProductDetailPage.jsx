@@ -1,12 +1,22 @@
 import { Link, useParams } from "react-router-dom";
+import { Image } from "antd";
 import { SITE_TEXT } from "../../constants/siteText";
-import { findProductBySlugs } from "../../utils/productCatalog";
+import { findProductBySlugs, productCatalog } from "../../utils/productCatalog";
 
 const { company } = SITE_TEXT;
 
 const ProductDetailPage = () => {
   const { categorySlug, productSlug } = useParams();
   const product = findProductBySlugs(categorySlug, productSlug);
+  const relatedProducts = product
+    ? productCatalog
+        .filter(
+          (item) =>
+            item.categorySlug === product.categorySlug &&
+            item.productSlug !== product.productSlug,
+        )
+        .slice(0, 3)
+    : [];
 
   if (!product) {
     return (
@@ -37,7 +47,12 @@ const ProductDetailPage = () => {
 
       <div className="container product-detail-main">
         <div className="product-detail-media">
-          <img src={product.image} alt={product.title} loading="lazy" />
+          <Image
+            src={product.image}
+            alt={product.title}
+            className="product-detail-main-image"
+            preview={{ mask: "Click to zoom" }}
+          />
         </div>
 
         <div className="product-detail-info">
@@ -60,6 +75,36 @@ const ProductDetailPage = () => {
           </Link>
         </div>
       </div>
+
+      <div className="container product-detail-description-block">
+        <h2>Description</h2>
+        <p>{product.description}</p>
+      </div>
+
+      {relatedProducts.length ? (
+        <div className="container product-related-wrap">
+          <h2>Related products</h2>
+          <div className="product-related-grid">
+            {relatedProducts.map((relatedItem) => (
+              <Link
+                key={relatedItem.productSlug}
+                to={`/products/${relatedItem.categorySlug}/${relatedItem.productSlug}`}
+                className="product-related-card"
+              >
+                <img
+                  src={relatedItem.image}
+                  alt={relatedItem.title}
+                  loading="lazy"
+                />
+                <div className="product-related-content">
+                  <h3>{relatedItem.model || relatedItem.title}</h3>
+                  <p>{relatedItem.description}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 };

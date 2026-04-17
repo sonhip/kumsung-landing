@@ -8,12 +8,13 @@ export const toSlug = (text) =>
     .replace(/^-+|-+$/g, "");
 
 export const productCatalog = SITE_TEXT.products.list.map((item) => {
-  const categorySlug = toSlug(item.title);
+  const categoryName = item.category || item.title;
+  const categorySlug = toSlug(categoryName);
   const productSlug = toSlug(item.model || item.title);
 
   return {
     ...item,
-    category: item.title,
+    category: categoryName,
     categorySlug,
     productSlug,
   };

@@ -8,9 +8,9 @@ import {
 import { motion } from "framer-motion";
 import ProductCard from "../ui/ProductCard";
 import { SITE_TEXT } from "../../constants/siteText";
-import { productCatalog } from "../../utils/productCatalog";
+import { productCatalog, toSlug } from "../../utils/productCatalog";
 
-const { products: productsText } = SITE_TEXT;
+const { products: productsText, nav } = SITE_TEXT;
 
 const productIcons = [
   BuildOutlined,
@@ -20,10 +20,20 @@ const productIcons = [
   AppstoreOutlined,
 ];
 
-const products = productCatalog.map((item, index) => ({
-  ...item,
-  icon: productIcons[index],
-}));
+const featuredProducts = nav.items
+  .map((category, categoryIndex) => {
+    const found = productCatalog.find(
+      (item) => item.categorySlug === toSlug(category),
+    );
+
+    if (!found) return null;
+
+    return {
+      ...found,
+      icon: productIcons[categoryIndex % productIcons.length],
+    };
+  })
+  .filter(Boolean);
 
 const Products = () => {
   return (
@@ -57,9 +67,9 @@ const Products = () => {
             visible: { transition: { staggerChildren: 0.12 } },
           }}
         >
-          {products.map((product) => (
+          {featuredProducts.map((product) => (
             <motion.div
-              key={product.title}
+              key={`${product.categorySlug}-${product.productSlug}`}
               variants={{
                 hidden: { opacity: 0, y: 24 },
                 visible: { opacity: 1, y: 0 },

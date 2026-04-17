@@ -218,7 +218,8 @@ export const SITE_TEXT = {
     learnMoreLabel: "Learn More",
     list: [
       {
-        title: "Compressor",
+        category: "Compressor",
+        title: "SC-TYPE",
         model: "SC-TYPE",
         image: "/static/images/product-compressor.jpg",
         description:
@@ -231,7 +232,36 @@ export const SITE_TEXT = {
         ],
       },
       {
-        title: "Unit Cooler",
+        category: "Compressor",
+        title: "RC-TYPE",
+        model: "RC-TYPE",
+        image: "/static/images/product-compressor-rc.jpg",
+        description:
+          "Reciprocating compressor unit for medium to heavy refrigeration loads.",
+        features: [
+          "Reciprocating design for stable performance at varied loads.",
+          "Compact frame with high serviceability.",
+          "Optimized for cold room and processing facilities.",
+          "Low maintenance configuration.",
+        ],
+      },
+      {
+        category: "Compressor",
+        title: "TK-TYPE",
+        model: "TK-TYPE",
+        image: "/static/images/product-compressor-tk.jpg",
+        description:
+          "Compact compressor model built for energy-conscious operations.",
+        features: [
+          "High-efficiency motor and thermal protection.",
+          "Reliable operation for long business hours.",
+          "Industrial-ready build quality.",
+          "Suitable for retrofit and new installations.",
+        ],
+      },
+      {
+        category: "Unit Cooler",
+        title: "BF-TYPE",
         model: "BF-TYPE",
         image: "/static/images/product-unit-cooler.jpg",
         description:
@@ -247,7 +277,36 @@ export const SITE_TEXT = {
         ],
       },
       {
-        title: "Condensing Unit",
+        category: "Unit Cooler",
+        title: "DL-TYPE",
+        model: "DL-TYPE",
+        image: "/static/images/product-unit-cooler-dl.jpg",
+        description:
+          "Dual-fan unit cooler optimized for balanced airflow distribution.",
+        features: [
+          "Enhanced airflow for uniform storage temperatures.",
+          "Anti-corrosion coated coil surface.",
+          "Designed for medium-sized cold rooms.",
+          "Fast access panel for easier maintenance.",
+        ],
+      },
+      {
+        category: "Unit Cooler",
+        title: "CE-TYPE",
+        model: "CE-TYPE",
+        image: "/static/images/product-unit-cooler-ce.jpg",
+        description:
+          "Ceiling-mounted unit cooler for compact refrigerated spaces.",
+        features: [
+          "Space-saving ceiling installation.",
+          "Stable evaporator performance under high humidity.",
+          "Efficient fan motor for daily operation.",
+          "Service-friendly design.",
+        ],
+      },
+      {
+        category: "Condensing Unit",
+        title: "CDU-TYPE",
         model: "CDU-TYPE",
         image: "/static/images/product-condensing-unit.jpg",
         description:
@@ -260,7 +319,36 @@ export const SITE_TEXT = {
         ],
       },
       {
-        title: "Condenser Unit",
+        category: "Condensing Unit",
+        title: "MD-TYPE",
+        model: "MD-TYPE",
+        image: "/static/images/product-condensing-unit-md.jpg",
+        description:
+          "Medium-duty condensing package with strong cooling stability.",
+        features: [
+          "Balanced condensing performance and power usage.",
+          "Rugged body for industrial environments.",
+          "Supports long-running refrigerated systems.",
+          "Easy integration with control panels.",
+        ],
+      },
+      {
+        category: "Condensing Unit",
+        title: "HX-TYPE",
+        model: "HX-TYPE",
+        image: "/static/images/product-condensing-unit-hx.jpg",
+        description:
+          "High-exchange condensing unit for heavy-duty cooling demands.",
+        features: [
+          "Optimized heat exchange surface area.",
+          "Stable performance under high ambient conditions.",
+          "Industrial-grade fan and coil assembly.",
+          "Built for demanding logistics and warehouse use.",
+        ],
+      },
+      {
+        category: "Condenser Unit",
+        title: "CN-TYPE",
         model: "CN-TYPE",
         image: "/static/images/product-condenser-unit.jpg",
         description:
@@ -273,7 +361,36 @@ export const SITE_TEXT = {
         ],
       },
       {
-        title: "Other Products",
+        category: "Condenser Unit",
+        title: "EV-TYPE",
+        model: "EV-TYPE",
+        image: "/static/images/product-condenser-unit-ev.jpg",
+        description:
+          "Efficient condenser system engineered for continuous operation.",
+        features: [
+          "High thermal transfer efficiency.",
+          "Corrosion-resistant coating for longer service life.",
+          "Reliable operation for commercial refrigeration.",
+          "Convenient cleaning and inspection points.",
+        ],
+      },
+      {
+        category: "Condenser Unit",
+        title: "AF-TYPE",
+        model: "AF-TYPE",
+        image: "/static/images/product-condenser-unit-af.jpg",
+        description:
+          "Air-flow optimized condenser solution for compact installations.",
+        features: [
+          "Optimized fan layout for better airflow.",
+          "Compact body with strong performance.",
+          "Suitable for retrofit projects.",
+          "Service-oriented construction.",
+        ],
+      },
+      {
+        category: "Other Products",
+        title: "ACCESSORIES",
         model: "ACCESSORIES",
         image: "/static/images/product-other.jpg",
         description:
@@ -283,6 +400,34 @@ export const SITE_TEXT = {
           "Compatible with major refrigeration system brands.",
           "Supports custom project requirements.",
           "Backed by technical assistance and after-sales service.",
+        ],
+      },
+      {
+        category: "Other Products",
+        title: "CONTROL PANEL",
+        model: "CONTROL PANEL",
+        image: "/static/images/product-other-control-panel.jpg",
+        description:
+          "Control panel units for monitoring and operating cooling systems.",
+        features: [
+          "Clear monitoring interface for refrigeration parameters.",
+          "Built-in safety and overload protections.",
+          "Supports custom control logic.",
+          "Easy integration with existing systems.",
+        ],
+      },
+      {
+        category: "Other Products",
+        title: "EXPANSION VALVE",
+        model: "EXPANSION VALVE",
+        image: "/static/images/product-other-expansion-valve.jpg",
+        description:
+          "Expansion valves for precise refrigerant flow and system efficiency.",
+        features: [
+          "Stable refrigerant flow control.",
+          "Improves cooling consistency and energy use.",
+          "Compatible with major industrial setups.",
+          "Designed for long-term durability.",
         ],
       },
     ],

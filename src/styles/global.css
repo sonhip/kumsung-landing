@@ -1075,6 +1075,17 @@ main {
   object-fit: contain;
 }
 
+.product-detail-main-image,
+.product-detail-main-image .ant-image-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+}
+
+.product-detail-main-image .ant-image-mask {
+  cursor: zoom-in;
+}
+
 .product-detail-info h1 {
   margin: 0;
   font-family: var(--font-body);
@@ -1121,6 +1132,84 @@ main {
 
 .product-detail-not-found {
   padding: 3rem 0;
+}
+
+.product-detail-description-block {
+  margin-top: 2rem;
+  padding: 1.4rem 1.3rem;
+  border-top: 1px solid #d3d3d3;
+}
+
+.product-detail-description-block h2 {
+  margin: 0;
+  color: #3f3f3f;
+  font-family: var(--font-body);
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+}
+
+.product-detail-description-block p {
+  margin: 0.75rem 0 0;
+  color: #636363;
+  line-height: 1.75;
+}
+
+.product-related-wrap {
+  margin-top: 1rem;
+  padding-top: 1.3rem;
+  border-top: 1px solid #d3d3d3;
+}
+
+.product-related-wrap h2 {
+  margin: 0;
+  color: #3f3f3f;
+  font-family: var(--font-body);
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+}
+
+.product-related-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.product-related-card {
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  background: #f8f8f8;
+  overflow: hidden;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.product-related-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-3px);
+}
+
+.product-related-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+}
+
+.product-related-content {
+  padding: 0.9rem;
+}
+
+.product-related-content h3 {
+  margin: 0;
+  color: #2f2f2f;
+  font-size: 1.05rem;
+}
+
+.product-related-content p {
+  margin: 0.55rem 0 0;
+  color: #666;
+  line-height: 1.5;
+  font-size: 0.93rem;
 }
 
 .why-grid {
@@ -1827,6 +1916,10 @@ main {
 
   .product-detail-page {
     padding-bottom: 3rem;
+  }
+
+  .product-related-grid {
+    grid-template-columns: 1fr;
   }
 
   .company-profile {

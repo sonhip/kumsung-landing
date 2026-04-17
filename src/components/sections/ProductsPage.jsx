@@ -14,7 +14,7 @@ import {
   toSlug,
 } from "../../utils/productCatalog";
 
-const { products: productsText, company } = SITE_TEXT;
+const { products: productsText, company, nav } = SITE_TEXT;
 
 const productIcons = [
   BuildOutlined,
@@ -26,14 +26,19 @@ const productIcons = [
 
 const productsWithIcons = productCatalog.map((item, index) => ({
   ...item,
-  icon: productIcons[index % productIcons.length],
+  icon:
+    productIcons[
+      nav.items.findIndex(
+        (category) => toSlug(category) === item.categorySlug,
+      ) % productIcons.length
+    ] || BuildOutlined,
 }));
 
 const ProductsPage = () => {
   const { categorySlug } = useParams();
 
   const selectedCategory = categorySlug
-    ? productsText.list.find((item) => toSlug(item.title) === categorySlug)
+    ? nav.items.find((item) => toSlug(item) === categorySlug)
     : null;
 
   const filteredProducts = categorySlug
@@ -52,9 +57,7 @@ const ProductsPage = () => {
       aria-label={productsText.sectionAriaLabel}
     >
       <div className="container products-page-hero">
-        <h1>
-          {selectedCategory ? selectedCategory.title : productsText.title}
-        </h1>
+        <h1>{selectedCategory || productsText.title}</h1>
         <p>
           {productsText.description || SITE_TEXT.routes.products.description}
         </p>
