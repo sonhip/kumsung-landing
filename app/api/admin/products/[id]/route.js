@@ -1,4 +1,5 @@
 import { prisma } from "../../../../../src/lib/prisma";
+import { deleteUploadIfUnused } from "../../../../../src/lib/uploadStorage";
 import { toSlug } from "../../../../../src/utils/productCatalog";
 
 const normalizeTags = (tags) => {
@@ -102,6 +103,17 @@ export async function PATCH(request, { params }) {
       return Response.json({ error: validation.error }, { status: 400 });
     }
 
+    const existingProduct = await prisma.product.findUnique({
+      where: { id: params.id },
+      include: {
+        images: true,
+      },
+    });
+
+    if (!existingProduct) {
+      return Response.json({ error: "Không tìm thấy sản phẩm." }, { status: 404 });
+    }
+
     const existing = await findDuplicateSlug(validation.data.slug, params.id);
 
     if (existing) {
@@ -136,6 +148,12 @@ export async function PATCH(request, { params }) {
       },
     });
 
+    const removedUrls = existingProduct.images
+      .map((image) => image.url)
+      .filter((url) => !validation.data.images.some((item) => item.url === url));
+
+    await Promise.all(removedUrls.map((url) => deleteUploadIfUnused(url)));
+
     return Response.json(product);
   } catch (error) {
     console.error("Failed to update product", error);
@@ -148,9 +166,23 @@ export async function PATCH(request, { params }) {
 
 export async function DELETE(_request, { params }) {
   try {
+    const existingProduct = await prisma.product.findUnique({
+      where: { id: params.id },
+      include: {
+        images: true,
+      },
+    });
+
+    if (!existingProduct) {
+      return Response.json({ error: "Không tìm thấy sản phẩm." }, { status: 404 });
+    }
+
     await prisma.product.delete({
       where: { id: params.id },
     });
+    await Promise.all(
+      existingProduct.images.map((image) => deleteUploadIfUnused(image.url)),
+    );
 
     return Response.json({ success: true });
   } catch (error) {

@@ -27,7 +27,7 @@ const mapProductRecord = (product) => {
     description: product.shortDescription,
     contentHtml: product.contentHtml || "",
     tags: product.tags || [],
-    image: images[0]?.url || "/static/images/product-other.jpg",
+    image: images[0]?.url || "/uploads/seed/product-other.jpg",
     images,
     categorySlug: toSlug(product.category),
     productSlug: product.slug,

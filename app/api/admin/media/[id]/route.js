@@ -1,4 +1,5 @@
 import { prisma } from "../../../../../src/lib/prisma";
+import { deleteUploadIfUnused } from "../../../../../src/lib/uploadStorage";
 
 const parseBoolean = (value) => value === true || value === "true";
 
@@ -48,10 +49,22 @@ export async function PATCH(request, { params }) {
       return Response.json({ error: validation.error }, { status: 400 });
     }
 
+    const existingItem = await prisma.mediaAsset.findUnique({
+      where: { id: params.id },
+    });
+
+    if (!existingItem) {
+      return Response.json({ error: "Không tìm thấy media." }, { status: 404 });
+    }
+
     const item = await prisma.mediaAsset.update({
       where: { id: params.id },
       data: validation.data,
     });
+
+    if (existingItem.imageUrl !== item.imageUrl) {
+      await deleteUploadIfUnused(existingItem.imageUrl);
+    }
 
     return Response.json(item);
   } catch (error) {
@@ -65,9 +78,18 @@ export async function PATCH(request, { params }) {
 
 export async function DELETE(_request, { params }) {
   try {
+    const existingItem = await prisma.mediaAsset.findUnique({
+      where: { id: params.id },
+    });
+
+    if (!existingItem) {
+      return Response.json({ error: "Không tìm thấy media." }, { status: 404 });
+    }
+
     await prisma.mediaAsset.delete({
       where: { id: params.id },
     });
+    await deleteUploadIfUnused(existingItem.imageUrl);
 
     return Response.json({ success: true });
   } catch (error) {

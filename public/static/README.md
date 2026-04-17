@@ -1,23 +1,17 @@
 # Static Assets
 
-Thư mục này dùng để lưu toàn bộ file tĩnh cho app (ảnh, icon, media) để dễ cập nhật về sau.
+Thư mục `public/static` hiện chỉ giữ lại icon và phần tương thích ngược.
 
-## Cấu trúc
+## Cấu trúc hiện tại
 
-- `images/`: ảnh banner, hero, sản phẩm...
-- `icons/`: icon custom dạng svg/png/webp...
+- `icons/`: icon tĩnh
+- `images/`: đã ngừng sử dụng trực tiếp
 
-## Cách sử dụng trong React (Vite)
+## Quy ước mới
 
-Vì đây là thư mục trong `public`, bạn truy cập trực tiếp qua path bắt đầu bằng `/static/...`.
+- Ảnh mặc định/seed: `/uploads/seed/...`
+- Ảnh admin upload: `/uploads/media/...`, `/uploads/products/...`, `/uploads/editor/...`
 
-Ví dụ:
+## Tương thích ngược
 
-- Hero image: `/static/images/hero.jpg`
-- Logo: `/static/images/logo.png`
-- Icon: `/static/icons/company.svg`
-
-## Lưu ý
-
-- Có thể thay file ảnh cùng tên để cập nhật giao diện mà không cần đổi code.
-- Nên dùng định dạng tối ưu (`webp`, `svg`) để tăng tốc tải trang.
+Middleware đang rewrite mọi request `/static/images/...` sang `/uploads/seed/...` để không làm vỡ dữ liệu cũ trong database.

@@ -50,6 +50,7 @@ const initialValues = {
 const uploadImage = async (file) => {
   const formData = new FormData();
   formData.append("file", file);
+  formData.append("folder", "media");
 
   const response = await fetch("/api/admin/uploads", {
     method: "POST",
