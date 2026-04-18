@@ -66,6 +66,7 @@ const mapSiteSettingsRecord = (settings) => ({
     facebookAriaLabel: settings.contactFacebookAriaLabel,
     zaloUrl: settings.contactZaloUrl || "",
     messengerUrl: settings.contactMessengerUrl || "",
+    googleMapUrl: settings.contactGoogleMapUrl || "",
   },
   branding: {
     logoUrl: settings.companyLogoUrl || null,

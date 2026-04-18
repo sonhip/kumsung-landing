@@ -31,6 +31,7 @@ const ContactPage = ({
   contactPageContent = defaultContactPageContent,
 }) => {
   const contactPage = contactPageContent;
+  const resolvedMapUrl = contact?.googleMapUrl || contactPage.locationMapUrl;
   const recaptchaRef = useRef(null);
   const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   const [captchaToken, setCaptchaToken] = useState("");
@@ -81,7 +82,7 @@ const ContactPage = ({
             </p>
             <p>{contact.addressFull}</p>
             <a
-              href={contactPage.locationMapUrl}
+              href={resolvedMapUrl}
               target="_blank"
               rel="noreferrer"
               className="contact-map-link"

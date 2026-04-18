@@ -66,6 +66,7 @@ const validateSiteSettingsPayload = (payload) => {
         payload.contact.facebookAriaLabel?.trim() || "Truy cập Facebook",
       contactZaloUrl: payload.contact?.zaloUrl?.trim() || null,
       contactMessengerUrl: payload.contact?.messengerUrl?.trim() || null,
+      contactGoogleMapUrl: payload.contact?.googleMapUrl?.trim() || null,
       footerContactInfoTitle:
         payload.footer?.contactInfoTitle?.trim() || null,
       footerRightsText: payload.footer?.rightsText?.trim() || null,
@@ -95,6 +96,7 @@ const mapSiteSettingsRecord = (settings) => ({
     facebookAriaLabel: settings.contactFacebookAriaLabel,
     zaloUrl: settings.contactZaloUrl || "",
     messengerUrl: settings.contactMessengerUrl || "",
+    googleMapUrl: settings.contactGoogleMapUrl || "",
   },
   branding: {
     logoUrl: settings.companyLogoUrl,

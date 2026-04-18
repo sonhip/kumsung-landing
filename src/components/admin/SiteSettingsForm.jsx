@@ -206,6 +206,13 @@ export default function SiteSettingsForm({ initialValues }) {
               >
                 <Input placeholder="https://m.me/..." />
               </Form.Item>
+
+              <Form.Item
+                label="URL Google Maps"
+                name={["contact", "googleMapUrl"]}
+              >
+                <Input placeholder="https://maps.google.com/?q=..." />
+              </Form.Item>
             </Card>
           </div>
 

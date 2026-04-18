@@ -27,6 +27,7 @@ async function seedSiteSettings() {
       contactEmailAriaLabel: STATIC_CONTENT.contact.emailAriaLabel,
       contactFacebookUrl: STATIC_CONTENT.contact.facebookUrl,
       contactFacebookAriaLabel: STATIC_CONTENT.contact.facebookAriaLabel,
+      contactGoogleMapUrl: STATIC_CONTENT.contactPage.locationMapUrl,
     },
   });
 }
