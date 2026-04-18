@@ -195,6 +195,17 @@ export default function SiteSettingsForm({ initialValues }) {
               >
                 <Input />
               </Form.Item>
+
+              <Form.Item label="URL Zalo" name={["contact", "zaloUrl"]}>
+                <Input placeholder="https://zalo.me/..." />
+              </Form.Item>
+
+              <Form.Item
+                label="URL Messenger"
+                name={["contact", "messengerUrl"]}
+              >
+                <Input placeholder="https://m.me/..." />
+              </Form.Item>
             </Card>
           </div>
 

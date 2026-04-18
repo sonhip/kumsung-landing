@@ -1,6 +1,7 @@
 import Footer from "../layout/Footer";
 import Header from "../layout/Header";
 import TopBar from "../layout/TopBar";
+import FloatingChatWidget from "./FloatingChatWidget";
 
 export default function SiteShell({
   children,
@@ -22,6 +23,7 @@ export default function SiteShell({
         contact={siteSettings.contact}
         footerContent={siteSettings.footer || siteContent.footer}
       />
+      <FloatingChatWidget contact={siteSettings.contact} />
     </div>
   );
 }

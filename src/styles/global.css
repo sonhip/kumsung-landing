@@ -2466,6 +2466,128 @@ main {
   }
 }
 
+.floating-chat {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  z-index: 60;
+}
+
+.floating-chat-desktop {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.floating-chat-link {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  border: 1px solid rgba(187, 222, 255, 0.54);
+  background: #123a66;
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 26px rgba(4, 15, 31, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.floating-chat-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px rgba(4, 15, 31, 0.45);
+}
+
+.floating-chat-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.floating-chat-link img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.floating-chat-mobile {
+  display: none;
+}
+
+.floating-chat-mobile-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.floating-chat-mobile-list.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.floating-chat-toggle {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  border: 1px solid rgba(187, 222, 255, 0.54);
+  background: #123a66;
+  color: #ffffff;
+  font-size: 1.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 24px rgba(4, 15, 31, 0.4);
+}
+
+@media (max-width: 767px) {
+  .floating-chat {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .floating-chat-desktop {
+    display: none;
+  }
+
+  .floating-chat-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .floating-chat-link {
+    width: 62px;
+    height: 62px;
+  }
+
+  .floating-chat-icon-wrap {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  .floating-chat-link img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .floating-chat-toggle {
+    width: 54px;
+    height: 54px;
+  }
+}
+
 @media (min-width: 768px) {
   .products-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));

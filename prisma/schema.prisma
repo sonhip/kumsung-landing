@@ -85,6 +85,8 @@ model SiteSettings {
   contactEmailAriaLabel    String
   contactFacebookUrl       String
   contactFacebookAriaLabel String
+  contactZaloUrl           String?
+  contactMessengerUrl      String?
   footerContactInfoTitle   String?
   footerRightsText         String?
   footerCopyrightStartYear Int?
