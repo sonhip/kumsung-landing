@@ -168,7 +168,7 @@ export async function getHomepageMedia() {
       image: item.imageUrl,
     })),
     serviceTiles: getSectionItems(items, "service_tile").map((item) => ({
-      type: item.variant || "image",
+      type: item.variant || (item.title || item.description ? "content" : "image"),
       tone: item.tone || "dark",
       image: item.imageUrl,
       title: item.title || "",

@@ -19,7 +19,9 @@ import {
   Space,
   Switch,
   Table,
+  Tabs,
   Tag,
+  Tooltip,
   Upload,
   message,
 } from "antd";
@@ -41,9 +43,50 @@ const initialValues = {
   imageUrl: "",
   altText: "",
   tone: "",
-  variant: "image",
   sortOrder: 0,
   isActive: true,
+};
+
+const getDefaultBySection = (section) => ({
+  ...initialValues,
+  section,
+  tone: null,
+});
+
+const normalizePayloadBySection = (values) => {
+  const section = values.section;
+  const base = {
+    ...values,
+    variant: null,
+    tone: section === "service_tile" ? values.tone || null : null,
+  };
+
+  if (section === "hero_slide") {
+    return {
+      ...base,
+      title: "",
+      subtitle: "",
+      description: "",
+      altText: values.altText || "Hero slide",
+    };
+  }
+
+  if (section === "partner_logo") {
+    return {
+      ...base,
+      subtitle: "",
+      description: "",
+    };
+  }
+
+  if (section === "stats_highlight" || section === "previous_work") {
+    return {
+      ...base,
+      description: "",
+    };
+  }
+
+  return base;
 };
 
 const uploadImage = async (file) => {
@@ -67,13 +110,19 @@ const uploadImage = async (file) => {
 
 export default function MediaManager({ initialItems = [] }) {
   const [form] = Form.useForm();
+  const selectedSection = Form.useWatch("section", form);
   const [items, setItems] = useState(initialItems);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
-  const [sectionFilter, setSectionFilter] = useState("all");
+  const [sectionFilter, setSectionFilter] = useState("hero_slide");
+  const isServiceTileSection = selectedSection === "service_tile";
+  const isHeroSlideSection = selectedSection === "hero_slide";
+  const isStatsHighlightSection = selectedSection === "stats_highlight";
+  const isPreviousWorkSection = selectedSection === "previous_work";
+  const isPartnerLogoSection = selectedSection === "partner_logo";
 
   const loadItems = async () => {
     setLoading(true);
@@ -95,21 +144,18 @@ export default function MediaManager({ initialItems = [] }) {
   };
 
   const filteredItems = useMemo(() => {
-    if (sectionFilter === "all") {
-      return items;
-    }
-
     return items.filter((item) => item.section === sectionFilter);
   }, [items, sectionFilter]);
 
   const openCreate = () => {
     setEditingItem(null);
-    form.setFieldsValue(initialValues);
+    form.setFieldsValue(getDefaultBySection(sectionFilter));
     setOpen(true);
   };
 
   const openEdit = (item) => {
     setEditingItem(item);
+    setSectionFilter(item.section);
     form.setFieldsValue({
       ...item,
       isActive: Boolean(item.isActive),
@@ -135,6 +181,7 @@ export default function MediaManager({ initialItems = [] }) {
 
   const handleFinish = async (values) => {
     setSaving(true);
+    const normalizedValues = normalizePayloadBySection(values);
 
     const response = await fetch(
       editingItem ? `/api/admin/media/${editingItem.id}` : "/api/admin/media",
@@ -143,7 +190,7 @@ export default function MediaManager({ initialItems = [] }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(normalizedValues),
       },
     );
 
@@ -187,14 +234,9 @@ export default function MediaManager({ initialItems = [] }) {
       title: "Tiêu đề",
       dataIndex: "title",
       key: "title",
+      width: 280,
       render: (value) =>
         value || <span style={{ color: "#9aa8b6" }}>Không có</span>,
-    },
-    {
-      title: "Variant",
-      dataIndex: "variant",
-      key: "variant",
-      render: (value) => value || "-",
     },
     {
       title: "Thứ tự",
@@ -232,28 +274,27 @@ export default function MediaManager({ initialItems = [] }) {
     <Card
       title="Quản lý media homepage"
       extra={
-        <Space>
-          <Select
-            value={sectionFilter}
-            style={{ minWidth: 180 }}
-            onChange={setSectionFilter}
-            options={[
-              { label: "Tất cả section", value: "all" },
-              ...sectionOptions,
-            ]}
-          />
-          <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
-            Thêm media
-          </Button>
-        </Space>
+        <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
+          Thêm media
+        </Button>
       }
     >
+      <Tabs
+        activeKey={sectionFilter}
+        onChange={(nextSection) => setSectionFilter(nextSection)}
+        items={sectionOptions.map((option) => ({
+          key: option.value,
+          label: option.label,
+        }))}
+        style={{ marginBottom: 8 }}
+      />
+
       <Table
         rowKey="id"
         loading={loading}
         columns={columns}
         dataSource={filteredItems}
-        scroll={{ x: 1100 }}
+        scroll={{ x: 980 }}
       />
 
       <Modal
@@ -270,30 +311,37 @@ export default function MediaManager({ initialItems = [] }) {
           initialValues={initialValues}
           onFinish={handleFinish}
         >
-          <Form.Item
-            label="Section"
-            name="section"
-            rules={[{ required: true }]}
-          >
-            <Select options={sectionOptions} />
+          <Form.Item label="Section" name="section" rules={[{ required: true }]}>
+            <Select options={sectionOptions} disabled />
           </Form.Item>
 
           <Space style={{ display: "flex" }} align="start">
-            <Form.Item label="Tiêu đề" name="title" style={{ flex: 1 }}>
-              <Input />
-            </Form.Item>
             <Form.Item label="Thứ tự" name="sortOrder" style={{ width: 120 }}>
               <InputNumber min={0} style={{ width: "100%" }} />
             </Form.Item>
           </Space>
 
-          <Form.Item label="Subtitle" name="subtitle">
-            <Input />
-          </Form.Item>
+          {!isHeroSlideSection ? (
+            <Form.Item
+              label={isPartnerLogoSection ? "Tên đối tác" : "Tiêu đề"}
+              name="title"
+              rules={[{ required: true, message: "Vui lòng nhập tiêu đề." }]}
+            >
+              <Input />
+            </Form.Item>
+          ) : null}
 
-          <Form.Item label="Mô tả thêm" name="description">
-            <Input.TextArea rows={3} />
-          </Form.Item>
+          {isStatsHighlightSection || isPreviousWorkSection ? (
+            <Form.Item label="Subtitle" name="subtitle">
+              <Input />
+            </Form.Item>
+          ) : null}
+
+          {isServiceTileSection ? (
+            <Form.Item label="Mô tả thêm" name="description">
+              <Input.TextArea rows={3} />
+            </Form.Item>
+          ) : null}
 
           <Form.Item
             label="URL hình ảnh"
@@ -331,24 +379,19 @@ export default function MediaManager({ initialItems = [] }) {
             <Form.Item label="Alt text" name="altText" style={{ flex: 1 }}>
               <Input />
             </Form.Item>
-            <Form.Item label="Variant" name="variant" style={{ width: 160 }}>
-              <Select
-                allowClear
-                options={[
-                  { label: "image", value: "image" },
-                  { label: "content", value: "content" },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item label="Tone" name="tone" style={{ width: 160 }}>
-              <Select
-                allowClear
-                options={[
-                  { label: "dark", value: "dark" },
-                  { label: "gold", value: "gold" },
-                ]}
-              />
-            </Form.Item>
+            {isServiceTileSection ? (
+              <>
+                <Form.Item label="Tone" name="tone" style={{ width: 160 }}>
+                  <Select
+                    allowClear
+                    options={[
+                      { label: "dark", value: "dark" },
+                      { label: "gold", value: "gold" },
+                    ]}
+                  />
+                </Form.Item>
+              </>
+            ) : null}
           </Space>
 
           <Form.Item label="Hiển thị" name="isActive" valuePropName="checked">
@@ -357,9 +400,20 @@ export default function MediaManager({ initialItems = [] }) {
 
           <Space>
             <Button onClick={() => setOpen(false)}>Hủy</Button>
-            <Button type="primary" htmlType="submit" loading={saving}>
-              {editingItem ? "Cập nhật" : "Tạo mới"}
-            </Button>
+            <Tooltip
+              title={
+                uploadingImage ? "Đang upload ảnh, vui lòng đợi..." : ""
+              }
+            >
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={saving}
+                disabled={uploadingImage}
+              >
+                {editingItem ? "Cập nhật" : "Tạo mới"}
+              </Button>
+            </Tooltip>
           </Space>
         </Form>
       </Modal>

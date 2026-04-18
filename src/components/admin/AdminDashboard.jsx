@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, Typography } from "antd";
+import HeroContentForm from "./HeroContentForm";
 import SiteSettingsForm from "./SiteSettingsForm";
 
 const { Paragraph, Title } = Typography;
@@ -9,6 +10,7 @@ export default function AdminDashboard({
   mediaCount,
   productCount,
   siteSettings,
+  heroContent,
 }) {
   return (
     <div style={{ display: "grid", gap: 24 }}>
@@ -27,6 +29,10 @@ export default function AdminDashboard({
 
       <div>
         <SiteSettingsForm initialValues={siteSettings} />
+      </div>
+
+      <div>
+        <HeroContentForm initialValues={heroContent} />
       </div>
 
       <div
