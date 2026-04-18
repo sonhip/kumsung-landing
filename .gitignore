@@ -26,3 +26,13 @@ dist-ssr
 
 
 .env
+
+# Runtime uploads (do not commit user-uploaded media)
+public/uploads/media/
+public/uploads/general/
+public/uploads/products/
+public/uploads/editor/
+
+# Keep seed assets in git
+!public/uploads/seed/
+!public/uploads/seed/**

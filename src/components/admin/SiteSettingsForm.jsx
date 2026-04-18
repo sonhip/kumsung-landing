@@ -28,6 +28,8 @@ export default function SiteSettingsForm({ initialValues }) {
   const { message } = App.useApp();
   const [form] = Form.useForm();
   const [isSaving, setIsSaving] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingFavicon, setUploadingFavicon] = useState(false);
 
   return (
     <Card>
@@ -228,18 +230,23 @@ export default function SiteSettingsForm({ initialValues }) {
                     <Upload
                       showUploadList={false}
                       beforeUpload={async (file) => {
+                        setUploadingLogo(true);
                         try {
                           const url = await uploadImage(file, "media");
                           form.setFieldValue(["branding", "logoUrl"], url);
                           message.success("Upload logo thành công.");
                         } catch (error) {
                           message.error(error.message);
+                        } finally {
+                          setUploadingLogo(false);
                         }
 
                         return false;
                       }}
                     >
-                      <Button icon={<UploadOutlined />}>Upload</Button>
+                      <Button icon={<UploadOutlined />} loading={uploadingLogo}>
+                        {uploadingLogo ? "Đang upload..." : "Upload"}
+                      </Button>
                     </Upload>
                   }
                 />
@@ -255,18 +262,23 @@ export default function SiteSettingsForm({ initialValues }) {
                     <Upload
                       showUploadList={false}
                       beforeUpload={async (file) => {
+                        setUploadingFavicon(true);
                         try {
                           const url = await uploadImage(file, "general");
                           form.setFieldValue(["branding", "faviconUrl"], url);
                           message.success("Upload favicon thành công.");
                         } catch (error) {
                           message.error(error.message);
+                        } finally {
+                          setUploadingFavicon(false);
                         }
 
                         return false;
                       }}
                     >
-                      <Button icon={<UploadOutlined />}>Upload</Button>
+                      <Button icon={<UploadOutlined />} loading={uploadingFavicon}>
+                        {uploadingFavicon ? "Đang upload..." : "Upload"}
+                      </Button>
                     </Upload>
                   }
                 />

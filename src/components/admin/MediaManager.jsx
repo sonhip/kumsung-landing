@@ -70,6 +70,7 @@ export default function MediaManager({ initialItems = [] }) {
   const [items, setItems] = useState(initialItems);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [sectionFilter, setSectionFilter] = useState("all");
@@ -304,18 +305,23 @@ export default function MediaManager({ initialItems = [] }) {
                 <Upload
                   showUploadList={false}
                   beforeUpload={async (file) => {
+                    setUploadingImage(true);
                     try {
                       const url = await uploadImage(file);
                       form.setFieldValue("imageUrl", url);
                       message.success("Upload thành công.");
                     } catch (error) {
                       message.error(error.message);
+                    } finally {
+                      setUploadingImage(false);
                     }
 
                     return false;
                   }}
                 >
-                  <Button icon={<UploadOutlined />}>Upload</Button>
+                  <Button icon={<UploadOutlined />} loading={uploadingImage}>
+                    {uploadingImage ? "Đang upload..." : "Upload"}
+                  </Button>
                 </Upload>
               }
             />

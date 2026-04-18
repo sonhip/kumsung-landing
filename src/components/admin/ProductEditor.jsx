@@ -53,6 +53,7 @@ export default function ProductEditor({
 }) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
+  const [uploadingByIndex, setUploadingByIndex] = useState({});
   const [contentHtml, setContentHtml] = useState(initialProduct?.contentHtml || "");
   const [images, setImages] = useState(
     initialProduct?.images?.length
@@ -268,19 +269,32 @@ export default function ProductEditor({
                       <Upload
                         showUploadList={false}
                         beforeUpload={async (file) => {
+                          setUploadingByIndex((current) => ({
+                            ...current,
+                            [index]: true,
+                          }));
                           try {
                             const url = await uploadImage(file);
                             updateImage(index, { url });
                             message.success("Upload thành công.");
                           } catch (error) {
                             message.error(error.message);
+                          } finally {
+                            setUploadingByIndex((current) => ({
+                              ...current,
+                              [index]: false,
+                            }));
                           }
 
                           return false;
                         }}
                       >
-                        <Button icon={<UploadOutlined />} block>
-                          Upload ảnh
+                        <Button
+                          icon={<UploadOutlined />}
+                          block
+                          loading={Boolean(uploadingByIndex[index])}
+                        >
+                          {uploadingByIndex[index] ? "Đang upload..." : "Upload ảnh"}
                         </Button>
                       </Upload>
 
