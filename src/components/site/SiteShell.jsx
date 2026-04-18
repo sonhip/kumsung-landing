@@ -6,13 +6,22 @@ export default function SiteShell({
   children,
   brandLogo = null,
   siteSettings,
+  siteContent,
 }) {
   return (
     <div className="page-shell">
       <TopBar contact={siteSettings.contact} />
-      <Header brandLogo={brandLogo} company={siteSettings.company} />
+      <Header
+        brandLogo={brandLogo}
+        company={siteSettings.company}
+        nav={siteContent.nav}
+      />
       <main>{children}</main>
-      <Footer company={siteSettings.company} contact={siteSettings.contact} />
+      <Footer
+        company={siteSettings.company}
+        contact={siteSettings.contact}
+        footerContent={siteContent.footer}
+      />
     </div>
   );
 }

@@ -6,9 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "./Navbar";
-import { SITE_TEXT } from "../../constants/siteText";
 
-const Header = ({ brandLogo = null, company = SITE_TEXT.company }) => {
+const Header = ({ brandLogo = null, company, nav }) => {
   const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const lastY = useRef(0);
@@ -72,7 +71,7 @@ const Header = ({ brandLogo = null, company = SITE_TEXT.company }) => {
         </div>
       </div>
 
-      <Navbar />
+      <Navbar nav={nav} />
     </motion.header>
   );
 };

@@ -3,11 +3,18 @@
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import { useRef, useState } from "react";
-import { SITE_TEXT } from "../../constants/siteText";
+const defaultPreviousWorksContent = {
+  ariaLabel: "Các nhóm giải pháp nổi bật",
+  title: "",
+  subtitle: "",
+  items: [],
+};
 
-const { previousWorks } = SITE_TEXT;
-
-const PreviousWorks = ({ items = previousWorks.items }) => {
+const PreviousWorks = ({
+  previousWorksContent = defaultPreviousWorksContent,
+  items = [],
+}) => {
+  const previousWorks = previousWorksContent;
   const gridRef = useRef(null);
   const [activeWork, setActiveWork] = useState(null);
 

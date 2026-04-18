@@ -1,29 +1,23 @@
 import Link from "next/link";
-import { SITE_TEXT } from "../../constants/siteText";
-import { findProductBySlugs, productCatalog } from "../../utils/productCatalog";
-
-const { company, products: productsText } = SITE_TEXT;
+const defaultProductsText = {
+  notFoundTitle: "Không tìm thấy sản phẩm",
+  notFoundDescription:
+    "Sản phẩm bạn chọn không tồn tại hoặc đã được cập nhật lại danh mục.",
+  backToProducts: "Quay lại tất cả sản phẩm",
+  breadcrumbsHome: "Trang chủ",
+  featureTitle: "Đặc điểm nổi bật",
+  categoryLabel: "Danh mục",
+  descriptionTitle: "Mô tả",
+  relatedTitle: "Sản phẩm liên quan",
+};
 
 const ProductDetailPage = ({
-  categorySlug,
-  productSlug,
-  product: providedProduct = null,
-  relatedProducts: providedRelatedProducts = null,
-  companyInfo = company,
+  product,
+  relatedProducts = [],
+  companyInfo,
+  productsText = defaultProductsText,
 }) => {
-  const product =
-    providedProduct || findProductBySlugs(categorySlug, productSlug);
-  const relatedProducts =
-    providedRelatedProducts ||
-    (product
-      ? productCatalog
-          .filter(
-            (item) =>
-              item.categorySlug === product.categorySlug &&
-              item.productSlug !== product.productSlug,
-          )
-          .slice(0, 3)
-      : []);
+  const resolvedRelatedProducts = relatedProducts || [];
 
   if (!product) {
     return (
@@ -47,7 +41,9 @@ const ProductDetailPage = ({
       <div className="container product-detail-breadcrumbs">
         <Link href="/">{productsText.breadcrumbsHome}</Link>
         <span>/</span>
-        <Link href={`/products/${product.categorySlug}`}>{product.category}</Link>
+        <Link href={`/products/${product.categorySlug}`}>
+          {product.category}
+        </Link>
         <span>/</span>
         <span>{product.model || product.title}</span>
       </div>
@@ -95,11 +91,11 @@ const ProductDetailPage = ({
         )}
       </div>
 
-      {relatedProducts.length ? (
+      {resolvedRelatedProducts.length ? (
         <div className="container product-related-wrap">
           <h2>{productsText.relatedTitle}</h2>
           <div className="product-related-grid">
-            {relatedProducts.map((relatedItem) => (
+            {resolvedRelatedProducts.map((relatedItem) => (
               <Link
                 key={relatedItem.productSlug}
                 href={`/products/${relatedItem.categorySlug}/${relatedItem.productSlug}`}

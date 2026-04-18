@@ -2,11 +2,16 @@
 
 import { Button } from "antd";
 import Link from "next/link";
-import { SITE_TEXT } from "../../constants/siteText";
 
-const { cta } = SITE_TEXT;
+const defaultCtaContent = {
+  ariaLabel: "Khối kêu gọi hành động",
+  title: "",
+  description: "",
+  buttonLabel: "Liên hệ",
+};
 
-const CTABanner = () => {
+const CTABanner = ({ ctaContent = defaultCtaContent }) => {
+  const cta = ctaContent;
   return (
     <section className="cta-banner" aria-label={cta.ariaLabel}>
       <div className="container cta-inner">

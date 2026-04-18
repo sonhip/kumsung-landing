@@ -4,28 +4,35 @@ import {
   getBrandLogo,
   getPublicProductBySlugs,
   getRelatedProducts,
+  getSiteContent,
   getSiteSettings,
 } from "../../../../src/lib/cms";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProductPage({ params }) {
-  const [brandLogo, cmsProduct, siteSettings] = await Promise.all([
+  const [brandLogo, cmsProduct, siteSettings, siteContent] = await Promise.all([
     getBrandLogo(),
     getPublicProductBySlugs(params.categorySlug, params.productSlug),
     getSiteSettings(),
+    getSiteContent(),
   ]);
 
-  const relatedProducts = cmsProduct ? await getRelatedProducts(cmsProduct) : [];
+  const relatedProducts = cmsProduct
+    ? await getRelatedProducts(cmsProduct)
+    : [];
 
   return (
-    <SiteShell brandLogo={brandLogo} siteSettings={siteSettings}>
+    <SiteShell
+      brandLogo={brandLogo}
+      siteSettings={siteSettings}
+      siteContent={siteContent}
+    >
       <ProductDetailPage
-        categorySlug={params.categorySlug}
-        productSlug={params.productSlug}
         product={cmsProduct}
         relatedProducts={cmsProduct ? relatedProducts : null}
         companyInfo={siteSettings.company}
+        productsText={siteContent.products}
       />
     </SiteShell>
   );

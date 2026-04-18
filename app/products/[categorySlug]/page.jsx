@@ -3,25 +3,30 @@ import SiteShell from "../../../src/components/site/SiteShell";
 import {
   getBrandLogo,
   getPublicProducts,
+  getSiteContent,
   getSiteSettings,
 } from "../../../src/lib/cms";
-import { productCatalog } from "../../../src/utils/productCatalog";
 
 export const dynamic = "force-dynamic";
 
 export default async function CategoryProductsPage({ params }) {
-  const [brandLogo, cmsProducts, siteSettings] = await Promise.all([
-    getBrandLogo(),
-    getPublicProducts(),
-    getSiteSettings(),
-  ]);
+  const [brandLogo, cmsProducts, siteSettings, siteContent] = await Promise.all(
+    [getBrandLogo(), getPublicProducts(), getSiteSettings(), getSiteContent()],
+  );
 
   return (
-    <SiteShell brandLogo={brandLogo} siteSettings={siteSettings}>
+    <SiteShell
+      brandLogo={brandLogo}
+      siteSettings={siteSettings}
+      siteContent={siteContent}
+    >
       <ProductsPage
         categorySlug={params.categorySlug}
-        products={cmsProducts.length ? cmsProducts : productCatalog}
+        products={cmsProducts}
         companyInfo={siteSettings.company}
+        productsText={siteContent.products}
+        nav={siteContent.nav}
+        routes={siteContent.routes}
       />
     </SiteShell>
   );

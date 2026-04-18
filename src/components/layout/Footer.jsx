@@ -6,25 +6,24 @@ import {
   PhoneOutlined,
   PushpinFilled,
 } from "@ant-design/icons";
-import { SITE_TEXT } from "../../constants/siteText";
+const defaultFooterContent = {
+  contactInfoTitle: "Thông Tin Liên Hệ",
+  copyrightStartYear: new Date().getFullYear(),
+  rightsText: "Bảo lưu mọi quyền.",
+};
 
-const { footer } = SITE_TEXT;
+const Footer = ({ company, contact, footerContent = defaultFooterContent }) => {
+  const currentYear = new Date().getFullYear();
+  const copyrightYearRange =
+    footerContent.copyrightStartYear &&
+    footerContent.copyrightStartYear < currentYear
+      ? `${footerContent.copyrightStartYear}-${currentYear}`
+      : `${currentYear}`;
 
-const currentYear = new Date().getFullYear();
-
-const copyrightYearRange =
-  footer.copyrightStartYear && footer.copyrightStartYear < currentYear
-    ? `${footer.copyrightStartYear}-${currentYear}`
-    : `${currentYear}`;
-
-const Footer = ({
-  company = SITE_TEXT.company,
-  contact = SITE_TEXT.contact,
-}) => {
   return (
     <footer className="site-footer">
       <div className="container footer-contact-wrap">
-        <h4>{footer.contactInfoTitle}</h4>
+        <h4>{footerContent.contactInfoTitle}</h4>
 
         <ul className="footer-office-list">
           {[{ label: "Khu vực hoạt động", address: contact.addressFull }].map(
@@ -56,7 +55,8 @@ const Footer = ({
       </div>
 
       <div className="footer-bottom">
-        Bản quyền © {copyrightYearRange} {company.name}. {footer.rightsText}
+        Bản quyền © {copyrightYearRange} {company.name}.{" "}
+        {footerContent.rightsText}
       </div>
 
       <button

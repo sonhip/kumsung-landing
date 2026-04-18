@@ -3,11 +3,34 @@
 import { MailOutlined, PhoneOutlined, SendOutlined } from "@ant-design/icons";
 import { useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-import { SITE_TEXT } from "../../constants/siteText";
 
-const { contactPage } = SITE_TEXT;
+const defaultContactPageContent = {
+  ariaLabel: "Trang liên hệ",
+  heroTitle: "",
+  heroImage: "",
+  phoneTitle: "Điện thoại",
+  phoneDescription: "",
+  emailTitle: "Email",
+  emailDescription: "",
+  locationTitle: "Khu vực hoạt động",
+  locationMapLabel: "Xem trên Google Maps",
+  locationMapUrl: "https://maps.google.com",
+  formTitle: "",
+  formSubtitle: "",
+  fields: {
+    name: "Họ và tên",
+    email: "Email",
+    subject: "Chủ đề",
+    message: "Nội dung",
+  },
+  submitLabel: "Gửi liên hệ",
+};
 
-const ContactPage = ({ contact = SITE_TEXT.contact }) => {
+const ContactPage = ({
+  contact,
+  contactPageContent = defaultContactPageContent,
+}) => {
+  const contactPage = contactPageContent;
   const recaptchaRef = useRef(null);
   const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   const [captchaToken, setCaptchaToken] = useState("");
@@ -171,8 +194,8 @@ const ContactPage = ({ contact = SITE_TEXT.contact }) => {
               ) : (
                 <p className="contact-recaptcha-missing">
                   Chưa cấu hình khóa reCAPTCHA. Hãy thiết lập{" "}
-                  <strong>NEXT_PUBLIC_RECAPTCHA_SITE_KEY</strong> trong file
-                  môi trường.
+                  <strong>NEXT_PUBLIC_RECAPTCHA_SITE_KEY</strong> trong file môi
+                  trường.
                 </p>
               )}
             </div>

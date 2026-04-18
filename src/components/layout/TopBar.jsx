@@ -5,9 +5,8 @@ import {
   MailOutlined,
   PhoneOutlined,
 } from "@ant-design/icons";
-import { SITE_TEXT } from "../../constants/siteText";
 
-const TopBar = ({ contact = SITE_TEXT.contact }) => {
+const TopBar = ({ contact }) => {
   return (
     <div className="topbar" aria-label="Thông tin liên hệ doanh nghiệp">
       <div className="container topbar-inner">

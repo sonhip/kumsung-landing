@@ -2,11 +2,19 @@
 
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { useRef } from "react";
-import { SITE_TEXT } from "../../constants/siteText";
 
-const { companyProfile } = SITE_TEXT;
+const defaultCompanyProfileContent = {
+  ariaLabel: "Tổng quan doanh nghiệp",
+  title: "",
+  description: "",
+  partners: [],
+};
 
-const OurCompany = ({ partners = companyProfile.partners }) => {
+const OurCompany = ({
+  companyProfileContent = defaultCompanyProfileContent,
+  partners = [],
+}) => {
+  const companyProfile = companyProfileContent;
   const partnersRef = useRef(null);
   const scrollPartners = [...partners, ...partners];
 

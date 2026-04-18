@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { SITE_TEXT } from "../src/constants/siteText.js";
+import { STATIC_CONTENT } from "../src/constants/staticContent.js";
 import { toSlug } from "../src/utils/productCatalog.js";
 
 const prisma = new PrismaClient();
@@ -12,21 +12,58 @@ async function seedSiteSettings() {
     update: {},
     create: {
       id: "default",
-      companyName: SITE_TEXT.company.name,
-      companyShortName: SITE_TEXT.company.shortName,
-      companyHomeAriaLabel: SITE_TEXT.company.homeAriaLabel,
-      companyTagline: SITE_TEXT.company.tagline,
-      companyDistributorLabel: SITE_TEXT.company.distributorLabel,
-      companyDistributorValue: SITE_TEXT.company.distributorValue,
-      companyQuoteButton: SITE_TEXT.company.quoteButton,
-      contactPhone: SITE_TEXT.contact.phone,
-      contactHours: SITE_TEXT.contact.hours,
-      contactAddressFull: SITE_TEXT.contact.addressFull,
-      contactAddressShort: SITE_TEXT.contact.addressShort,
-      contactEmail: SITE_TEXT.contact.email,
-      contactEmailAriaLabel: SITE_TEXT.contact.emailAriaLabel,
-      contactFacebookUrl: SITE_TEXT.contact.facebookUrl,
-      contactFacebookAriaLabel: SITE_TEXT.contact.facebookAriaLabel,
+      companyName: STATIC_CONTENT.company.name,
+      companyShortName: STATIC_CONTENT.company.shortName,
+      companyHomeAriaLabel: STATIC_CONTENT.company.homeAriaLabel,
+      companyTagline: STATIC_CONTENT.company.tagline,
+      companyDistributorLabel: STATIC_CONTENT.company.distributorLabel,
+      companyDistributorValue: STATIC_CONTENT.company.distributorValue,
+      companyQuoteButton: STATIC_CONTENT.company.quoteButton,
+      contactPhone: STATIC_CONTENT.contact.phone,
+      contactHours: STATIC_CONTENT.contact.hours,
+      contactAddressFull: STATIC_CONTENT.contact.addressFull,
+      contactAddressShort: STATIC_CONTENT.contact.addressShort,
+      contactEmail: STATIC_CONTENT.contact.email,
+      contactEmailAriaLabel: STATIC_CONTENT.contact.emailAriaLabel,
+      contactFacebookUrl: STATIC_CONTENT.contact.facebookUrl,
+      contactFacebookAriaLabel: STATIC_CONTENT.contact.facebookAriaLabel,
+    },
+  });
+}
+
+async function seedSiteContent() {
+  await prisma.siteContent.upsert({
+    where: {
+      id: "default",
+    },
+    update: {
+      nav: STATIC_CONTENT.nav,
+      hero: STATIC_CONTENT.hero,
+      stats: STATIC_CONTENT.stats,
+      previousWorks: STATIC_CONTENT.previousWorks,
+      services: STATIC_CONTENT.services,
+      companyProfile: STATIC_CONTENT.companyProfile,
+      products: STATIC_CONTENT.products,
+      cta: STATIC_CONTENT.cta,
+      contactPage: STATIC_CONTENT.contactPage,
+      aboutPage: STATIC_CONTENT.aboutPage,
+      footer: STATIC_CONTENT.footer,
+      routes: STATIC_CONTENT.routes,
+    },
+    create: {
+      id: "default",
+      nav: STATIC_CONTENT.nav,
+      hero: STATIC_CONTENT.hero,
+      stats: STATIC_CONTENT.stats,
+      previousWorks: STATIC_CONTENT.previousWorks,
+      services: STATIC_CONTENT.services,
+      companyProfile: STATIC_CONTENT.companyProfile,
+      products: STATIC_CONTENT.products,
+      cta: STATIC_CONTENT.cta,
+      contactPage: STATIC_CONTENT.contactPage,
+      aboutPage: STATIC_CONTENT.aboutPage,
+      footer: STATIC_CONTENT.footer,
+      routes: STATIC_CONTENT.routes,
     },
   });
 }
@@ -46,23 +83,27 @@ async function seedMediaAssets() {
     return;
   }
 
-  const heroSlides = SITE_TEXT.hero.backgroundImages.map((imageUrl, index) => ({
-    section: "hero_slide",
-    imageUrl,
-    altText: `Hero ${index + 1}`,
-    sortOrder: index,
-  }));
+  const heroSlides = STATIC_CONTENT.hero.backgroundImages.map(
+    (imageUrl, index) => ({
+      section: "hero_slide",
+      imageUrl,
+      altText: `Hero ${index + 1}`,
+      sortOrder: index,
+    }),
+  );
 
-  const statsHighlights = SITE_TEXT.stats.highlights.map((item, index) => ({
-    section: "stats_highlight",
-    title: item.title,
-    subtitle: item.subtitle,
-    imageUrl: item.image,
-    altText: item.title,
-    sortOrder: index,
-  }));
+  const statsHighlights = STATIC_CONTENT.stats.highlights.map(
+    (item, index) => ({
+      section: "stats_highlight",
+      title: item.title,
+      subtitle: item.subtitle,
+      imageUrl: item.image,
+      altText: item.title,
+      sortOrder: index,
+    }),
+  );
 
-  const serviceTiles = SITE_TEXT.services.tiles.map((item, index) => ({
+  const serviceTiles = STATIC_CONTENT.services.tiles.map((item, index) => ({
     section: "service_tile",
     title: item.title || null,
     subtitle: item.description || null,
@@ -74,22 +115,26 @@ async function seedMediaAssets() {
     sortOrder: index,
   }));
 
-  const previousWorks = SITE_TEXT.previousWorks.items.map((item, index) => ({
-    section: "previous_work",
-    title: item.title,
-    subtitle: item.subtitle,
-    imageUrl: item.image,
-    altText: item.title,
-    sortOrder: index,
-  }));
+  const previousWorks = STATIC_CONTENT.previousWorks.items.map(
+    (item, index) => ({
+      section: "previous_work",
+      title: item.title,
+      subtitle: item.subtitle,
+      imageUrl: item.image,
+      altText: item.title,
+      sortOrder: index,
+    }),
+  );
 
-  const partnerLogos = SITE_TEXT.companyProfile.partners.map((item, index) => ({
-    section: "partner_logo",
-    title: item.name,
-    imageUrl: item.logo,
-    altText: item.name,
-    sortOrder: index,
-  }));
+  const partnerLogos = STATIC_CONTENT.companyProfile.partners.map(
+    (item, index) => ({
+      section: "partner_logo",
+      title: item.name,
+      imageUrl: item.logo,
+      altText: item.name,
+      sortOrder: index,
+    }),
+  );
 
   await prisma.mediaAsset.createMany({
     data: [
@@ -109,7 +154,7 @@ async function seedProducts() {
     return;
   }
 
-  for (const product of SITE_TEXT.products.list) {
+  for (const product of STATIC_CONTENT.products.list) {
     await prisma.product.create({
       data: {
         category: product.category,
@@ -136,6 +181,7 @@ async function seedProducts() {
 
 async function main() {
   await seedSiteSettings();
+  await seedSiteContent();
   await seedMediaAssets();
   await seedProducts();
 }

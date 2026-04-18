@@ -1,10 +1,25 @@
 import { prisma } from "./prisma";
-import { SITE_TEXT } from "../constants/siteText";
+import { STATIC_CONTENT } from "../constants/staticContent";
 import { toSlug } from "../utils/productCatalog";
 
 const defaultSiteSettings = {
-  company: SITE_TEXT.company,
-  contact: SITE_TEXT.contact,
+  company: STATIC_CONTENT.company,
+  contact: STATIC_CONTENT.contact,
+};
+
+const defaultSiteContent = {
+  nav: STATIC_CONTENT.nav,
+  hero: STATIC_CONTENT.hero,
+  stats: STATIC_CONTENT.stats,
+  previousWorks: STATIC_CONTENT.previousWorks,
+  services: STATIC_CONTENT.services,
+  companyProfile: STATIC_CONTENT.companyProfile,
+  products: STATIC_CONTENT.products,
+  cta: STATIC_CONTENT.cta,
+  contactPage: STATIC_CONTENT.contactPage,
+  aboutPage: STATIC_CONTENT.aboutPage,
+  footer: STATIC_CONTENT.footer,
+  routes: STATIC_CONTENT.routes,
 };
 
 const mapProductImage = (image, index) => ({
@@ -75,6 +90,35 @@ export async function getSiteSettings() {
   return mapSiteSettingsRecord(settings);
 }
 
+const mergeSiteContent = (content) => ({
+  nav: content?.nav || defaultSiteContent.nav,
+  hero: content?.hero || defaultSiteContent.hero,
+  stats: content?.stats || defaultSiteContent.stats,
+  previousWorks: content?.previousWorks || defaultSiteContent.previousWorks,
+  services: content?.services || defaultSiteContent.services,
+  companyProfile: content?.companyProfile || defaultSiteContent.companyProfile,
+  products: content?.products || defaultSiteContent.products,
+  cta: content?.cta || defaultSiteContent.cta,
+  contactPage: content?.contactPage || defaultSiteContent.contactPage,
+  aboutPage: content?.aboutPage || defaultSiteContent.aboutPage,
+  footer: content?.footer || defaultSiteContent.footer,
+  routes: content?.routes || defaultSiteContent.routes,
+});
+
+export async function getSiteContent() {
+  const content = await prisma.siteContent.findUnique({
+    where: {
+      id: "default",
+    },
+  });
+
+  if (!content) {
+    return defaultSiteContent;
+  }
+
+  return mergeSiteContent(content);
+}
+
 export async function getBrandLogo() {
   const siteSettings = await getSiteSettings();
   const brandLogo = await prisma.mediaAsset.findFirst({
@@ -114,7 +158,9 @@ export async function getHomepageMedia() {
   });
 
   return {
-    heroSlides: getSectionItems(items, "hero_slide").map((item) => item.imageUrl),
+    heroSlides: getSectionItems(items, "hero_slide").map(
+      (item) => item.imageUrl,
+    ),
     statsHighlights: getSectionItems(items, "stats_highlight").map((item) => ({
       title: item.title || "",
       subtitle: item.subtitle || "",

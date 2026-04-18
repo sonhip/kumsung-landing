@@ -5,12 +5,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SITE_TEXT } from "../../constants/siteText";
 import { toSlug } from "../../utils/productCatalog";
 
-const { nav } = SITE_TEXT;
+const defaultNav = {
+  home: "Trang chủ",
+  products: "Sản phẩm",
+  contact: "Liên hệ",
+  about: "Giới thiệu",
+  toggleMenuAriaLabel: "Mở hoặc đóng menu điều hướng",
+  toggleProductsAriaLabel: "Mở menu sản phẩm",
+  items: [],
+};
 
-const Navbar = () => {
+const Navbar = ({ nav = defaultNav }) => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);

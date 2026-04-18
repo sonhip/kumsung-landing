@@ -1,8 +1,14 @@
-import { SITE_TEXT } from "../../constants/siteText";
+const defaultServicesContent = {
+  ariaLabel: "Dịch vụ",
+  title: "",
+  tiles: [],
+};
 
-const { services } = SITE_TEXT;
-
-const OurServices = ({ tiles = services.tiles }) => {
+const OurServices = ({
+  servicesContent = defaultServicesContent,
+  tiles = [],
+}) => {
+  const services = servicesContent;
   return (
     <section className="services-section" aria-label={services.ariaLabel}>
       <div className="services-heading">

@@ -1,4 +1,4 @@
-export const SITE_TEXT = {
+export const STATIC_CONTENT = {
   company: {
     name: "CÔNG TY TM & DV ĐIỆN LẠNH TÂN VIỆT",
     shortName: "Tân Việt",
@@ -72,15 +72,18 @@ export const SITE_TEXT = {
     services: [
       {
         title: "Phân phối",
-        description: "Cung cấp thiết bị điện lạnh cho đại lý, nhà thầu và dự án.",
+        description:
+          "Cung cấp thiết bị điện lạnh cho đại lý, nhà thầu và dự án.",
       },
       {
         title: "Tư vấn",
-        description: "Đề xuất cấu hình phù hợp về hiệu suất, chi phí và vận hành.",
+        description:
+          "Đề xuất cấu hình phù hợp về hiệu suất, chi phí và vận hành.",
       },
       {
         title: "Hậu mãi",
-        description: "Hỗ trợ kỹ thuật nhanh chóng để hệ thống vận hành bền vững.",
+        description:
+          "Hỗ trợ kỹ thuật nhanh chóng để hệ thống vận hành bền vững.",
       },
     ],
     contactCta: "Trao đổi với chúng tôi",
@@ -202,7 +205,10 @@ export const SITE_TEXT = {
       { name: "EMERSON", logo: "/uploads/seed/company-emerson.svg" },
       { name: "CARRIER", logo: "/uploads/seed/company-carrier.svg" },
       { name: "DAIKIN", logo: "/uploads/seed/company-daikin.svg" },
-      { name: "MITSUBISHI ELECTRIC", logo: "/uploads/seed/company-mitsubishi.svg" },
+      {
+        name: "MITSUBISHI ELECTRIC",
+        logo: "/uploads/seed/company-mitsubishi.svg",
+      },
       { name: "PANASONIC", logo: "/uploads/seed/company-panasonic.svg" },
       { name: "LG", logo: "/uploads/seed/company-lg.svg" },
     ],

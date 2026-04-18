@@ -1,9 +1,23 @@
-import { SITE_TEXT } from "../../constants/siteText";
 import AnimatedCounter from "../ui/AnimatedCounter";
 
-const { aboutPage } = SITE_TEXT;
+const defaultAboutPageContent = {
+  ariaLabel: "Trang giới thiệu",
+  heroTitle: "",
+  heroImage: "",
+  companyTitle: "",
+  companyName: "",
+  description: "",
+  milestonesTitle: "",
+  milestonesHighlight: "",
+  milestonesSubtitle: "",
+  milestonesImage: "",
+  milestones: [],
+  teamTitle: "",
+  teamMembers: [],
+};
 
-const AboutPage = () => {
+const AboutPage = ({ aboutPageContent = defaultAboutPageContent }) => {
+  const aboutPage = aboutPageContent;
   return (
     <section className="about-page" aria-label={aboutPage.ariaLabel}>
       <div

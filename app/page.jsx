@@ -8,67 +8,78 @@ import SiteShell from "../src/components/site/SiteShell";
 import {
   getBrandLogo,
   getHomepageMedia,
+  getSiteContent,
   getSiteSettings,
 } from "../src/lib/cms";
 import ScrollReveal from "../src/components/ui/ScrollReveal";
-import { SITE_TEXT } from "../src/constants/siteText";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [brandLogo, homepageMedia, siteSettings] = await Promise.all([
-    getBrandLogo(),
-    getHomepageMedia(),
-    getSiteSettings(),
-  ]);
+  const [brandLogo, homepageMedia, siteSettings, siteContent] =
+    await Promise.all([
+      getBrandLogo(),
+      getHomepageMedia(),
+      getSiteSettings(),
+      getSiteContent(),
+    ]);
 
   return (
-    <SiteShell brandLogo={brandLogo} siteSettings={siteSettings}>
+    <SiteShell
+      brandLogo={brandLogo}
+      siteSettings={siteSettings}
+      siteContent={siteContent}
+    >
       <Hero
+        heroContent={siteContent.hero}
         backgroundImages={
           homepageMedia.heroSlides.length
             ? homepageMedia.heroSlides
-            : SITE_TEXT.hero.backgroundImages
+            : siteContent.hero.backgroundImages
         }
       />
       <ScrollReveal>
         <Stats
+          statsContent={siteContent.stats}
           highlights={
             homepageMedia.statsHighlights.length
               ? homepageMedia.statsHighlights
-              : SITE_TEXT.stats.highlights
+              : siteContent.stats.highlights
           }
         />
       </ScrollReveal>
       <ScrollReveal>
         <PreviousWorks
+          previousWorksContent={siteContent.previousWorks}
           items={
             homepageMedia.previousWorks.length
               ? homepageMedia.previousWorks
-              : SITE_TEXT.previousWorks.items
+              : siteContent.previousWorks.items
           }
         />
       </ScrollReveal>
       <ScrollReveal>
         <OurServices
+          servicesContent={siteContent.services}
           tiles={
             homepageMedia.serviceTiles.length
               ? homepageMedia.serviceTiles
-              : SITE_TEXT.services.tiles
+              : siteContent.services.tiles
           }
         />
       </ScrollReveal>
       <ScrollReveal>
         <OurCompany
+          companyProfileContent={siteContent.companyProfile}
           partners={
             homepageMedia.partnerLogos.length
               ? homepageMedia.partnerLogos
-              : SITE_TEXT.companyProfile.partners
+              : siteContent.companyProfile.partners
           }
         />
       </ScrollReveal>
       <ScrollReveal>
-        <CTABanner />
+        <CTABanner ctaContent={siteContent.cta} />
       </ScrollReveal>
     </SiteShell>
   );

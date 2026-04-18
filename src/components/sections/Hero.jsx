@@ -5,11 +5,20 @@ import { Button } from "antd";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { SITE_TEXT } from "../../constants/siteText";
+const defaultHeroContent = {
+  ariaLabel: "Khu vực giới thiệu chính",
+  prevButtonAriaLabel: "Chuyển về ảnh trước",
+  nextButtonAriaLabel: "Chuyển tới ảnh tiếp theo",
+  backgroundImages: [],
+  kicker: "",
+  headlineWords: [],
+  subtitle: "",
+  viewProductsButton: "Xem sản phẩm",
+  contactButton: "Liên hệ ngay",
+};
 
-const { hero } = SITE_TEXT;
-
-const Hero = ({ backgroundImages = hero.backgroundImages }) => {
+const Hero = ({ heroContent = defaultHeroContent, backgroundImages = [] }) => {
+  const hero = heroContent;
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = backgroundImages.length;
 

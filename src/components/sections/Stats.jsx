@@ -5,12 +5,17 @@ import {
   ShoppingOutlined,
   ToolOutlined,
 } from "@ant-design/icons";
-import { SITE_TEXT } from "../../constants/siteText";
-
-const { stats } = SITE_TEXT;
+const defaultStatsContent = {
+  ariaLabel: "Điểm mạnh của doanh nghiệp",
+  highlights: [],
+  serviceMark: "",
+  services: [],
+  contactCta: "Liên hệ",
+};
 const serviceIcons = [ShoppingOutlined, ToolOutlined, CustomerServiceOutlined];
 
-const Stats = ({ highlights = stats.highlights }) => {
+const Stats = ({ statsContent = defaultStatsContent, highlights = [] }) => {
+  const stats = statsContent;
   return (
     <section className="stats-section" aria-label={stats.ariaLabel}>
       <div className="stats-highlights">
