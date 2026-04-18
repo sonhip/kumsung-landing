@@ -55,7 +55,8 @@ const resolveLocalUploadPath = (url) => {
 };
 
 const hasReferenceToUpload = async (url) => {
-  const [mediaCount, productImageCount, productContentCount] = await Promise.all([
+  const [mediaCount, productImageCount, productContentCount, teamMemberCount] =
+    await Promise.all([
     prisma.mediaAsset.count({
       where: {
         imageUrl: url,
@@ -73,9 +74,19 @@ const hasReferenceToUpload = async (url) => {
         },
       },
     }),
-  ]);
+    prisma.teamMember.count({
+      where: {
+        imageUrl: url,
+      },
+    }),
+    ]);
 
-  return mediaCount > 0 || productImageCount > 0 || productContentCount > 0;
+  return (
+    mediaCount > 0 ||
+    productImageCount > 0 ||
+    productContentCount > 0 ||
+    teamMemberCount > 0
+  );
 };
 
 export const deleteUploadIfUnused = async (url) => {

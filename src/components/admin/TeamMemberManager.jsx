@@ -7,6 +7,7 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import {
+  App,
   Button,
   Card,
   Form,
@@ -15,33 +16,21 @@ import {
   InputNumber,
   Modal,
   Popconfirm,
-  Select,
   Space,
   Switch,
   Table,
   Tag,
   Upload,
-  message,
 } from "antd";
-import { useMemo, useState } from "react";
-
-const sectionOptions = [
-  { label: "Hero Slide", value: "hero_slide" },
-  { label: "Stats Highlight", value: "stats_highlight" },
-  { label: "Service Tile", value: "service_tile" },
-  { label: "Previous Work", value: "previous_work" },
-  { label: "Partner Logo", value: "partner_logo" },
-];
+import { useState } from "react";
 
 const initialValues = {
-  section: "hero_slide",
-  title: "",
-  subtitle: "",
-  description: "",
+  fullName: "",
+  role: "",
+  email: "",
+  phone: "",
   imageUrl: "",
-  altText: "",
-  tone: "",
-  variant: "image",
+  bio: "",
   sortOrder: 0,
   isActive: true,
 };
@@ -65,41 +54,33 @@ const uploadImage = async (file) => {
   return result.url;
 };
 
-export default function MediaManager({ initialItems = [] }) {
+export default function TeamMemberManager({ initialItems = [] }) {
+  const { message } = App.useApp();
   const [form] = Form.useForm();
   const [items, setItems] = useState(initialItems);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
-  const [sectionFilter, setSectionFilter] = useState("all");
 
   const loadItems = async () => {
     setLoading(true);
     try {
-      const response = await fetch("/api/admin/media");
+      const response = await fetch("/api/admin/team-members");
       const result = await response.json();
 
       if (!response.ok) {
-        message.error(result.error || "Không thể tải media.");
+        message.error(result.error || "Không thể tải thành viên.");
         return;
       }
 
       setItems(result);
     } catch {
-      message.error("Không thể tải media.");
+      message.error("Không thể tải thành viên.");
     } finally {
       setLoading(false);
     }
   };
-
-  const filteredItems = useMemo(() => {
-    if (sectionFilter === "all") {
-      return items;
-    }
-
-    return items.filter((item) => item.section === sectionFilter);
-  }, [items, sectionFilter]);
 
   const openCreate = () => {
     setEditingItem(null);
@@ -117,18 +98,18 @@ export default function MediaManager({ initialItems = [] }) {
   };
 
   const handleDelete = async (id) => {
-    const response = await fetch(`/api/admin/media/${id}`, {
+    const response = await fetch(`/api/admin/team-members/${id}`, {
       method: "DELETE",
     });
 
     const result = await response.json();
 
     if (!response.ok) {
-      message.error(result.error || "Không thể xóa media.");
+      message.error(result.error || "Không thể xóa thành viên.");
       return;
     }
 
-    message.success("Đã xóa media.");
+    message.success("Đã xóa thành viên.");
     loadItems();
   };
 
@@ -136,7 +117,9 @@ export default function MediaManager({ initialItems = [] }) {
     setSaving(true);
 
     const response = await fetch(
-      editingItem ? `/api/admin/media/${editingItem.id}` : "/api/admin/media",
+      editingItem
+        ? `/api/admin/team-members/${editingItem.id}`
+        : "/api/admin/team-members",
       {
         method: editingItem ? "PATCH" : "POST",
         headers: {
@@ -147,15 +130,14 @@ export default function MediaManager({ initialItems = [] }) {
     );
 
     const result = await response.json();
-
     setSaving(false);
 
     if (!response.ok) {
-      message.error(result.error || "Không thể lưu media.");
+      message.error(result.error || "Không thể lưu thành viên.");
       return;
     }
 
-    message.success(editingItem ? "Đã cập nhật media." : "Đã tạo media.");
+    message.success(editingItem ? "Đã cập nhật thành viên." : "Đã tạo thành viên.");
     setOpen(false);
     loadItems();
   };
@@ -165,35 +147,39 @@ export default function MediaManager({ initialItems = [] }) {
       title: "Ảnh",
       dataIndex: "imageUrl",
       key: "imageUrl",
-      width: 110,
-      render: (value, item) => (
-        <Image
-          src={value}
-          alt={item.altText || item.title || "media"}
-          width={72}
-          height={56}
-          style={{ objectFit: "cover", borderRadius: 8 }}
-        />
+      width: 96,
+      render: (value, item) =>
+        value ? (
+          <Image
+            src={value}
+            alt={item.fullName}
+            width={58}
+            height={58}
+            style={{ objectFit: "cover", borderRadius: 10 }}
+          />
+        ) : (
+          <Tag>Không có ảnh</Tag>
+        ),
+    },
+    {
+      title: "Thành viên",
+      key: "member",
+      render: (_, item) => (
+        <div>
+          <div style={{ fontWeight: 600 }}>{item.fullName}</div>
+          <div style={{ color: "#7b8a99" }}>{item.role || "Đang cập nhật"}</div>
+        </div>
       ),
     },
     {
-      title: "Section",
-      dataIndex: "section",
-      key: "section",
-      render: (value) => <Tag color="blue">{value}</Tag>,
-    },
-    {
-      title: "Tiêu đề",
-      dataIndex: "title",
-      key: "title",
-      render: (value) =>
-        value || <span style={{ color: "#9aa8b6" }}>Không có</span>,
-    },
-    {
-      title: "Variant",
-      dataIndex: "variant",
-      key: "variant",
-      render: (value) => value || "-",
+      title: "Liên hệ",
+      key: "contact",
+      render: (_, item) => (
+        <div>
+          <div>{item.email || "-"}</div>
+          <div style={{ color: "#7b8a99" }}>{item.phone || "-"}</div>
+        </div>
+      ),
     },
     {
       title: "Thứ tự",
@@ -217,7 +203,7 @@ export default function MediaManager({ initialItems = [] }) {
         <Space>
           <Button icon={<EditOutlined />} onClick={() => openEdit(item)} />
           <Popconfirm
-            title="Xóa media này?"
+            title="Xóa thành viên này?"
             onConfirm={() => handleDelete(item.id)}
           >
             <Button danger icon={<DeleteOutlined />} />
@@ -229,34 +215,23 @@ export default function MediaManager({ initialItems = [] }) {
 
   return (
     <Card
-      title="Quản lý media homepage"
+      title="Quản lý thành viên"
       extra={
-        <Space>
-          <Select
-            value={sectionFilter}
-            style={{ minWidth: 180 }}
-            onChange={setSectionFilter}
-            options={[
-              { label: "Tất cả section", value: "all" },
-              ...sectionOptions,
-            ]}
-          />
-          <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
-            Thêm media
-          </Button>
-        </Space>
+        <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
+          Thêm thành viên
+        </Button>
       }
     >
       <Table
         rowKey="id"
         loading={loading}
         columns={columns}
-        dataSource={filteredItems}
-        scroll={{ x: 1100 }}
+        dataSource={items}
+        scroll={{ x: 980 }}
       />
 
       <Modal
-        title={editingItem ? "Cập nhật media" : "Thêm media"}
+        title={editingItem ? "Cập nhật thành viên" : "Thêm thành viên"}
         open={open}
         onCancel={() => setOpen(false)}
         footer={null}
@@ -269,16 +244,13 @@ export default function MediaManager({ initialItems = [] }) {
           initialValues={initialValues}
           onFinish={handleFinish}
         >
-          <Form.Item
-            label="Section"
-            name="section"
-            rules={[{ required: true }]}
-          >
-            <Select options={sectionOptions} />
-          </Form.Item>
-
           <Space style={{ display: "flex" }} align="start">
-            <Form.Item label="Tiêu đề" name="title" style={{ flex: 1 }}>
+            <Form.Item
+              label="Họ và tên"
+              name="fullName"
+              style={{ flex: 1 }}
+              rules={[{ required: true, message: "Vui lòng nhập họ và tên." }]}
+            >
               <Input />
             </Form.Item>
             <Form.Item label="Thứ tự" name="sortOrder" style={{ width: 120 }}>
@@ -286,19 +258,24 @@ export default function MediaManager({ initialItems = [] }) {
             </Form.Item>
           </Space>
 
-          <Form.Item label="Subtitle" name="subtitle">
+          <Form.Item label="Chức danh" name="role">
             <Input />
           </Form.Item>
 
-          <Form.Item label="Mô tả thêm" name="description">
+          <Space style={{ display: "flex" }} align="start">
+            <Form.Item label="Email" name="email" style={{ flex: 1 }}>
+              <Input type="email" />
+            </Form.Item>
+            <Form.Item label="Số điện thoại" name="phone" style={{ flex: 1 }}>
+              <Input />
+            </Form.Item>
+          </Space>
+
+          <Form.Item label="Tiểu sử ngắn" name="bio">
             <Input.TextArea rows={3} />
           </Form.Item>
 
-          <Form.Item
-            label="URL hình ảnh"
-            name="imageUrl"
-            rules={[{ required: true }]}
-          >
+          <Form.Item label="Ảnh đại diện (URL)" name="imageUrl">
             <Input
               addonAfter={
                 <Upload
@@ -307,7 +284,7 @@ export default function MediaManager({ initialItems = [] }) {
                     try {
                       const url = await uploadImage(file);
                       form.setFieldValue("imageUrl", url);
-                      message.success("Upload thành công.");
+                      message.success("Upload ảnh thành công.");
                     } catch (error) {
                       message.error(error.message);
                     }
@@ -321,31 +298,7 @@ export default function MediaManager({ initialItems = [] }) {
             />
           </Form.Item>
 
-          <Space style={{ display: "flex" }} align="start">
-            <Form.Item label="Alt text" name="altText" style={{ flex: 1 }}>
-              <Input />
-            </Form.Item>
-            <Form.Item label="Variant" name="variant" style={{ width: 160 }}>
-              <Select
-                allowClear
-                options={[
-                  { label: "image", value: "image" },
-                  { label: "content", value: "content" },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item label="Tone" name="tone" style={{ width: 160 }}>
-              <Select
-                allowClear
-                options={[
-                  { label: "dark", value: "dark" },
-                  { label: "gold", value: "gold" },
-                ]}
-              />
-            </Form.Item>
-          </Space>
-
-          <Form.Item label="Hiển thị" name="isActive" valuePropName="checked">
+          <Form.Item name="isActive" valuePropName="checked" label="Hiển thị">
             <Switch />
           </Form.Item>
 

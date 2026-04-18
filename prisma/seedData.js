@@ -508,7 +508,7 @@ export const STATIC_CONTENT = {
         label: "Chất lượng làm trọng tâm",
       },
     ],
-    teamTitle: "Hình Ảnh Hoạt Động",
+    teamTitle: "Gặp gỡ chúng tôi",
     teamMembers: [
       {
         name: "Tân Việt 1",

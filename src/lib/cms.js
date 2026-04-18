@@ -8,6 +8,18 @@ const mapProductImage = (image, index) => ({
   sortOrder: image.sortOrder,
 });
 
+const mapTeamMemberRecord = (member) => ({
+  id: member.id,
+  fullName: member.fullName,
+  role: member.role || "",
+  email: member.email || "",
+  phone: member.phone || "",
+  imageUrl: member.imageUrl || "",
+  bio: member.bio || "",
+  sortOrder: member.sortOrder,
+  isActive: member.isActive,
+});
+
 const mapProductRecord = (product) => {
   const images = [...product.images]
     .sort((left, right) => left.sortOrder - right.sortOrder)
@@ -125,24 +137,7 @@ export async function getBrandLogo() {
         siteSettings.branding.logoAltText || siteSettings.company.shortName,
     };
   }
-
-  const brandLogo = await prisma.mediaAsset.findFirst({
-    where: {
-      section: "brand_logo",
-      isActive: true,
-    },
-    orderBy: {
-      sortOrder: "asc",
-    },
-  });
-
-  return brandLogo
-    ? {
-        id: brandLogo.id,
-        imageUrl: brandLogo.imageUrl,
-        altText: brandLogo.altText || siteSettings.company.shortName,
-      }
-    : null;
+  return null;
 }
 
 export async function getHomepageMedia() {
@@ -212,6 +207,25 @@ export async function getAdminProducts() {
   });
 
   return products.map(mapProductRecord);
+}
+
+export async function getAdminTeamMembers() {
+  const members = await prisma.teamMember.findMany({
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+  });
+
+  return members.map(mapTeamMemberRecord);
+}
+
+export async function getPublicTeamMembers() {
+  const members = await prisma.teamMember.findMany({
+    where: {
+      isActive: true,
+    },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+  });
+
+  return members.map(mapTeamMemberRecord);
 }
 
 export async function getPublicProducts() {

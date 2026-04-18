@@ -1638,8 +1638,67 @@ main {
 }
 
 .about-team-card {
-  background: #dcdcdc;
+  background: #ffffff;
+  border-radius: 16px;
   overflow: hidden;
+  border: 1px solid rgba(22, 54, 95, 0.1);
+  box-shadow: 0 10px 26px rgba(22, 54, 95, 0.08);
+}
+
+.about-team-placeholder {
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2f5f93 0%, #1799dc 100%);
+}
+
+.about-team-card-content {
+  padding: 1rem 1rem 1.1rem;
+}
+
+.about-team-card-content h3 {
+  margin: 0;
+  color: #16365f;
+  font-size: 1.1rem;
+}
+
+.about-team-role {
+  margin: 0.35rem 0 0;
+  color: #2f5f93;
+  font-weight: 600;
+}
+
+.about-team-bio {
+  margin: 0.55rem 0 0;
+  color: #5e738b;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.about-team-contact {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.9rem;
+  color: #4a6079;
+}
+
+.about-team-contact a:hover {
+  color: #1799dc;
+}
+
+.about-team-empty {
+  grid-column: 1 / -1;
+  padding: 1.25rem;
+  border-radius: 14px;
+  border: 1px dashed rgba(22, 54, 95, 0.28);
+  color: #5f738a;
+  text-align: center;
+  background: #f3f8fc;
 }
 
 .about-team-card img {

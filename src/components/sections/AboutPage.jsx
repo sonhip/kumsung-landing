@@ -13,10 +13,9 @@ const defaultAboutPageContent = {
   milestonesImage: "",
   milestones: [],
   teamTitle: "",
-  teamMembers: [],
 };
 
-const AboutPage = ({ aboutPageContent = defaultAboutPageContent }) => {
+const AboutPage = ({ aboutPageContent = defaultAboutPageContent, teamMembers = [] }) => {
   const aboutPage = aboutPageContent;
   return (
     <section className="about-page" aria-label={aboutPage.ariaLabel}>
@@ -66,14 +65,31 @@ const AboutPage = ({ aboutPageContent = defaultAboutPageContent }) => {
 
       <div className="about-team-section">
         <div className="container">
-          <h2>{aboutPage.teamTitle}</h2>
+          <h2>{aboutPage.teamTitle || "Gặp gỡ chúng tôi"}</h2>
 
           <div className="about-team-grid">
-            {aboutPage.teamMembers.map((member) => (
-              <article key={member.name} className="about-team-card">
-                <img src={member.image} alt={member.name} loading="lazy" />
+            {teamMembers.length ? teamMembers.map((member) => (
+              <article key={member.id} className="about-team-card">
+                {member.imageUrl ? (
+                  <img src={member.imageUrl} alt={member.fullName} loading="lazy" />
+                ) : (
+                  <div className="about-team-placeholder">TV</div>
+                )}
+                <div className="about-team-card-content">
+                  <h3>{member.fullName}</h3>
+                  {member.role ? <p className="about-team-role">{member.role}</p> : null}
+                  {member.bio ? <p className="about-team-bio">{member.bio}</p> : null}
+                  <div className="about-team-contact">
+                    {member.email ? (
+                      <a href={`mailto:${member.email}`}>{member.email}</a>
+                    ) : null}
+                    {member.phone ? <span>{member.phone}</span> : null}
+                  </div>
+                </div>
               </article>
-            ))}
+            )) : (
+              <div className="about-team-empty">Danh sách thành viên đang được cập nhật.</div>
+            )}
           </div>
         </div>
       </div>

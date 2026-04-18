@@ -179,11 +179,39 @@ async function seedProducts() {
   }
 }
 
+async function seedTeamMembers() {
+  const count = await prisma.teamMember.count();
+
+  if (count > 0) {
+    return;
+  }
+
+  const teamMembers = STATIC_CONTENT.aboutPage.teamMembers || [];
+
+  if (!teamMembers.length) {
+    return;
+  }
+
+  await prisma.teamMember.createMany({
+    data: teamMembers.map((member, index) => ({
+      fullName: member.name,
+      role: member.role || null,
+      imageUrl: member.image || null,
+      email: null,
+      phone: null,
+      bio: null,
+      sortOrder: index,
+      isActive: true,
+    })),
+  });
+}
+
 async function main() {
   await seedSiteSettings();
   await seedSiteContent();
   await seedMediaAssets();
   await seedProducts();
+  await seedTeamMembers();
 }
 
 main()
