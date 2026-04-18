@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { STATIC_CONTENT } from "../src/constants/staticContent.js";
+import { STATIC_CONTENT } from "./seedData.js";
 import { toSlug } from "../src/utils/productCatalog.js";
 
 const prisma = new PrismaClient();

@@ -1,9 +1,28 @@
 "use client";
 
-import { App, Button, Card, Form, Input, Typography } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { App, Button, Card, Form, Input, InputNumber, Typography, Upload } from "antd";
 import { useState } from "react";
 
 const { Paragraph, Title } = Typography;
+
+const uploadImage = async (file, folder = "general") => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("folder", folder);
+
+  const response = await fetch("/api/admin/uploads", {
+    method: "POST",
+    body: formData,
+  });
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || "Upload thất bại.");
+  }
+
+  return result.url;
+};
 
 export default function SiteSettingsForm({ initialValues }) {
   const { message } = App.useApp();
@@ -175,6 +194,82 @@ export default function SiteSettingsForm({ initialValues }) {
                 name={["contact", "facebookAriaLabel"]}
               >
                 <Input />
+              </Form.Item>
+            </Card>
+          </div>
+
+          <div>
+            <Card
+              size="small"
+              title="Logo, favicon và footer"
+              styles={{ body: { paddingBottom: 0 } }}
+            >
+              <Form.Item label="Logo công ty (URL)" name={["branding", "logoUrl"]}>
+                <Input
+                  addonAfter={
+                    <Upload
+                      showUploadList={false}
+                      beforeUpload={async (file) => {
+                        try {
+                          const url = await uploadImage(file, "media");
+                          form.setFieldValue(["branding", "logoUrl"], url);
+                          message.success("Upload logo thành công.");
+                        } catch (error) {
+                          message.error(error.message);
+                        }
+
+                        return false;
+                      }}
+                    >
+                      <Button icon={<UploadOutlined />}>Upload</Button>
+                    </Upload>
+                  }
+                />
+              </Form.Item>
+
+              <Form.Item label="Alt text logo" name={["branding", "logoAltText"]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item label="Favicon (URL)" name={["branding", "faviconUrl"]}>
+                <Input
+                  addonAfter={
+                    <Upload
+                      showUploadList={false}
+                      beforeUpload={async (file) => {
+                        try {
+                          const url = await uploadImage(file, "general");
+                          form.setFieldValue(["branding", "faviconUrl"], url);
+                          message.success("Upload favicon thành công.");
+                        } catch (error) {
+                          message.error(error.message);
+                        }
+
+                        return false;
+                      }}
+                    >
+                      <Button icon={<UploadOutlined />}>Upload</Button>
+                    </Upload>
+                  }
+                />
+              </Form.Item>
+
+              <Form.Item
+                label="Tiêu đề khối liên hệ footer"
+                name={["footer", "contactInfoTitle"]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item label="Dòng bản quyền footer" name={["footer", "rightsText"]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Năm bắt đầu bản quyền"
+                name={["footer", "copyrightStartYear"]}
+              >
+                <InputNumber min={1900} max={3000} style={{ width: "100%" }} />
               </Form.Item>
             </Card>
           </div>

@@ -20,7 +20,7 @@ export default function SiteShell({
       <Footer
         company={siteSettings.company}
         contact={siteSettings.contact}
-        footerContent={siteContent.footer}
+        footerContent={siteSettings.footer || siteContent.footer}
       />
     </div>
   );

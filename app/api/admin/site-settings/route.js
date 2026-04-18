@@ -1,4 +1,15 @@
 import { prisma } from "../../../../src/lib/prisma";
+import { Prisma } from "@prisma/client";
+
+const siteSettingsModel = Prisma.dmmf.datamodel.models.find(
+  (model) => model.name === "SiteSettings",
+);
+const siteSettingsFieldNames = new Set(
+  (siteSettingsModel?.fields || []).map((field) => field.name),
+);
+
+const getUnsupportedSiteSettingsFields = (data) =>
+  Object.keys(data).filter((key) => !siteSettingsFieldNames.has(key));
 
 const validateSiteSettingsPayload = (payload) => {
   if (!payload.company?.name?.trim()) {
@@ -13,6 +24,19 @@ const validateSiteSettingsPayload = (payload) => {
     return { error: "Vui lòng nhập email liên hệ." };
   }
 
+  const rawStartYear = payload.footer?.copyrightStartYear;
+  const parsedStartYear =
+    rawStartYear === undefined || rawStartYear === null || rawStartYear === ""
+      ? null
+      : Number(rawStartYear);
+
+  if (
+    parsedStartYear !== null &&
+    (!Number.isInteger(parsedStartYear) || parsedStartYear < 1900)
+  ) {
+    return { error: "Năm bắt đầu bản quyền không hợp lệ." };
+  }
+
   return {
     data: {
       companyName: payload.company.name.trim(),
@@ -23,6 +47,12 @@ const validateSiteSettingsPayload = (payload) => {
       companyDistributorLabel: payload.company.distributorLabel?.trim() || "",
       companyDistributorValue: payload.company.distributorValue?.trim() || "",
       companyQuoteButton: payload.company.quoteButton?.trim() || "Liên hệ tư vấn",
+      companyLogoUrl: payload.branding?.logoUrl?.trim() || null,
+      companyLogoAltText:
+        payload.branding?.logoAltText?.trim() ||
+        payload.company.shortName.trim() ||
+        null,
+      faviconUrl: payload.branding?.faviconUrl?.trim() || null,
       contactPhone: payload.contact.phone?.trim() || "",
       contactHours: payload.contact.hours?.trim() || "",
       contactAddressFull: payload.contact.addressFull?.trim() || "",
@@ -34,6 +64,10 @@ const validateSiteSettingsPayload = (payload) => {
       contactFacebookUrl: payload.contact.facebookUrl?.trim() || "",
       contactFacebookAriaLabel:
         payload.contact.facebookAriaLabel?.trim() || "Truy cập Facebook",
+      footerContactInfoTitle:
+        payload.footer?.contactInfoTitle?.trim() || null,
+      footerRightsText: payload.footer?.rightsText?.trim() || null,
+      footerCopyrightStartYear: parsedStartYear,
     },
   };
 };
@@ -58,6 +92,16 @@ const mapSiteSettingsRecord = (settings) => ({
     facebookUrl: settings.contactFacebookUrl,
     facebookAriaLabel: settings.contactFacebookAriaLabel,
   },
+  branding: {
+    logoUrl: settings.companyLogoUrl,
+    logoAltText: settings.companyLogoAltText,
+    faviconUrl: settings.faviconUrl,
+  },
+  footer: {
+    contactInfoTitle: settings.footerContactInfoTitle || "",
+    rightsText: settings.footerRightsText || "",
+    copyrightStartYear: settings.footerCopyrightStartYear || null,
+  },
 });
 
 export async function GET() {
@@ -67,7 +111,14 @@ export async function GET() {
     },
   });
 
-  return Response.json(settings ? mapSiteSettingsRecord(settings) : null);
+  if (!settings) {
+    return Response.json(
+      { error: "Thiếu dữ liệu SiteSettings trong database." },
+      { status: 404 },
+    );
+  }
+
+  return Response.json(mapSiteSettingsRecord(settings));
 }
 
 export async function PUT(request) {
@@ -77,6 +128,19 @@ export async function PUT(request) {
 
     if (validation.error) {
       return Response.json({ error: validation.error }, { status: 400 });
+    }
+
+    const unsupportedFields = getUnsupportedSiteSettingsFields(validation.data);
+
+    if (unsupportedFields.length > 0) {
+      return Response.json(
+        {
+          error:
+            "Prisma Client chưa đồng bộ schema mới. Hãy chạy db:generate, db:push và khởi động lại server.",
+          details: unsupportedFields,
+        },
+        { status: 500 },
+      );
     }
 
     const settings = await prisma.siteSettings.upsert({

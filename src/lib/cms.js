@@ -1,26 +1,5 @@
 import { prisma } from "./prisma";
-import { STATIC_CONTENT } from "../constants/staticContent";
 import { toSlug } from "../utils/productCatalog";
-
-const defaultSiteSettings = {
-  company: STATIC_CONTENT.company,
-  contact: STATIC_CONTENT.contact,
-};
-
-const defaultSiteContent = {
-  nav: STATIC_CONTENT.nav,
-  hero: STATIC_CONTENT.hero,
-  stats: STATIC_CONTENT.stats,
-  previousWorks: STATIC_CONTENT.previousWorks,
-  services: STATIC_CONTENT.services,
-  companyProfile: STATIC_CONTENT.companyProfile,
-  products: STATIC_CONTENT.products,
-  cta: STATIC_CONTENT.cta,
-  contactPage: STATIC_CONTENT.contactPage,
-  aboutPage: STATIC_CONTENT.aboutPage,
-  footer: STATIC_CONTENT.footer,
-  routes: STATIC_CONTENT.routes,
-};
 
 const mapProductImage = (image, index) => ({
   id: image.id,
@@ -74,6 +53,16 @@ const mapSiteSettingsRecord = (settings) => ({
     facebookUrl: settings.contactFacebookUrl,
     facebookAriaLabel: settings.contactFacebookAriaLabel,
   },
+  branding: {
+    logoUrl: settings.companyLogoUrl || null,
+    logoAltText: settings.companyLogoAltText || settings.companyShortName,
+    faviconUrl: settings.faviconUrl || null,
+  },
+  footer: {
+    contactInfoTitle: settings.footerContactInfoTitle || "",
+    rightsText: settings.footerRightsText || "",
+    copyrightStartYear: settings.footerCopyrightStartYear || null,
+  },
 });
 
 export async function getSiteSettings() {
@@ -84,25 +73,27 @@ export async function getSiteSettings() {
   });
 
   if (!settings) {
-    return defaultSiteSettings;
+    throw new Error(
+      "Missing SiteSettings record (id=default). Seed database before running app.",
+    );
   }
 
   return mapSiteSettingsRecord(settings);
 }
 
-const mergeSiteContent = (content) => ({
-  nav: content?.nav || defaultSiteContent.nav,
-  hero: content?.hero || defaultSiteContent.hero,
-  stats: content?.stats || defaultSiteContent.stats,
-  previousWorks: content?.previousWorks || defaultSiteContent.previousWorks,
-  services: content?.services || defaultSiteContent.services,
-  companyProfile: content?.companyProfile || defaultSiteContent.companyProfile,
-  products: content?.products || defaultSiteContent.products,
-  cta: content?.cta || defaultSiteContent.cta,
-  contactPage: content?.contactPage || defaultSiteContent.contactPage,
-  aboutPage: content?.aboutPage || defaultSiteContent.aboutPage,
-  footer: content?.footer || defaultSiteContent.footer,
-  routes: content?.routes || defaultSiteContent.routes,
+const mapSiteContentRecord = (content) => ({
+  nav: content.nav,
+  hero: content.hero,
+  stats: content.stats,
+  previousWorks: content.previousWorks,
+  services: content.services,
+  companyProfile: content.companyProfile,
+  products: content.products,
+  cta: content.cta,
+  contactPage: content.contactPage,
+  aboutPage: content.aboutPage,
+  footer: content.footer,
+  routes: content.routes,
 });
 
 export async function getSiteContent() {
@@ -113,14 +104,26 @@ export async function getSiteContent() {
   });
 
   if (!content) {
-    return defaultSiteContent;
+    throw new Error(
+      "Missing SiteContent record (id=default). Seed database before running app.",
+    );
   }
 
-  return mergeSiteContent(content);
+  return mapSiteContentRecord(content);
 }
 
 export async function getBrandLogo() {
   const siteSettings = await getSiteSettings();
+
+  if (siteSettings.branding.logoUrl) {
+    return {
+      id: "site_settings_logo",
+      imageUrl: siteSettings.branding.logoUrl,
+      altText:
+        siteSettings.branding.logoAltText || siteSettings.company.shortName,
+    };
+  }
+
   const brandLogo = await prisma.mediaAsset.findFirst({
     where: {
       section: "brand_logo",
