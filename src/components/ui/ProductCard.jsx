@@ -14,17 +14,34 @@ const ProductCard = ({
 }) => {
   const content = (
     <>
-      {image && (
-        <img src={image} alt={title} className="product-image" loading="lazy" />
-      )}
-      <motion.div whileHover={{ scale: 1.08 }} transition={{ duration: 0.2 }}>
-        <Icon className="product-icon" aria-hidden="true" />
-      </motion.div>
-      <h3>{title}</h3>
-      <p>{description}</p>
-      <span className="learn-more" aria-label={`Xem chi tiết ${title}`}>
-        {learnMoreLabel} <ArrowRightOutlined />
-      </span>
+      <div className="product-card-media">
+        {image && (
+          <img
+            src={image}
+            alt={title}
+            className="product-image"
+            loading="lazy"
+          />
+        )}
+        <motion.span
+          className="product-card-icon-badge"
+          whileHover={{ scale: 1.06 }}
+          transition={{ duration: 0.2 }}
+        >
+          <Icon className="product-icon" aria-hidden="true" />
+        </motion.span>
+      </div>
+
+      <div className="product-card-body">
+        <h3 className="product-title">{title}</h3>
+        <p className="product-description">{description}</p>
+      </div>
+
+      <div className="product-card-footer">
+        <span className="learn-more" aria-label={`Xem chi tiết ${title}`}>
+          {learnMoreLabel} <ArrowRightOutlined />
+        </span>
+      </div>
     </>
   );
 
