@@ -7,6 +7,12 @@ const isAuthenticated = (request) =>
 export function middleware(request) {
   const { pathname } = request.nextUrl;
 
+  if (pathname.startsWith("/uploads/")) {
+    const targetUrl = request.nextUrl.clone();
+    targetUrl.pathname = pathname.replace("/uploads/", "/api/files/");
+    return NextResponse.rewrite(targetUrl);
+  }
+
   if (pathname.startsWith("/static/images/")) {
     const targetUrl = request.nextUrl.clone();
     targetUrl.pathname = pathname.replace("/static/images/", "/uploads/seed/");
@@ -40,5 +46,10 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*", "/static/images/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/api/admin/:path*",
+    "/static/images/:path*",
+    "/uploads/:path*",
+  ],
 };
