@@ -323,9 +323,19 @@ export default function MediaManager({ initialItems = [] }) {
 
           {!isHeroSlideSection ? (
             <Form.Item
-              label={isPartnerLogoSection ? "Tên đối tác" : "Tiêu đề"}
+              label={
+                isPartnerLogoSection
+                  ? "Tên đối tác"
+                  : isServiceTileSection
+                    ? "Tiêu đề (tuỳ chọn)"
+                    : "Tiêu đề"
+              }
               name="title"
-              rules={[{ required: true, message: "Vui lòng nhập tiêu đề." }]}
+              rules={
+                isServiceTileSection
+                  ? []
+                  : [{ required: true, message: "Vui lòng nhập tiêu đề." }]
+              }
             >
               <Input />
             </Form.Item>
