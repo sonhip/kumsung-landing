@@ -123,39 +123,50 @@ const formatSubmissionTime = (date = new Date()) =>
 const buildTemplateParams = ({
   submission,
   metadata,
-  recipientEmail,
   companyName,
+  companyEmail,
+  companyPhone,
   request,
 }) => {
-  const resolvedSubject =
-    submission.subject || "Khách hàng gửi liên hệ từ website";
+  const resolvedSubject = submission.subject || "Liên hệ từ website";
   const websiteUrl = request.headers.get("origin") || "Không xác định";
   const submittedAt = formatSubmissionTime();
+  const companySignature = [
+    "",
+    "Trân trọng,",
+    companyName,
+    companyEmail ? `Email hỗ trợ: ${companyEmail}` : "",
+    companyPhone ? `Điện thoại: ${companyPhone}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
 
   const emailBody = [
-    "Bạn vừa nhận được một liên hệ mới từ form Contact.",
+    `Xin chào ${submission.name},`,
     "",
+    "Chúng tôi đã tiếp nhận yêu cầu liên hệ của bạn.",
+    "Đội ngũ tư vấn sẽ phản hồi trong thời gian sớm nhất, vui lòng chờ thêm.",
+    "",
+    "Thông tin bạn đã gửi:",
     `- Họ và tên: ${submission.name}`,
     `- Email: ${submission.email}`,
     `- Chủ đề: ${resolvedSubject}`,
-    "- Nội dung:",
-    submission.message,
+    `- Nội dung: ${submission.message}`,
     "",
-    "--- Thông tin hệ thống ---",
-    `- Thời gian gửi: ${submittedAt}`,
-    `- Website: ${websiteUrl}`,
-    `- IP: ${metadata.ipAddress || "Không xác định"}`,
-    `- User Agent: ${metadata.userAgent || "Không xác định"}`,
+    `Mã xác nhận: CONTACT-${Date.now()}`,
+    `Thời gian tiếp nhận: ${submittedAt}`,
+    `Website: ${websiteUrl}`,
+    companySignature,
   ].join("\n");
 
   return {
-    to_email: recipientEmail,
-    email_subject: `[${companyName}] ${resolvedSubject}`,
+    to_email: submission.email,
+    email_subject: `[${companyName}] Đã tiếp nhận yêu cầu của bạn`,
     email_body: emailBody,
     form_name: submission.name,
-    from_name: submission.name,
+    from_name: companyName,
     form_email: submission.email,
-    reply_to: submission.email,
+    reply_to: companyEmail || "",
     form_subject: resolvedSubject,
     form_message: submission.message,
     submitted_at: submittedAt,
@@ -227,6 +238,7 @@ export async function POST(request) {
         where: { id: "default" },
         select: {
           contactEmail: true,
+          contactPhone: true,
           companyShortName: true,
           companyName: true,
         },
@@ -244,32 +256,19 @@ export async function POST(request) {
       );
     }
 
-    const recipientEmail =
-      process.env.CONTACT_RECEIVER_EMAIL?.trim() ||
-      siteSettings?.contactEmail?.trim() ||
-      "";
-
-    if (!recipientEmail) {
-      console.error("Missing recipient email for contact notifications.");
-      return Response.json(
-        {
-          error:
-            "Chưa có email nhận liên hệ. Vui lòng cập nhật email liên hệ trong admin hoặc CONTACT_RECEIVER_EMAIL.",
-        },
-        { status: 500 },
-      );
-    }
-
     const companyName =
       siteSettings?.companyShortName ||
       siteSettings?.companyName ||
       "Tân Việt";
+    const companyEmail = siteSettings?.contactEmail?.trim() || "";
+    const companyPhone = siteSettings?.contactPhone?.trim() || "";
 
     const templateParams = buildTemplateParams({
       submission,
       metadata,
-      recipientEmail,
       companyName,
+      companyEmail,
+      companyPhone,
       request,
     });
 

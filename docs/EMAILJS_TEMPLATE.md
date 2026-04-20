@@ -10,29 +10,29 @@ Dùng cho form `/contact` trong website.
 
 - Subject: `{{email_subject}}`
 - To Email: `{{to_email}}`
-- From Name: `{{form_name}}`
+- From Name: `{{from_name}}`
 - Reply To: `{{reply_to}}`
 - Content: `{{email_body}}`
 
 ## 3) Nội dung email chuẩn (khuyên dùng)
 
-Bạn có thể dùng trực tiếp nội dung dưới trong phần `Content` nếu muốn format đầy đủ, rõ ràng:
+Bạn có thể dùng trực tiếp nội dung dưới trong phần `Content`:
 
 ```text
-Bạn vừa nhận được liên hệ mới từ website {{company_name}}.
+Xin chào {{form_name}},
 
-THÔNG TIN KHÁCH HÀNG
+Chúng tôi đã tiếp nhận yêu cầu liên hệ của bạn.
+Đội ngũ tư vấn sẽ phản hồi trong thời gian sớm nhất, vui lòng chờ thêm.
+
+Thông tin bạn đã gửi:
 - Họ và tên: {{form_name}}
 - Email: {{form_email}}
 - Chủ đề: {{form_subject}}
-- Nội dung:
-{{form_message}}
+- Nội dung: {{form_message}}
 
-THÔNG TIN HỆ THỐNG
-- Thời gian gửi: {{submitted_at}}
+Mã xác nhận: CONTACT-{{submitted_at}}
+Thời gian tiếp nhận: {{submitted_at}}
 - Website: {{website_url}}
-- IP: {{user_ip}}
-- User Agent: {{user_agent}}
 ```
 
 ## 4) Variables hiện có từ API

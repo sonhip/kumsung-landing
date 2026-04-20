@@ -20,7 +20,6 @@ EMAILJS_SERVICE_ID=service_xxxxxxx
 EMAILJS_TEMPLATE_ID=template_xxxxxxx
 EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxxx
 EMAILJS_PRIVATE_KEY=
-CONTACT_RECEIVER_EMAIL=
 ```
 
 ## Chạy dự án
@@ -44,7 +43,7 @@ npm run dev
 - `EMAILJS_TEMPLATE_ID`: Template ID của EmailJS
 - `EMAILJS_PUBLIC_KEY`: Public key của EmailJS
 - `EMAILJS_PRIVATE_KEY` (không bắt buộc): private access token cho server-side
-- `CONTACT_RECEIVER_EMAIL` (không bắt buộc): email nhận cố định. Nếu bỏ trống, hệ thống dùng email liên hệ trong site settings.
+- Luồng hiện tại: gửi email **xác nhận đã tiếp nhận yêu cầu** cho chính khách hàng (`to_email = form_email`).
 
 Template variables được route `/api/contact` gửi lên:
 
