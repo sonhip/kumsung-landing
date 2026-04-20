@@ -1,6 +1,6 @@
 "use client";
 
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Typography, message } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -64,21 +64,17 @@ export default function AdminLoginForm() {
         <Title level={2} style={{ color: "#16365f", marginBottom: 8 }}>
           Đăng nhập quản trị
         </Title>
-        <Paragraph style={{ color: "#5f7e9d", marginBottom: 24 }}>
-          Tạm thời hệ thống dùng tài khoản hardcode: <strong>admin / admin</strong>
-        </Paragraph>
 
-        <Form
-          layout="vertical"
-          onFinish={handleSubmit}
-          initialValues={{ username: "admin", password: "admin" }}
-        >
+        <Form layout="vertical" onFinish={handleSubmit}>
           <Form.Item
-            label="Tên đăng nhập"
-            name="username"
-            rules={[{ required: true, message: "Vui lòng nhập tên đăng nhập." }]}
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: "Vui lòng nhập email." },
+              { type: "email", message: "Email không hợp lệ." },
+            ]}
           >
-            <Input prefix={<UserOutlined />} size="large" />
+            <Input prefix={<MailOutlined />} size="large" />
           </Form.Item>
 
           <Form.Item

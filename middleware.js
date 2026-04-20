@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import { ADMIN_SESSION_COOKIE } from "./src/lib/auth";
 
 const isAuthenticated = (request) =>
-  request.cookies.get(ADMIN_SESSION_COOKIE)?.value === "authenticated";
+  request.cookies
+    .get(ADMIN_SESSION_COOKIE)
+    ?.value?.startsWith("authenticated:");
 
 export function middleware(request) {
   const { pathname } = request.nextUrl;

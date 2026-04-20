@@ -5,6 +5,7 @@ import {
   FileImageOutlined,
   LogoutOutlined,
   TeamOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { App, Button, Layout, Menu, Typography } from "antd";
 import Link from "next/link";
@@ -36,6 +37,11 @@ const menuItems = [
     key: "/admin/team-members",
     icon: <TeamOutlined />,
     label: <Link href="/admin/team-members">Quản lý thành viên</Link>,
+  },
+  {
+    key: "/admin/users",
+    icon: <UserOutlined />,
+    label: <Link href="/admin/users">Quản lý user</Link>,
   },
 ];
 
@@ -150,7 +156,7 @@ export default function AdminLayoutShell({ children }) {
               Khu vực quản trị
             </Title>
             <Text style={{ color: "#5f7e9d" }}>
-              Đăng nhập với tài khoản hardcode `admin/admin`
+              Đăng nhập theo tài khoản user trong database
             </Text>
           </div>
 

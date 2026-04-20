@@ -128,3 +128,18 @@ model TeamMember {
 
   @@index([isActive, sortOrder])
 }
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  email        String   @unique
+  recoveryEmail String?
+  passwordHash String
+  role         String   @default("admin")
+  isActive     Boolean  @default(true)
+  isRoot       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([isActive, role])
+}

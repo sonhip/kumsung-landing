@@ -1,8 +1,41 @@
 import { PrismaClient } from "@prisma/client";
 import { STATIC_CONTENT } from "./seedData.js";
 import { toSlug } from "../src/utils/productCatalog.js";
+import { hashPassword } from "../src/lib/password.js";
 
 const prisma = new PrismaClient();
+
+async function seedRootAdminUser() {
+  const existingRoot = await prisma.adminUser.findFirst({
+    where: { isRoot: true },
+  });
+
+  if (existingRoot) {
+    return;
+  }
+
+  await prisma.adminUser.upsert({
+    where: {
+      username: "admin",
+    },
+    update: {
+      email: "tanvietref@gmail.com",
+      recoveryEmail: "tanvietref@gmail.com",
+      role: "admin",
+      isRoot: true,
+      isActive: true,
+    },
+    create: {
+      username: "admin",
+      email: "tanvietref@gmail.com",
+      recoveryEmail: "tanvietref@gmail.com",
+      passwordHash: hashPassword("Tanviet@1234"),
+      role: "admin",
+      isRoot: true,
+      isActive: true,
+    },
+  });
+}
 
 async function seedSiteSettings() {
   await prisma.siteSettings.upsert({
@@ -208,6 +241,7 @@ async function seedTeamMembers() {
 }
 
 async function main() {
+  await seedRootAdminUser();
   await seedSiteSettings();
   await seedSiteContent();
   await seedMediaAssets();

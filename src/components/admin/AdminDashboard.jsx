@@ -20,9 +20,8 @@ export default function AdminDashboard({
             Tổng quan quản trị
           </Title>
           <Paragraph style={{ color: "#5f7e9d", marginBottom: 0 }}>
-            Khu vực này cho phép quản lý đăng nhập admin hardcode, media
-            homepage, upload ảnh và CRUD sản phẩm với nội dung chi tiết dạng
-            HTML.
+            Khu vực này cho phép quản lý user đăng nhập, media homepage,
+            upload ảnh và CRUD sản phẩm với nội dung chi tiết dạng HTML.
           </Paragraph>
         </Card>
       </div>
