@@ -14,6 +14,7 @@
 
 ```bash
 DATABASE_URL=postgresql://admin:123456@localhost:5432/mydb?schema=public
+NEXT_PUBLIC_SITE_URL=https://tanvietref.com.vn
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_google_recaptcha_site_key
 RECAPTCHA_SECRET_KEY=your_google_recaptcha_secret_key
 EMAILJS_SERVICE_ID=service_xxxxxxx

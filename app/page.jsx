@@ -12,8 +12,39 @@ import {
   getSiteSettings,
 } from "../src/lib/cms";
 import ScrollReveal from "../src/components/ui/ScrollReveal";
+import { buildPageMetadata } from "../src/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata() {
+  const [siteSettings, siteContent] = await Promise.all([
+    getSiteSettings(),
+    getSiteContent(),
+  ]);
+
+  const companyName = siteSettings.company.shortName || "Tân Việt";
+  const title = `${companyName} - Giải pháp điện lạnh`;
+  const description =
+    siteContent.hero?.subtitle ||
+    "Đơn vị phân phối thiết bị điện lạnh, tư vấn giải pháp tối ưu cho doanh nghiệp và công trình tại Việt Nam.";
+  const heroImage =
+    siteContent.hero?.backgroundImages?.[0] ||
+    "/uploads/seed/hero-warehouse.jpg";
+
+  return buildPageMetadata({
+    title,
+    description,
+    path: "/",
+    images: [heroImage],
+    keywords: [
+      "thiết bị điện lạnh",
+      "máy nén lạnh",
+      "dàn nóng dàn lạnh",
+      "tanvietref",
+      "tân việt",
+    ],
+  });
+}
 
 export default async function HomePage() {
   const [brandLogo, homepageMedia, siteSettings, siteContent] =
