@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ProductPreviewImage from "../ui/ProductPreviewImage";
 const defaultProductsText = {
   notFoundTitle: "Không tìm thấy sản phẩm",
   notFoundDescription:
@@ -50,11 +51,7 @@ const ProductDetailPage = ({
 
       <div className="container product-detail-main">
         <div className="product-detail-media">
-          <img
-            src={product.image}
-            alt={product.title}
-            className="product-detail-main-image"
-          />
+          <ProductPreviewImage src={product.image} alt={product.title} />
         </div>
 
         <div className="product-detail-info">
