@@ -1,6 +1,16 @@
 "use client";
 
-import { Card, Typography } from "antd";
+import {
+  AppstoreOutlined,
+  ContactsOutlined,
+  GlobalOutlined,
+  HomeOutlined,
+  InfoCircleOutlined,
+  ProfileOutlined,
+} from "@ant-design/icons";
+import { Card, Tabs, Typography } from "antd";
+import AboutPageContentForm from "./AboutPageContentForm";
+import ContactPageContentForm from "./ContactPageContentForm";
 import HeroContentForm from "./HeroContentForm";
 import SiteSettingsForm from "./SiteSettingsForm";
 
@@ -11,28 +21,20 @@ export default function AdminDashboard({
   productCount,
   siteSettings,
   heroContent,
+  contactPageContent,
+  aboutPageContent,
 }) {
-  return (
+  const overviewContent = (
     <div style={{ display: "grid", gap: 24 }}>
-      <div>
-        <Card>
-          <Title level={2} style={{ color: "#16365f", marginTop: 0 }}>
-            Tổng quan quản trị
-          </Title>
-          <Paragraph style={{ color: "#5f7e9d", marginBottom: 0 }}>
-            Khu vực này cho phép quản lý user đăng nhập, media homepage,
-            upload ảnh và CRUD sản phẩm với nội dung chi tiết dạng HTML.
-          </Paragraph>
-        </Card>
-      </div>
-
-      <div>
-        <SiteSettingsForm initialValues={siteSettings} />
-      </div>
-
-      <div>
-        <HeroContentForm initialValues={heroContent} />
-      </div>
+      <Card>
+        <Title level={2} style={{ color: "#16365f", marginTop: 0 }}>
+          Tổng quan quản trị
+        </Title>
+        <Paragraph style={{ color: "#5f7e9d", marginBottom: 0 }}>
+          Chia theo tab để dễ thao tác nhanh: thông tin chung, banner hero,
+          trang contact và trang about.
+        </Paragraph>
+      </Card>
 
       <div
         style={{
@@ -60,5 +62,68 @@ export default function AdminDashboard({
         </Card>
       </div>
     </div>
+  );
+
+  const tabItems = [
+    {
+      key: "overview",
+      label: "Tổng quan",
+      icon: <AppstoreOutlined />,
+      children: overviewContent,
+    },
+    {
+      key: "site-settings",
+      label: "Thông tin chung",
+      icon: <GlobalOutlined />,
+      children: <SiteSettingsForm initialValues={siteSettings} />,
+    },
+    {
+      key: "hero-content",
+      label: "Hero Trang Chủ",
+      icon: <HomeOutlined />,
+      children: <HeroContentForm initialValues={heroContent} />,
+    },
+    {
+      key: "contact-content",
+      label: "Trang Contact",
+      icon: <ContactsOutlined />,
+      children: <ContactPageContentForm initialValues={contactPageContent} />,
+    },
+    {
+      key: "about-content",
+      label: "Trang About",
+      icon: <ProfileOutlined />,
+      children: <AboutPageContentForm initialValues={aboutPageContent} />,
+    },
+  ];
+
+  return (
+    <Card
+      title={
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            color: "#16365f",
+          }}
+        >
+          <InfoCircleOutlined />
+          Quản trị nội dung website
+        </span>
+      }
+      styles={{
+        body: {
+          paddingTop: 12,
+        },
+      }}
+    >
+      <Tabs
+        defaultActiveKey="overview"
+        items={tabItems}
+        destroyOnHidden
+        tabBarGutter={8}
+      />
+    </Card>
   );
 }
