@@ -2707,6 +2707,24 @@ main {
 }
 
 @media (max-width: 767px) {
+  .header-main {
+    display: block;
+  }
+
+  .header-inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding: 0.6rem 0 0.5rem;
+  }
+
+  .distributor-badge {
+    display: none;
+  }
+
+  .header-inner > a:not(.brand) {
+    display: none;
+  }
+
   .floating-chat {
     right: 12px;
     bottom: 12px;
