@@ -7,21 +7,25 @@ import {
   getSiteContent,
   getSiteSettings,
 } from "../../../../src/lib/cms";
-import { buildPageMetadata } from "../../../../src/lib/seo";
+import { buildPageMetadata, resolveSeoFallbackImage } from "../../../../src/lib/seo";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
+  const { categorySlug, productSlug } = await params;
+
   const [siteSettings, product] = await Promise.all([
     getSiteSettings(),
-    getPublicProductBySlugs(params.categorySlug, params.productSlug),
+    getPublicProductBySlugs(categorySlug, productSlug),
   ]);
+  const fallbackImage = resolveSeoFallbackImage(siteSettings);
 
   if (!product) {
     return buildPageMetadata({
       title: "Sản phẩm không tồn tại",
       description: "Không tìm thấy sản phẩm bạn yêu cầu.",
-      path: `/products/${params.categorySlug}/${params.productSlug}`,
+      path: `/products/${categorySlug}/${productSlug}`,
+      fallbackImage,
     });
   }
 
@@ -34,17 +38,20 @@ export async function generateMetadata({ params }) {
   return buildPageMetadata({
     title,
     description,
-    path: `/products/${params.categorySlug}/${params.productSlug}`,
+    path: `/products/${categorySlug}/${productSlug}`,
     images: [product.image],
+    fallbackImage,
     type: "article",
     keywords: [product.category, product.model || product.title, companyName],
   });
 }
 
 export default async function ProductPage({ params }) {
+  const { categorySlug, productSlug } = await params;
+
   const [brandLogo, cmsProduct, siteSettings, siteContent] = await Promise.all([
     getBrandLogo(),
-    getPublicProductBySlugs(params.categorySlug, params.productSlug),
+    getPublicProductBySlugs(categorySlug, productSlug),
     getSiteSettings(),
     getSiteContent(),
   ]);

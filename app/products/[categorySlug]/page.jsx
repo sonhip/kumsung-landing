@@ -6,37 +6,43 @@ import {
   getSiteContent,
   getSiteSettings,
 } from "../../../src/lib/cms";
-import { buildPageMetadata } from "../../../src/lib/seo";
+import { buildPageMetadata, resolveSeoFallbackImage } from "../../../src/lib/seo";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
+  const { categorySlug } = await params;
+
   const [siteSettings, cmsProducts] = await Promise.all([
     getSiteSettings(),
     getPublicProducts(),
   ]);
 
   const companyName = siteSettings.company.shortName || "Tân Việt";
+  const fallbackImage = resolveSeoFallbackImage(siteSettings);
   const categoryProducts = cmsProducts.filter(
-    (item) => item.categorySlug === params.categorySlug,
+    (item) => item.categorySlug === categorySlug,
   );
-  const categoryName = categoryProducts[0]?.category || params.categorySlug;
+  const categoryName = categoryProducts[0]?.category || categorySlug;
   const title = `${categoryName} | ${companyName}`;
   const description = categoryProducts.length
     ? `Danh mục ${categoryName} do ${companyName} phân phối, cập nhật thông số và hình ảnh mới nhất.`
     : `Danh mục ${categoryName} tại ${companyName}.`;
-  const image = categoryProducts[0]?.image || "/uploads/seed/product-other.jpg";
+  const image = categoryProducts[0]?.image;
 
   return buildPageMetadata({
     title,
     description,
-    path: `/products/${params.categorySlug}`,
+    path: `/products/${categorySlug}`,
     images: [image],
+    fallbackImage,
     keywords: [categoryName, "thiết bị điện lạnh", companyName],
   });
 }
 
 export default async function CategoryProductsPage({ params }) {
+  const { categorySlug } = await params;
+
   const [brandLogo, cmsProducts, siteSettings, siteContent] = await Promise.all(
     [getBrandLogo(), getPublicProducts(), getSiteSettings(), getSiteContent()],
   );
@@ -48,7 +54,7 @@ export default async function CategoryProductsPage({ params }) {
       siteContent={siteContent}
     >
       <ProductsPage
-        categorySlug={params.categorySlug}
+        categorySlug={categorySlug}
         products={cmsProducts}
         companyInfo={siteSettings.company}
         productsText={siteContent.products}

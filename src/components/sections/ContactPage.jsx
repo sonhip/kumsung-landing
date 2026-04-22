@@ -133,19 +133,33 @@ const ContactPage = ({
                   body: JSON.stringify(payload),
                 });
 
-                const result = await response.json();
+                const raw = await response.text();
+                let result = {};
+
+                if (raw) {
+                  try {
+                    result = JSON.parse(raw);
+                  } catch {
+                    result = { message: raw };
+                  }
+                }
 
                 if (!response.ok) {
                   setStatus({
                     type: "error",
-                    message: result.error || "Không thể gửi biểu mẫu.",
+                    message:
+                      result.error ||
+                      result.message ||
+                      "Không thể gửi biểu mẫu.",
                   });
                   return;
                 }
 
                 setStatus({
                   type: "success",
-                  message: result.message,
+                  message:
+                    result.message ||
+                    "Tân Việt đã nhận được thông tin. Chúng tôi sẽ liên hệ lại sớm.",
                 });
                 event.currentTarget.reset();
                 recaptchaRef.current?.reset();

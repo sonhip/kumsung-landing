@@ -6,29 +6,31 @@ import {
   getSiteContent,
   getSiteSettings,
 } from "../../src/lib/cms";
-import { buildPageMetadata } from "../../src/lib/seo";
+import { buildPageMetadata, resolveSeoFallbackImage } from "../../src/lib/seo";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
-  const [siteSettings, siteContent] = await Promise.all([
+  const [siteSettings, siteContent, products] = await Promise.all([
     getSiteSettings(),
     getSiteContent(),
+    getPublicProducts(),
   ]);
 
   const companyName = siteSettings.company.shortName || "Tân Việt";
+  const fallbackImage = resolveSeoFallbackImage(siteSettings);
   const title = `Danh mục sản phẩm | ${companyName}`;
   const description =
     siteContent.routes?.products?.description ||
     "Khám phá danh mục máy nén lạnh, dàn ngưng, dàn lạnh và phụ kiện điện lạnh do Tân Việt phân phối.";
-  const image =
-    siteContent.hero?.backgroundImages?.[0] || "/uploads/seed/product-other.jpg";
+  const image = products[0]?.image || siteContent.hero?.backgroundImages?.[0];
 
   return buildPageMetadata({
     title,
     description,
     path: "/products",
     images: [image],
+    fallbackImage,
     keywords: ["sản phẩm điện lạnh", "máy nén lạnh", "dàn ngưng", "phụ kiện điện lạnh"],
   });
 }

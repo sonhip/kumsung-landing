@@ -3,14 +3,14 @@ import "../src/styles/global.css";
 import "../src/styles/animations.css";
 import Providers from "./providers";
 import { getSiteContent, getSiteSettings } from "../src/lib/cms";
-import { getSiteUrl, toAbsoluteUrl } from "../src/lib/seo";
+import { getSiteUrl, resolveSeoFallbackImage, toAbsoluteUrl } from "../src/lib/seo";
 
 export async function generateMetadata() {
   let faviconUrl = "/favicon.svg";
   let siteName = "Tân Việt";
   let defaultDescription =
     "Tân Việt chuyên phân phối thiết bị điện lạnh tiêu chuẩn Hàn Quốc, cung cấp giải pháp tối ưu cho công trình dân dụng và công nghiệp.";
-  let defaultImage = "/uploads/seed/hero-warehouse.jpg";
+  let defaultImage = "/favicon.svg";
 
   try {
     const [settings, content] = await Promise.all([
@@ -24,10 +24,7 @@ export async function generateMetadata() {
 
     siteName = settings?.company?.shortName || siteName;
     defaultDescription = content?.routes?.products?.description || defaultDescription;
-    defaultImage =
-      content?.hero?.backgroundImages?.[0] ||
-      content?.contactPage?.heroImage ||
-      defaultImage;
+    defaultImage = resolveSeoFallbackImage(settings);
   } catch {
     faviconUrl = "/favicon.svg";
   }

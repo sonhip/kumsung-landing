@@ -6,27 +6,31 @@ import {
   getSiteContent,
   getSiteSettings,
 } from "../../src/lib/cms";
-import { buildPageMetadata } from "../../src/lib/seo";
+import { buildPageMetadata, resolveSeoFallbackImage } from "../../src/lib/seo";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
-  const [siteSettings, siteContent] = await Promise.all([
+  const [siteSettings, siteContent, newsPosts] = await Promise.all([
     getSiteSettings(),
     getSiteContent(),
+    getPublicNewsPosts(),
   ]);
 
   const companyName = siteSettings.company.shortName || "Tân Việt";
+  const fallbackImage = resolveSeoFallbackImage(siteSettings);
   const title = `Tin tức | ${companyName}`;
   const description =
     siteContent.routes?.news?.description ||
     "Cập nhật tin tức, chia sẻ kinh nghiệm và thông tin sản phẩm từ Tân Việt.";
+  const image = newsPosts[0]?.coverImage || siteContent.hero?.backgroundImages?.[0];
 
   return buildPageMetadata({
     title,
     description,
     path: "/news",
-    images: [siteContent.hero?.backgroundImages?.[0] || "/uploads/seed/hero-warehouse.jpg"],
+    images: [image],
+    fallbackImage,
     keywords: ["tin tức điện lạnh", "tin tức tân việt", "kinh nghiệm điện lạnh"],
   });
 }

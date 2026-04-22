@@ -5,7 +5,7 @@ import {
   getSiteContent,
   getSiteSettings,
 } from "../../src/lib/cms";
-import { buildPageMetadata } from "../../src/lib/seo";
+import { buildPageMetadata, resolveSeoFallbackImage } from "../../src/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -16,18 +16,19 @@ export async function generateMetadata() {
   ]);
 
   const companyName = siteSettings.company.shortName || "Tân Việt";
+  const fallbackImage = resolveSeoFallbackImage(siteSettings);
   const title = `Liên hệ ${companyName}`;
   const description =
     siteContent.contactPage?.formSubtitle ||
     "Liên hệ Tân Việt để nhận tư vấn giải pháp thiết bị điện lạnh phù hợp.";
-  const image =
-    siteContent.contactPage?.heroImage || "/uploads/seed/hero-warehouse-2.jpg";
+  const image = siteContent.contactPage?.heroImage;
 
   return buildPageMetadata({
     title,
     description,
     path: "/contact",
     images: [image],
+    fallbackImage,
     keywords: ["liên hệ tân việt", "tư vấn điện lạnh", "báo giá thiết bị điện lạnh"],
   });
 }

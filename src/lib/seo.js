@@ -1,4 +1,5 @@
 const DEFAULT_SITE_URL = "https://tanvietref.com.vn";
+const DEFAULT_OG_IMAGE = "/favicon.svg";
 
 export const getSiteUrl = () => {
   const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
@@ -16,18 +17,39 @@ export const toAbsoluteUrl = (path = "/") => {
   return `${baseUrl}${normalizedPath}`;
 };
 
+export const resolveSeoFallbackImage = (siteSettings) =>
+  siteSettings?.branding?.logoUrl ||
+  siteSettings?.branding?.faviconUrl ||
+  DEFAULT_OG_IMAGE;
+
+const resolveImageUrl = (value) => {
+  const normalized = value?.trim();
+
+  if (!normalized) {
+    return null;
+  }
+
+  if (normalized.startsWith("http://") || normalized.startsWith("https://")) {
+    return normalized;
+  }
+
+  return toAbsoluteUrl(normalized);
+};
+
 export const buildPageMetadata = ({
   title,
   description,
   path = "/",
   images = [],
+  fallbackImage = DEFAULT_OG_IMAGE,
   type = "website",
   keywords = [],
 }) => {
   const canonical = toAbsoluteUrl(path);
-  const openGraphImages = images.length
-    ? images.map((url) => ({ url }))
-    : [{ url: toAbsoluteUrl("/uploads/seed/hero-warehouse.jpg") }];
+  const resolvedImages = images.map(resolveImageUrl).filter(Boolean);
+  const openGraphImages = resolvedImages.length
+    ? resolvedImages.map((url) => ({ url }))
+    : [{ url: resolveImageUrl(fallbackImage) || toAbsoluteUrl(DEFAULT_OG_IMAGE) }];
 
   return {
     title,

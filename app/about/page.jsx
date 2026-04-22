@@ -5,7 +5,7 @@ import {
   getSiteContent,
   getSiteSettings,
 } from "../../src/lib/cms";
-import { buildPageMetadata } from "../../src/lib/seo";
+import { buildPageMetadata, resolveSeoFallbackImage } from "../../src/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -16,20 +16,21 @@ export async function generateMetadata() {
   ]);
 
   const companyName = siteSettings.company.shortName || "Tân Việt";
+  const fallbackImage = resolveSeoFallbackImage(siteSettings);
   const title = `Giới thiệu ${companyName}`;
   const description =
     siteContent.aboutPage?.description ||
     "Thông tin doanh nghiệp, năng lực và đội ngũ của Tân Việt.";
   const image =
     siteContent.aboutPage?.heroImage ||
-    siteContent.aboutPage?.milestonesImage ||
-    "/uploads/seed/hero-warehouse.jpg";
+    siteContent.aboutPage?.milestonesImage;
 
   return buildPageMetadata({
     title,
     description,
     path: "/about",
     images: [image],
+    fallbackImage,
     keywords: ["giới thiệu tân việt", "năng lực doanh nghiệp", "đội ngũ tân việt"],
   });
 }

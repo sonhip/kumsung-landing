@@ -6,7 +6,7 @@ import {
   getSiteContent,
   getSiteSettings,
 } from "../../../src/lib/cms";
-import { buildPageMetadata } from "../../../src/lib/seo";
+import { buildPageMetadata, resolveSeoFallbackImage } from "../../../src/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -17,12 +17,14 @@ export async function generateMetadata({ params }) {
     getSiteSettings(),
     getPublicNewsPostBySlug(slug),
   ]);
+  const fallbackImage = resolveSeoFallbackImage(siteSettings);
 
   if (!post) {
     return buildPageMetadata({
       title: "Bài viết không tồn tại",
       description: "Không tìm thấy bài viết bạn yêu cầu.",
       path: `/news/${slug}`,
+      fallbackImage,
     });
   }
 
@@ -33,7 +35,8 @@ export async function generateMetadata({ params }) {
     title,
     description: post.excerpt || `Bài viết mới từ ${companyName}.`,
     path: `/news/${post.slug}`,
-    images: [post.coverImage || "/uploads/seed/hero-warehouse.jpg"],
+    images: [post.coverImage],
+    fallbackImage,
     type: "article",
     keywords: ["tin tức", "điện lạnh", companyName, post.title],
   });
