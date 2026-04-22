@@ -20,6 +20,19 @@ const mapTeamMemberRecord = (member) => ({
   isActive: member.isActive,
 });
 
+const mapNewsPostRecord = (post) => ({
+  id: post.id,
+  title: post.title,
+  slug: post.slug,
+  excerpt: post.excerpt || "",
+  contentHtml: post.contentHtml || "",
+  coverImage: post.coverImage || "",
+  isPublished: post.isPublished,
+  publishedAt: post.publishedAt,
+  createdAt: post.createdAt,
+  updatedAt: post.updatedAt,
+});
+
 const mapProductRecord = (product) => {
   const images = [...product.images]
     .sort((left, right) => left.sortOrder - right.sortOrder)
@@ -216,6 +229,38 @@ export async function getAdminTeamMembers() {
   });
 
   return members.map(mapTeamMemberRecord);
+}
+
+export async function getAdminNewsPosts() {
+  const posts = await prisma.newsPost.findMany({
+    orderBy: [{ updatedAt: "desc" }],
+  });
+
+  return posts.map(mapNewsPostRecord);
+}
+
+export async function getPublicNewsPosts() {
+  const posts = await prisma.newsPost.findMany({
+    where: {
+      isPublished: true,
+      OR: [{ publishedAt: null }, { publishedAt: { lte: new Date() } }],
+    },
+    orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
+  });
+
+  return posts.map(mapNewsPostRecord);
+}
+
+export async function getPublicNewsPostBySlug(slug) {
+  const post = await prisma.newsPost.findFirst({
+    where: {
+      slug,
+      isPublished: true,
+      OR: [{ publishedAt: null }, { publishedAt: { lte: new Date() } }],
+    },
+  });
+
+  return post ? mapNewsPostRecord(post) : null;
 }
 
 export async function getPublicTeamMembers() {

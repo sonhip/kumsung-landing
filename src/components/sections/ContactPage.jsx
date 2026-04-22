@@ -12,7 +12,7 @@ const defaultContactPageContent = {
   phoneDescription: "",
   emailTitle: "Email",
   emailDescription: "",
-  locationTitle: "Khu vực hoạt động",
+  locationTitle: "Địa chỉ",
   locationMapLabel: "Xem trên Google Maps",
   locationMapUrl: "https://maps.google.com",
   formTitle: "",
@@ -78,7 +78,7 @@ const ContactPage = ({
             <SendOutlined className="contact-info-icon" aria-hidden="true" />
             <h2>{contactPage.locationTitle}</h2>
             <p>
-              <strong>Khu vực hoạt động:</strong>
+              <strong>Địa chỉ:</strong>
             </p>
             <p>{contact.addressFull}</p>
             <a

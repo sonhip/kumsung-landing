@@ -1,7 +1,8 @@
-import AboutPage from "../../src/components/sections/AboutPage";
+import NewsPage from "../../src/components/sections/NewsPage";
 import SiteShell from "../../src/components/site/SiteShell";
 import {
   getBrandLogo,
+  getPublicNewsPosts,
   getSiteContent,
   getSiteSettings,
 } from "../../src/lib/cms";
@@ -16,27 +17,24 @@ export async function generateMetadata() {
   ]);
 
   const companyName = siteSettings.company.shortName || "Tân Việt";
-  const title = `Giới thiệu ${companyName}`;
+  const title = `Tin tức | ${companyName}`;
   const description =
-    siteContent.aboutPage?.description ||
-    "Thông tin doanh nghiệp, năng lực và đội ngũ của Tân Việt.";
-  const image =
-    siteContent.aboutPage?.heroImage ||
-    siteContent.aboutPage?.milestonesImage ||
-    "/uploads/seed/hero-warehouse.jpg";
+    siteContent.routes?.news?.description ||
+    "Cập nhật tin tức, chia sẻ kinh nghiệm và thông tin sản phẩm từ Tân Việt.";
 
   return buildPageMetadata({
     title,
     description,
-    path: "/about",
-    images: [image],
-    keywords: ["giới thiệu tân việt", "năng lực doanh nghiệp", "đội ngũ tân việt"],
+    path: "/news",
+    images: [siteContent.hero?.backgroundImages?.[0] || "/uploads/seed/hero-warehouse.jpg"],
+    keywords: ["tin tức điện lạnh", "tin tức tân việt", "kinh nghiệm điện lạnh"],
   });
 }
 
-export default async function About() {
-  const [brandLogo, siteSettings, siteContent] = await Promise.all([
+export default async function NewsListPage() {
+  const [brandLogo, posts, siteSettings, siteContent] = await Promise.all([
     getBrandLogo(),
+    getPublicNewsPosts(),
     getSiteSettings(),
     getSiteContent(),
   ]);
@@ -47,7 +45,7 @@ export default async function About() {
       siteSettings={siteSettings}
       siteContent={siteContent}
     >
-      <AboutPage aboutPageContent={siteContent.aboutPage} />
+      <NewsPage posts={posts} routes={siteContent.routes} />
     </SiteShell>
   );
 }

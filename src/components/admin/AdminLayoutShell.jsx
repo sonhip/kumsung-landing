@@ -4,7 +4,7 @@ import {
   AppstoreOutlined,
   FileImageOutlined,
   LogoutOutlined,
-  TeamOutlined,
+  ReadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { App, Button, Layout, Menu, Typography } from "antd";
@@ -34,9 +34,9 @@ const menuItems = [
     label: <Link href="/admin/products">Quản lý sản phẩm</Link>,
   },
   {
-    key: "/admin/team-members",
-    icon: <TeamOutlined />,
-    label: <Link href="/admin/team-members">Quản lý thành viên</Link>,
+    key: "/admin/news",
+    icon: <ReadOutlined />,
+    label: <Link href="/admin/news">Quản lý tin tức</Link>,
   },
   {
     key: "/admin/users",

@@ -21,6 +21,7 @@ export const STATIC_CONTENT = {
   nav: {
     home: "Trang chủ",
     products: "Sản phẩm",
+    news: "Tin tức",
     contact: "Liên hệ",
     about: "Giới thiệu",
     toggleMenuAriaLabel: "Mở hoặc đóng menu điều hướng",
@@ -463,7 +464,7 @@ export const STATIC_CONTENT = {
     emailTitle: "Email",
     emailDescription:
       "Gửi thông tin dự án hoặc yêu cầu báo giá, đội ngũ Tân Việt sẽ phản hồi sớm.",
-    locationTitle: "Khu vực hoạt động",
+    locationTitle: "Địa chỉ",
     locationMapLabel: "Xem trên Google Maps",
     locationMapUrl: "https://maps.google.com/?q=Viet+Nam",
     formTitle: "Để lại thông tin",
@@ -531,7 +532,7 @@ export const STATIC_CONTENT = {
     contactInfoTitle: "Thông Tin Liên Hệ",
     officeLocations: [
       {
-        label: "Khu vực hoạt động",
+        label: "Địa chỉ",
         address: "Thông tin địa chỉ cụ thể đang được cập nhật.",
       },
     ],
@@ -557,6 +558,11 @@ export const STATIC_CONTENT = {
       title: "Giới thiệu",
       description:
         "Tân Việt là đơn vị phân phối và tư vấn thiết bị điện lạnh, định hướng chất lượng và hiệu quả cho thị trường Việt Nam.",
+    },
+    news: {
+      title: "Tin tức",
+      description:
+        "Cập nhật bài viết về thiết bị điện lạnh, kinh nghiệm vận hành và các thông tin mới từ Tân Việt.",
     },
   },
 };

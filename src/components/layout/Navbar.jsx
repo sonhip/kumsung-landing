@@ -10,6 +10,7 @@ import { toSlug } from "../../utils/productCatalog";
 const defaultNav = {
   home: "Trang chủ",
   products: "Sản phẩm",
+  news: "Tin tức",
   contact: "Liên hệ",
   about: "Giới thiệu",
   toggleMenuAriaLabel: "Mở hoặc đóng menu điều hướng",
@@ -94,6 +95,13 @@ const Navbar = ({ nav = defaultNav }) => {
             className={isActive("/contact") ? "active" : ""}
           >
             {nav.contact}
+          </Link>
+          <Link
+            href="/news"
+            onClick={closeMenus}
+            className={pathname.startsWith("/news") ? "active" : ""}
+          >
+            {nav.news || defaultNav.news}
           </Link>
           <Link
             href="/about"

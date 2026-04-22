@@ -240,6 +240,41 @@ async function seedTeamMembers() {
   });
 }
 
+async function seedNewsPosts() {
+  const count = await prisma.newsPost.count();
+
+  if (count > 0) {
+    return;
+  }
+
+  const posts = [
+    {
+      title: "5 tiêu chí chọn máy nén lạnh cho kho bảo quản",
+      slug: "5-tieu-chi-chon-may-nen-lanh-cho-kho-bao-quan",
+      excerpt:
+        "Các tiêu chí quan trọng giúp lựa chọn đúng công suất, độ bền và mức tiêu thụ điện khi đầu tư hệ thống kho lạnh.",
+      coverImage: "/uploads/seed/product-compressor.jpg",
+      contentHtml:
+        "<p>Việc chọn máy nén lạnh phù hợp ảnh hưởng trực tiếp đến hiệu suất và chi phí vận hành.</p><ul><li>Xác định đúng tải lạnh thực tế.</li><li>Ưu tiên thiết bị có hiệu suất ổn định.</li><li>Xem xét điều kiện môi trường lắp đặt.</li><li>Đảm bảo dễ bảo trì và có hỗ trợ kỹ thuật.</li><li>Tối ưu tổng chi phí đầu tư và vận hành.</li></ul>",
+      isPublished: true,
+      publishedAt: new Date(),
+    },
+    {
+      title: "Khi nào nên nâng cấp dàn ngưng cho hệ thống hiện hữu?",
+      slug: "khi-nao-nen-nang-cap-dan-ngung-cho-he-thong-hien-huu",
+      excerpt:
+        "Dấu hiệu nhận biết hệ thống đang thiếu hiệu quả giải nhiệt và thời điểm phù hợp để nâng cấp dàn ngưng.",
+      coverImage: "/uploads/seed/product-condenser-unit.jpg",
+      contentHtml:
+        "<p>Dàn ngưng xuống cấp có thể khiến hệ thống tiêu tốn điện năng nhiều hơn và giảm độ ổn định.</p><p>Nếu áp suất ngưng thường xuyên cao hoặc chi phí điện tăng bất thường, doanh nghiệp nên rà soát và nâng cấp thiết bị.</p>",
+      isPublished: true,
+      publishedAt: new Date(),
+    },
+  ];
+
+  await prisma.newsPost.createMany({ data: posts });
+}
+
 async function main() {
   await seedRootAdminUser();
   await seedSiteSettings();
@@ -247,6 +282,7 @@ async function main() {
   await seedMediaAssets();
   await seedProducts();
   await seedTeamMembers();
+  await seedNewsPosts();
 }
 
 main()

@@ -136,8 +136,8 @@ main {
 }
 
 .brand-logo-image {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   border-radius: 14px;
   background: #fff;
@@ -2390,6 +2390,11 @@ main {
     width: 46px;
     height: 46px;
     border-radius: 14px;
+  }
+
+  .brand-logo-image {
+    width: 52px;
+    height: 52px;
   }
 
   .brand-tagline {

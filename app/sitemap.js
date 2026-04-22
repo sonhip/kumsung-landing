@@ -1,4 +1,4 @@
-import { getPublicProducts } from "../src/lib/cms";
+import { getPublicNewsPosts, getPublicProducts } from "../src/lib/cms";
 import { getSiteUrl, toAbsoluteUrl } from "../src/lib/seo";
 
 export default async function sitemap() {
@@ -30,9 +30,18 @@ export default async function sitemap() {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    {
+      url: toAbsoluteUrl("/news"),
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
   ];
 
-  const products = await getPublicProducts();
+  const [products, newsPosts] = await Promise.all([
+    getPublicProducts(),
+    getPublicNewsPosts(),
+  ]);
   const categorySlugs = [...new Set(products.map((item) => item.categorySlug))];
 
   const categoryPages = categorySlugs.map((slug) => ({
@@ -49,5 +58,12 @@ export default async function sitemap() {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...categoryPages, ...productPages];
+  const newsPages = newsPosts.map((post) => ({
+    url: `${siteUrl}/news/${post.slug}`,
+    lastModified: post.updatedAt || now,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...categoryPages, ...productPages, ...newsPages];
 }

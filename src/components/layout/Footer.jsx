@@ -26,7 +26,7 @@ const Footer = ({ company, contact, footerContent = defaultFooterContent }) => {
         <h4>{footerContent.contactInfoTitle}</h4>
 
         <ul className="footer-office-list">
-          {[{ label: "Khu vực hoạt động", address: contact.addressFull }].map(
+          {[{ label: "Địa chỉ", address: contact.addressFull }].map(
             (office) => (
               <li key={office.label}>
                 <PushpinFilled className="footer-icon" aria-hidden="true" />

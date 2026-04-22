@@ -9,7 +9,7 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { Button, Card, Select, Space, Typography } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const { Text } = Typography;
 
@@ -20,6 +20,17 @@ export default function HtmlEditor({
 }) {
   const editorRef = useRef(null);
   const [selectedMediaUrl, setSelectedMediaUrl] = useState();
+  const dedupedMediaOptions = useMemo(() => {
+    const seen = new Set();
+    return mediaOptions.filter((item) => {
+      if (!item?.imageUrl || seen.has(item.imageUrl)) {
+        return false;
+      }
+
+      seen.add(item.imageUrl);
+      return true;
+    });
+  }, [mediaOptions]);
 
   useEffect(() => {
     if (editorRef.current && editorRef.current.innerHTML !== value) {
@@ -77,7 +88,7 @@ export default function HtmlEditor({
           placeholder="Chọn ảnh từ media library"
           value={selectedMediaUrl}
           onChange={setSelectedMediaUrl}
-          options={mediaOptions.map((item) => ({
+          options={dedupedMediaOptions.map((item) => ({
             label: `${item.section} - ${item.title || item.imageUrl}`,
             value: item.imageUrl,
           }))}
