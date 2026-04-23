@@ -15,6 +15,7 @@ import {
   Form,
   Input,
   Row,
+  Select,
   Space,
   Typography,
   Upload,
@@ -50,6 +51,7 @@ export default function ProductEditor({
   mode,
   initialProduct = null,
   mediaLibrary = [],
+  categories = [],
 }) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
@@ -79,6 +81,18 @@ export default function ProductEditor({
     }),
     [initialProduct],
   );
+
+  const categoryOptions = useMemo(() => {
+    const source = [...categories, initialProduct?.category || ""]
+      .map((item) => item?.trim())
+      .filter(Boolean);
+    const unique = [...new Set(source)];
+
+    return unique.map((item) => ({
+      label: item,
+      value: item,
+    }));
+  }, [categories, initialProduct?.category]);
 
   const updateImage = (index, patch) => {
     setImages((current) =>
@@ -172,7 +186,12 @@ export default function ProductEditor({
                     name="category"
                     rules={[{ required: true, message: "Vui lòng nhập danh mục." }]}
                   >
-                    <Input />
+                    <Select
+                      showSearch
+                      placeholder="Chọn danh mục"
+                      options={categoryOptions}
+                      optionFilterProp="label"
+                    />
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12}>

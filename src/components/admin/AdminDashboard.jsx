@@ -6,12 +6,14 @@ import {
   GlobalOutlined,
   HomeOutlined,
   InfoCircleOutlined,
+  MenuOutlined,
   ProfileOutlined,
 } from "@ant-design/icons";
 import { Card, Tabs, Typography } from "antd";
 import AboutPageContentForm from "./AboutPageContentForm";
 import ContactPageContentForm from "./ContactPageContentForm";
 import HeroContentForm from "./HeroContentForm";
+import NavbarSettingsForm from "./NavbarSettingsForm";
 import SiteSettingsForm from "./SiteSettingsForm";
 
 const { Paragraph, Title } = Typography;
@@ -23,6 +25,7 @@ export default function AdminDashboard({
   heroContent,
   contactPageContent,
   aboutPageContent,
+  navbarSettings,
 }) {
   const overviewContent = (
     <div style={{ display: "grid", gap: 24 }}>
@@ -82,6 +85,12 @@ export default function AdminDashboard({
       label: "Hero Trang Chủ",
       icon: <HomeOutlined />,
       children: <HeroContentForm initialValues={heroContent} />,
+    },
+    {
+      key: "navbar-settings",
+      label: "Navbar",
+      icon: <MenuOutlined />,
+      children: <NavbarSettingsForm initialValues={navbarSettings} />,
     },
     {
       key: "contact-content",

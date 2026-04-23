@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation";
 import ProductEditor from "../../../../src/components/admin/ProductEditor";
-import { getAdminMediaAssets } from "../../../../src/lib/cms";
+import { getAdminMediaAssets, getSiteContent } from "../../../../src/lib/cms";
 import { prisma } from "../../../../src/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
 export default async function EditProductPage({ params }) {
-  const [product, mediaLibrary] = await Promise.all([
+  const [product, mediaLibrary, siteContent] = await Promise.all([
     prisma.product.findUnique({
       where: { id: params.id },
       include: {
@@ -18,7 +18,11 @@ export default async function EditProductPage({ params }) {
       },
     }),
     getAdminMediaAssets(),
+    getSiteContent(),
   ]);
+  const categories = Array.isArray(siteContent.nav?.items)
+    ? siteContent.nav.items
+    : [];
 
   if (!product) {
     notFound();
@@ -29,6 +33,7 @@ export default async function EditProductPage({ params }) {
       mode="edit"
       initialProduct={product}
       mediaLibrary={mediaLibrary}
+      categories={categories}
     />
   );
 }

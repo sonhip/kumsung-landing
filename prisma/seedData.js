@@ -24,6 +24,13 @@ export const STATIC_CONTENT = {
     news: "Tin tức",
     contact: "Liên hệ",
     about: "Giới thiệu",
+    visibility: {
+      home: true,
+      products: true,
+      news: true,
+      contact: true,
+      about: true,
+    },
     toggleMenuAriaLabel: "Mở hoặc đóng menu điều hướng",
     toggleProductsAriaLabel: "Mở menu sản phẩm",
     items: [

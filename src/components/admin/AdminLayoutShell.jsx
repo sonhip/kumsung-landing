@@ -2,6 +2,7 @@
 
 import {
   AppstoreOutlined,
+  TagsOutlined,
   FileImageOutlined,
   LogoutOutlined,
   ReadOutlined,
@@ -32,6 +33,11 @@ const menuItems = [
     key: "/admin/products",
     icon: <AppstoreOutlined />,
     label: <Link href="/admin/products">Quản lý sản phẩm</Link>,
+  },
+  {
+    key: "/admin/product-categories",
+    icon: <TagsOutlined />,
+    label: <Link href="/admin/product-categories">Danh mục sản phẩm</Link>,
   },
   {
     key: "/admin/news",

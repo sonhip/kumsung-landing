@@ -13,6 +13,13 @@ const defaultNav = {
   news: "Tin tức",
   contact: "Liên hệ",
   about: "Giới thiệu",
+  visibility: {
+    home: true,
+    products: true,
+    news: true,
+    contact: true,
+    about: true,
+  },
   toggleMenuAriaLabel: "Mở hoặc đóng menu điều hướng",
   toggleProductsAriaLabel: "Mở menu sản phẩm",
   items: [],
@@ -22,6 +29,10 @@ const Navbar = ({ nav = defaultNav }) => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const visibility = {
+    ...defaultNav.visibility,
+    ...(nav.visibility || {}),
+  };
 
   const closeMenus = () => {
     setIsOpen(false);
@@ -43,73 +54,83 @@ const Navbar = ({ nav = defaultNav }) => {
         </button>
 
         <div className={`nav-links ${isOpen ? "open" : ""}`}>
-          <Link
-            href="/"
-            onClick={closeMenus}
-            className={isActive("/") ? "active" : ""}
-          >
-            {nav.home}
-          </Link>
-
-          <div
-            className="nav-products"
-            onMouseEnter={() => setProductsOpen(true)}
-            onMouseLeave={() => setProductsOpen(false)}
-          >
-            <button
-              className="products-trigger"
-              onClick={() => setProductsOpen((value) => !value)}
-              aria-expanded={productsOpen}
-              aria-label={nav.toggleProductsAriaLabel}
-              data-active={isProductsActive}
+          {visibility.home ? (
+            <Link
+              href="/"
+              onClick={closeMenus}
+              className={isActive("/") ? "active" : ""}
             >
-              {nav.products} <DownOutlined />
-            </button>
+              {nav.home}
+            </Link>
+          ) : null}
 
-            <AnimatePresence>
-              {productsOpen && (
-                <motion.div
-                  className="products-dropdown"
-                  initial={{ opacity: 0, y: -12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {nav.items.map((item) => (
-                    <Link
-                      key={item}
-                      href={`/products/${toSlug(item)}`}
-                      onClick={closeMenus}
-                    >
-                      {item}
-                    </Link>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          {visibility.products ? (
+            <div
+              className="nav-products"
+              onMouseEnter={() => setProductsOpen(true)}
+              onMouseLeave={() => setProductsOpen(false)}
+            >
+              <button
+                className="products-trigger"
+                onClick={() => setProductsOpen((value) => !value)}
+                aria-expanded={productsOpen}
+                aria-label={nav.toggleProductsAriaLabel}
+                data-active={isProductsActive}
+              >
+                {nav.products} <DownOutlined />
+              </button>
 
-          <Link
-            href="/contact"
-            onClick={closeMenus}
-            className={isActive("/contact") ? "active" : ""}
-          >
-            {nav.contact}
-          </Link>
-          <Link
-            href="/news"
-            onClick={closeMenus}
-            className={pathname.startsWith("/news") ? "active" : ""}
-          >
-            {nav.news || defaultNav.news}
-          </Link>
-          <Link
-            href="/about"
-            onClick={closeMenus}
-            className={isActive("/about") ? "active" : ""}
-          >
-            {nav.about}
-          </Link>
+              <AnimatePresence>
+                {productsOpen && (
+                  <motion.div
+                    className="products-dropdown"
+                    initial={{ opacity: 0, y: -12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {nav.items.map((item) => (
+                      <Link
+                        key={item}
+                        href={`/products/${toSlug(item)}`}
+                        onClick={closeMenus}
+                      >
+                        {item}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ) : null}
+
+          {visibility.contact ? (
+            <Link
+              href="/contact"
+              onClick={closeMenus}
+              className={isActive("/contact") ? "active" : ""}
+            >
+              {nav.contact}
+            </Link>
+          ) : null}
+          {visibility.news ? (
+            <Link
+              href="/news"
+              onClick={closeMenus}
+              className={pathname.startsWith("/news") ? "active" : ""}
+            >
+              {nav.news || defaultNav.news}
+            </Link>
+          ) : null}
+          {visibility.about ? (
+            <Link
+              href="/about"
+              onClick={closeMenus}
+              className={isActive("/about") ? "active" : ""}
+            >
+              {nav.about}
+            </Link>
+          ) : null}
         </div>
       </div>
     </nav>
