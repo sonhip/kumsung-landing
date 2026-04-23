@@ -1,0 +1,26 @@
+services:
+  app:
+    image: ${APP_IMAGE:-ghcr.io/sonhip/kumsung-landing:latest}
+    container_name: tan-viet-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+      NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
+      EMAILJS_SERVICE_ID: ${EMAILJS_SERVICE_ID}
+      EMAILJS_TEMPLATE_ID: ${EMAILJS_TEMPLATE_ID}
+      EMAILJS_PUBLIC_KEY: ${EMAILJS_PUBLIC_KEY}
+      EMAILJS_PRIVATE_KEY: ${EMAILJS_PRIVATE_KEY}
+      CONTACT_RECEIVER_EMAIL: ${CONTACT_RECEIVER_EMAIL}
+    volumes:
+      - ./public/uploads:/app/public/uploads
+    networks:
+      - tanviet-net
+
+networks:
+  tanviet-net:
+    external: true

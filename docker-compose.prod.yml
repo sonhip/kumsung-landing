@@ -1,0 +1,39 @@
+services:
+  app:
+    image: ${APP_IMAGE:-ghcr.io/sonhip/kumsung-landing:latest}
+    container_name: tan-viet-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL:-postgresql://admin:123456@postgres:5432/mydb?schema=public}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - uploads_data:/app/public/uploads
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: tan-viet-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456}
+      POSTGRES_DB: ${POSTGRES_DB:-mydb}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin} -d ${POSTGRES_DB:-mydb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+  uploads_data:

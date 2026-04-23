@@ -62,3 +62,57 @@ Template variables được route `/api/contact` gửi lên:
 - `user_agent`
 - `website_url`
 - `company_name`
+
+## Deploy bằng Docker (không build trên VPS)
+
+### 1. Build và push image từ local
+
+```bash
+docker build -t ghcr.io/<github-username>/kumsung-landing:latest .
+echo <GITHUB_TOKEN> | docker login ghcr.io -u <github-username> --password-stdin
+docker push ghcr.io/<github-username>/kumsung-landing:latest
+```
+
+### 2. Trên VPS: pull image và chạy bằng compose
+
+Chuẩn bị `.env` trên VPS với các biến production (đặc biệt `DATABASE_URL`, `NEXT_PUBLIC_SITE_URL`, EmailJS, reCAPTCHA).
+
+```bash
+docker compose -f docker-compose.prod.yml pull
+docker compose -f docker-compose.prod.yml up -d
+```
+
+### Trường hợp đã có sẵn container DB trên VPS
+
+Nếu bạn đã có Postgres container riêng (ví dụ `tanviet-postgres`) và chỉ muốn chạy app container:
+
+```bash
+docker network create tanviet-net || true
+docker network connect tanviet-net tanviet-postgres || true
+```
+
+`.env` trên VPS cần để:
+
+```bash
+APP_IMAGE=ghcr.io/<github-username>/kumsung-landing:latest
+DATABASE_URL=postgresql://admin:123456@tanviet-postgres:5432/mydb?schema=public
+```
+
+Chạy app:
+
+```bash
+docker compose -f docker-compose.app.yml --env-file .env pull
+docker compose -f docker-compose.app.yml --env-file .env up -d
+```
+
+### 3. Apply Prisma schema trên VPS (sau mỗi lần đổi schema)
+
+```bash
+docker exec -it tan-viet-web npx prisma db push
+```
+
+Nếu cần seed dữ liệu:
+
+```bash
+docker exec -it tan-viet-web npm run db:seed
+```

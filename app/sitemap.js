@@ -1,6 +1,8 @@
 import { getPublicNewsPosts, getPublicProducts } from "../src/lib/cms";
 import { getSiteUrl, toAbsoluteUrl } from "../src/lib/seo";
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap() {
   const siteUrl = getSiteUrl();
   const now = new Date();
