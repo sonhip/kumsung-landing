@@ -28,13 +28,14 @@ export async function generateMetadata() {
   const description =
     siteContent.hero?.subtitle ||
     "Đơn vị phân phối thiết bị điện lạnh, tư vấn giải pháp tối ưu cho doanh nghiệp và công trình tại Việt Nam.";
-  const heroImage = siteContent.hero?.backgroundImages?.[0];
+  const primarySeoImage =
+    siteSettings.branding?.logoUrl || siteContent.hero?.backgroundImages?.[0];
 
   return buildPageMetadata({
     title,
     description,
     path: "/",
-    images: [heroImage],
+    images: [primarySeoImage],
     fallbackImage,
     keywords: [
       "thiết bị điện lạnh",

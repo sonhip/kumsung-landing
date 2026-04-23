@@ -68,9 +68,9 @@ Template variables được route `/api/contact` gửi lên:
 ### 1. Build và push image từ local
 
 ```bash
-docker build -t ghcr.io/<github-username>/kumsung-landing:latest .
-echo <GITHUB_TOKEN> | docker login ghcr.io -u <github-username> --password-stdin
-docker push ghcr.io/<github-username>/kumsung-landing:latest
+docker buildx build --platform linux/amd64 \
+  -t <dockerhub-username>/tan-viet-web:latest \
+  --push .
 ```
 
 ### 2. Trên VPS: pull image và chạy bằng compose
@@ -94,8 +94,8 @@ docker network connect tanviet-net tanviet-postgres || true
 `.env` trên VPS cần để:
 
 ```bash
-APP_IMAGE=ghcr.io/<github-username>/kumsung-landing:latest
-DATABASE_URL=postgresql://admin:123456@tanviet-postgres:5432/mydb?schema=public
+APP_IMAGE=<dockerhub-username>/tan-viet-web:latest
+DATABASE_URL=postgresql://<db_user>:<db_password>@tanviet-postgres:5432/mydb?schema=public
 ```
 
 Chạy app:
@@ -116,3 +116,37 @@ Nếu cần seed dữ liệu:
 ```bash
 docker exec -it tan-viet-web npm run db:seed
 ```
+
+## Upload persistence và mapping path
+
+`docker-compose.app.yml` đã mount:
+
+```bash
+./public/uploads:/app/public/uploads
+```
+
+Nghĩa là file upload được lưu trên host VPS tại:
+
+```bash
+/root/tan-viet-web/app/public/uploads
+```
+
+Container recreate/redeploy sẽ không mất ảnh upload nếu không xoá thư mục này.
+
+### Cách kiểm tra nhanh sau deploy
+
+```bash
+# 1) kiểm tra mount
+docker inspect tan-viet-web | grep -A 20 Mounts
+
+# 2) kiểm tra route ảnh upload trả về 200
+curl -I https://tanvietref.com.vn/uploads/media/<file-name>.jpg
+
+# 3) kiểm tra file tồn tại trên host
+ls -lah /root/tan-viet-web/app/public/uploads/media | tail -n 5
+```
+
+### Lưu ý quan trọng
+
+- Không chạy `docker compose down -v` nếu muốn giữ dữ liệu.
+- Nếu app báo lỗi DB auth (`P1000`), cần sửa đúng `DATABASE_URL` theo user/password hiện có trong container Postgres.
