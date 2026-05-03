@@ -30,11 +30,6 @@ const ALLOWED_FILE_TYPES = {
   "application/zip": [".zip"],
 };
 
-const getFileExtension = (fileName) => {
-  const parts = fileName.split(".");
-  return parts.length > 1 ? `.${parts[parts.length - 1]}` : "";
-};
-
 export async function POST(request) {
   try {
     const formData = await request.formData();
