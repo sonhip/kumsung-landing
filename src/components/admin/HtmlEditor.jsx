@@ -9,17 +9,68 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { Button, Card, Select, Space, Typography } from "antd";
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 const { Text } = Typography;
 
-export default function HtmlEditor({
-  value,
-  onChange,
-  mediaOptions = [],
-}) {
+const escapeHtml = (value) =>
+  String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+
+const insertHtmlAtCursor = (editor, html, onChange) => {
+  if (!editor) return;
+
+  editor.focus();
+  const selection = window.getSelection();
+
+  if (
+    !selection ||
+    selection.rangeCount === 0 ||
+    !editor.contains(selection.anchorNode)
+  ) {
+    editor.insertAdjacentHTML("beforeend", html);
+    onChange(editor.innerHTML || "");
+    return;
+  }
+
+  const range = selection.getRangeAt(0);
+  range.deleteContents();
+
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  const fragment = template.content;
+  const lastNode = fragment.lastChild;
+
+  range.insertNode(fragment);
+
+  if (lastNode) {
+    range.setStartAfter(lastNode);
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+
+  onChange(editor.innerHTML || "");
+};
+
+const HtmlEditor = forwardRef(function HtmlEditor(
+  { value, onChange, mediaOptions = [] },
+  ref,
+) {
   const editorRef = useRef(null);
   const [selectedMediaUrl, setSelectedMediaUrl] = useState();
+
   const dedupedMediaOptions = useMemo(() => {
     const seen = new Set();
     return mediaOptions.filter((item) => {
@@ -48,25 +99,44 @@ export default function HtmlEditor({
 
   const insertImageUrl = (url) => {
     if (!url) return;
-    applyCommand("insertImage", url);
+    const html = `<p><img src="${escapeHtml(url)}" alt="" style="max-width:100%;height:auto;display:block;margin:12px 0;" /></p>`;
+    insertHtmlAtCursor(editorRef.current, html, onChange);
   };
+
+  useImperativeHandle(ref, () => ({
+    insertHtml: (html) => insertHtmlAtCursor(editorRef.current, html, onChange),
+    focus: focusEditor,
+  }));
 
   return (
     <Card
       title="Nội dung chi tiết"
-      extra={<Text type="secondary">Editor HTML đơn giản có chèn ảnh</Text>}
+      extra={
+        <Text type="secondary">
+          Editor HTML đơn giản có chèn ảnh, file, video
+        </Text>
+      }
     >
       <Space wrap style={{ marginBottom: 16 }}>
         <Button icon={<BoldOutlined />} onClick={() => applyCommand("bold")}>
           Đậm
         </Button>
-        <Button icon={<FontSizeOutlined />} onClick={() => applyCommand("formatBlock", "<h2>")}>
+        <Button
+          icon={<FontSizeOutlined />}
+          onClick={() => applyCommand("formatBlock", "<h2>")}
+        >
           Tiêu đề H2
         </Button>
-        <Button icon={<OrderedListOutlined />} onClick={() => applyCommand("insertOrderedList")}>
+        <Button
+          icon={<OrderedListOutlined />}
+          onClick={() => applyCommand("insertOrderedList")}
+        >
           Danh sách số
         </Button>
-        <Button icon={<UnorderedListOutlined />} onClick={() => applyCommand("insertUnorderedList")}>
+        <Button
+          icon={<UnorderedListOutlined />}
+          onClick={() => applyCommand("insertUnorderedList")}
+        >
           Danh sách chấm
         </Button>
         <Button
@@ -118,4 +188,6 @@ export default function HtmlEditor({
       />
     </Card>
   );
-}
+});
+
+export default HtmlEditor;

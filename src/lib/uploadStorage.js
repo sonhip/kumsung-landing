@@ -61,9 +61,9 @@ const hasReferenceToUpload = async (url) => {
     productContentCount,
     teamMemberCount,
     newsCoverCount,
+    newsAttachmentCount,
     newsContentCount,
-  ] =
-    await Promise.all([
+  ] = await Promise.all([
     prisma.mediaAsset.count({
       where: {
         imageUrl: url,
@@ -93,12 +93,19 @@ const hasReferenceToUpload = async (url) => {
     }),
     prisma.newsPost.count({
       where: {
+        attachmentUrls: {
+          has: url,
+        },
+      },
+    }),
+    prisma.newsPost.count({
+      where: {
         contentHtml: {
           contains: url,
         },
       },
     }),
-    ]);
+  ]);
 
   return (
     mediaCount > 0 ||
@@ -106,6 +113,7 @@ const hasReferenceToUpload = async (url) => {
     productContentCount > 0 ||
     teamMemberCount > 0 ||
     newsCoverCount > 0 ||
+    newsAttachmentCount > 0 ||
     newsContentCount > 0
   );
 };

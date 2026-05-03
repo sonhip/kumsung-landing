@@ -26,6 +26,18 @@ const validatePayload = (payload) => {
     payload.isPublished === true || payload.isPublished === "true";
   const publishedAt = parsePublishedAt(payload.publishedAt);
 
+  const attachmentUrls = Array.isArray(payload.attachmentUrls)
+    ? payload.attachmentUrls.filter(
+        (url) => typeof url === "string" && url.trim(),
+      )
+    : [];
+
+  const youtubeEmbeds = Array.isArray(payload.youtubeEmbeds)
+    ? payload.youtubeEmbeds.filter(
+        (item) => typeof item === "string" && item.trim(),
+      )
+    : [];
+
   return {
     data: {
       title: payload.title.trim(),
@@ -33,6 +45,8 @@ const validatePayload = (payload) => {
       excerpt: payload.excerpt?.trim() || null,
       contentHtml: payload.contentHtml,
       coverImage: payload.coverImage?.trim() || null,
+      attachmentUrls,
+      youtubeEmbeds,
       isPublished,
       publishedAt: isPublished ? publishedAt || new Date() : null,
     },
@@ -67,7 +81,10 @@ export async function POST(request) {
     const existing = await findDuplicateSlug(validation.data.slug);
 
     if (existing) {
-      return Response.json({ error: "Slug bài viết đã tồn tại." }, { status: 400 });
+      return Response.json(
+        { error: "Slug bài viết đã tồn tại." },
+        { status: 400 },
+      );
     }
 
     const item = await prisma.newsPost.create({

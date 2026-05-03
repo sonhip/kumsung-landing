@@ -27,6 +27,8 @@ const mapNewsPostRecord = (post) => ({
   excerpt: post.excerpt || "",
   contentHtml: post.contentHtml || "",
   coverImage: post.coverImage || "",
+  attachmentUrls: post.attachmentUrls || [],
+  youtubeEmbeds: post.youtubeEmbeds || [],
   isPublished: post.isPublished,
   publishedAt: post.publishedAt,
   createdAt: post.createdAt,
@@ -181,7 +183,8 @@ export async function getHomepageMedia() {
       image: item.imageUrl,
     })),
     serviceTiles: getSectionItems(items, "service_tile").map((item) => ({
-      type: item.variant || (item.title || item.description ? "content" : "image"),
+      type:
+        item.variant || (item.title || item.description ? "content" : "image"),
       tone: item.tone || "dark",
       image: item.imageUrl,
       title: item.title || "",

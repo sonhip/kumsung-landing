@@ -27,6 +27,18 @@ const validatePayload = (payload) => {
     payload.isPublished === true || payload.isPublished === "true";
   const publishedAt = parsePublishedAt(payload.publishedAt);
 
+  const attachmentUrls = Array.isArray(payload.attachmentUrls)
+    ? payload.attachmentUrls.filter(
+        (url) => typeof url === "string" && url.trim(),
+      )
+    : [];
+
+  const youtubeEmbeds = Array.isArray(payload.youtubeEmbeds)
+    ? payload.youtubeEmbeds.filter(
+        (item) => typeof item === "string" && item.trim(),
+      )
+    : [];
+
   return {
     data: {
       title: payload.title.trim(),
@@ -34,6 +46,8 @@ const validatePayload = (payload) => {
       excerpt: payload.excerpt?.trim() || null,
       contentHtml: payload.contentHtml,
       coverImage: payload.coverImage?.trim() || null,
+      attachmentUrls,
+      youtubeEmbeds,
       isPublished,
       publishedAt: isPublished ? publishedAt || new Date() : null,
     },
@@ -54,7 +68,10 @@ export async function GET(_request, { params }) {
   });
 
   if (!item) {
-    return Response.json({ error: "Không tìm thấy bài viết." }, { status: 404 });
+    return Response.json(
+      { error: "Không tìm thấy bài viết." },
+      { status: 404 },
+    );
   }
 
   return Response.json(item);
@@ -74,13 +91,19 @@ export async function PATCH(request, { params }) {
     });
 
     if (!existingItem) {
-      return Response.json({ error: "Không tìm thấy bài viết." }, { status: 404 });
+      return Response.json(
+        { error: "Không tìm thấy bài viết." },
+        { status: 404 },
+      );
     }
 
     const duplicate = await findDuplicateSlug(validation.data.slug, params.id);
 
     if (duplicate) {
-      return Response.json({ error: "Slug bài viết đã tồn tại." }, { status: 400 });
+      return Response.json(
+        { error: "Slug bài viết đã tồn tại." },
+        { status: 400 },
+      );
     }
 
     const item = await prisma.newsPost.update({
@@ -93,6 +116,16 @@ export async function PATCH(request, { params }) {
       existingItem.coverImage !== validation.data.coverImage
     ) {
       await deleteUploadIfUnused(existingItem.coverImage);
+    }
+
+    // Delete old attachments that are no longer used
+    if (existingItem.attachmentUrls && existingItem.attachmentUrls.length > 0) {
+      const newAttachmentUrls = new Set(validation.data.attachmentUrls);
+      for (const oldUrl of existingItem.attachmentUrls) {
+        if (!newAttachmentUrls.has(oldUrl)) {
+          await deleteUploadIfUnused(oldUrl);
+        }
+      }
     }
 
     return Response.json(item);
@@ -112,7 +145,10 @@ export async function DELETE(_request, { params }) {
     });
 
     if (!existingItem) {
-      return Response.json({ error: "Không tìm thấy bài viết." }, { status: 404 });
+      return Response.json(
+        { error: "Không tìm thấy bài viết." },
+        { status: 404 },
+      );
     }
 
     await prisma.newsPost.delete({
@@ -123,12 +159,16 @@ export async function DELETE(_request, { params }) {
       await deleteUploadIfUnused(existingItem.coverImage);
     }
 
+    // Delete all attachments
+    if (existingItem.attachmentUrls && existingItem.attachmentUrls.length > 0) {
+      for (const url of existingItem.attachmentUrls) {
+        await deleteUploadIfUnused(url);
+      }
+    }
+
     return Response.json({ success: true });
   } catch (error) {
     console.error("Failed to delete news post", error);
-    return Response.json(
-      { error: "Không thể xoá bài viết." },
-      { status: 500 },
-    );
+    return Response.json({ error: "Không thể xoá bài viết." }, { status: 500 });
   }
 }
